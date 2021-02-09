@@ -506,6 +506,12 @@ var app = {
 						};
 					}
 
+					if (app.cfg.items[i]['type'] == 'percent') {
+						options.yaxis.labels.formatter = function (val, index) {
+							return val.toLocaleString('de', {maximumFractionDigits: 2}) + '%';
+						}
+					}
+
 					if (typeof app.graphs.charts[i] !== 'undefined') {
 
 						app.graphs.charts[i].destroy();
@@ -516,7 +522,11 @@ var app = {
 					text = serie[serie.length - 1];
 					if (text !== null && typeof text !== 'undefined') {
 						options.annotations.points[0].x = x;
-						options.annotations.points[0].label.text = parseFloat(text).toLocaleString('de', {maximumFractionDigits: 2});
+						if (app.cfg.items[i]['type'] == 'percent') {
+							options.annotations.points[0].label.text = parseFloat(text).toLocaleString('de', {maximumFractionDigits: 2}) + '%';
+						} else {
+							options.annotations.points[0].label.text = parseFloat(text).toLocaleString('de', {maximumFractionDigits: 2});
+						}
 					}
 
 					app.graphs.charts[i] = new ApexCharts(document.querySelector('#graph-' + i), options);
