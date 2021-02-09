@@ -31,6 +31,7 @@ class CreateDataTable extends Migration
 				$table->integer('confirmed')->nullable();
 				$table->integer('increase')->nullable();
 				$table->integer('confirmed_7d')->nullable();
+				$table->decimal('incidence_7d', 12, 5)->nullable();
 				$table->integer('confirmed_14d')->nullable();
 				$table->decimal('incidence_14d', 12, 5)->nullable();
 				$table->integer('confirmed_total')->nullable();

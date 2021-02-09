@@ -79,6 +79,7 @@ class ImportController extends Controller
 				'city' => null,
 				'confirmed' => isset($d[3]) ? $d[3]['val'] : null,
 				'confirmed_7d' => isset($d[7]) ? $d[7]['val'] : null,
+				'incidence_7d' => isset($d[8]) ? $d[8]['val'] : null,
 				'confirmed_14d' => isset($d[5]) ? $d[5]['val'] : null,
 				'incidence_14d' => isset($d[6]) ? $d[6]['val'] : null,
 				'confirmed_total' => isset($d[1]) ? $d[1]['val'] : null,

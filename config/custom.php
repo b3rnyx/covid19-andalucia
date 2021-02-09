@@ -78,15 +78,28 @@ return [
 				'type' => 'line',
 			],
 		],
+		'confirmed_14d' => [
+			'name' => 'Confirmados 14 días',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
 		'confirmed_7d' => [
 			'name' => 'Confirmados 7 días',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'green' => 'desc',
+			'graph' => [
+				'type' => 'line',
+			],
 		],
-		'confirmed_14d' => [
-			'name' => 'Confirmados 14 días',
-			'allowed' => ['region', 'province', 'district', 'city'],
+		'incidence_7d' => [
+			'name' => 'Incidencia 7 días',
+			'legend' => 'Datos disponibles desde el 10/02/2021.',
+			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
 			'graph' => [

@@ -121,6 +121,7 @@
 					<?php echo htmlInfo('confirmed', 'Confirmados totales', 'style2'); ?>
 					<?php echo htmlInfo('confirmed_14d', 'Confirmados 14 días', 'style3'); ?>
 					<?php echo htmlInfo('confirmed_7d', 'Confirmados 7 días', 'style3'); ?>
+					<?php echo htmlInfo('incidence_7d', 'Incidencia 7 días', 'style3'); ?>
 					<?php echo htmlInfo('confirmed_percent', 'Porcentaje confirmados', 'stylep', 'Respecto a la población'); ?>
 				</div>
 
