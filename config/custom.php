@@ -98,7 +98,7 @@ return [
 		],
 		'incidence_7d' => [
 			'name' => 'Incidencia 7 días',
-			'legend' => 'Datos disponibles desde el 10/02/2021.',
+			'legend' => 'Datos disponibles a partir del 10/02/2021.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -125,7 +125,7 @@ return [
 		],
 		'hospitalized' => [
 			'name' => 'Hospitalizados diarios',
-			'legend' => 'Datos disponibles desde el 31/01/2021.',
+			'legend' => 'Datos disponibles a partir del 31/01/2021.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -153,7 +153,7 @@ return [
 		],
 		'uci' => [
 			'name' => 'Ingresados en UCI diarios',
-			'legend' => 'Datos disponibles desde el 31/01/2021.',
+			'legend' => 'Datos disponibles a partir del 31/01/2021.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -181,7 +181,7 @@ return [
 		],
 		'recovered' => [
 			'name' => 'Curados totales',
-			'legend' => 'Datos por municipios disponibles desde el 29/01/2021.',
+			'legend' => 'Datos por municipios disponibles a partir del 29/01/2021.',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'graph' => [
@@ -190,7 +190,7 @@ return [
 		],
 		'recovered_percent' => [
 			'name' => 'Porcentaje curados',
-			'legend' => 'Respecto a confirmados. Datos por municipios disponibles desde el 29/01/2021.',
+			'legend' => 'Respecto a confirmados. Datos por municipios disponibles a partir del 29/01/2021.',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'percent',
 			'graph' => [
@@ -199,7 +199,7 @@ return [
 		],
 		'dead' => [
 			'name' => 'Fallecidos diarios',
-			'legend' => 'Datos disponibles desde el 08/02/2021.',
+			'legend' => 'Datos disponibles a partir del 08/02/2021.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
