@@ -168,6 +168,7 @@ return [
 		],
 		'recovered' => [
 			'name' => 'Curados totales',
+			'legend' => 'Datos por municipios disponibles desde el 29/01/2021.',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'graph' => [
@@ -176,7 +177,7 @@ return [
 		],
 		'recovered_percent' => [
 			'name' => 'Porcentaje curados',
-			'legend' => 'Respecto a confirmados.',
+			'legend' => 'Respecto a confirmados. Datos por municipios disponibles desde el 29/01/2021.',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'percent',
 			'graph' => [
