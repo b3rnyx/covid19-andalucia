@@ -1,0 +1,132 @@
+Datos pakito
+------------------
+
+acumulados.csv
+https://github.com/Pakillo/COVID19-Andalucia/raw/master/datos/acumulados.csv
+CA + provincias
+Diario (acumulados)
+- Confirmados PDIA
+- Aumento
+- Confirmados PDIA 14 días
+- Confirmados PDIA 7 días
+- Total confirmados
+- Hospitalizados
+- Total UCI
+- Fallecidos
+- Curados
+
+municipios.csv
+https://github.com/Pakillo/COVID19-Andalucia/raw/master/datos/municipios.csv
+Municipios
+Diario
+- Confirmados.PCR.TA
+- Confirmados.PCR.TA.14d
+- Conf14d_100.000hab
+- ConfirmadosTotal
+- Defunciones
+
+
+Datos Junta
+------------------
+
+https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/informe/anual?CodOper=b3_2314&idNode=42348
+
+File-01 -> provinces-total
+Número acumulado y tasas de casos confirmados y defunciones por COVID-19 en Andalucía según fecha de diagnóstico por provincias
+https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/44088?CodOper=b3_2314&codConsulta=44088
+JSON: https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/44088
+CA + procincias
+Totales
+- Total Confirmados
+- Tasa total confirmados
+- Confirmados PDIA
+- Tasa PDIA
+- Confirmados PDIA 14 días
+- Tasa PDIA 14 días
+- Confirmados PDIA 7 días
+- Tasa PDIA 7 días
+- Curados
+- Fallecidos
+
+File-02 -> provinces-daily
+Situación de COVID-19 según fecha de diagnóstico por provincias
+https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/39409?CodOper=b3_2314&codConsulta=39409
+JSON: https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/39409
+CA + provincias
+Diario
+- Confirmados PDIA
+- Total confirmados
+- Hospitalizados
+- UCI
+- Fallecidos
+
+File-03 -> provinces-accumulated
+Histórico de datos acumulados de COVID-19 en Andalucía (último mes)
+https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/39464?CodOper=b3_2314&codConsulta=39464
+JSON: https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/39464
+CA + provincias
+Diario (acumulados)
+- Confirmados PDIA
+- Aumento
+- Confirmados PDIA 14 días
+- Confirmados PDIA 7 días
+- Total confirmados
+- Hospitalizados
+- Total UCI
+- Fallecidos
+- Curados
+
+File-04 -> cities-total
+Casos confirmados, curados y fallecidos por COVID-19 en la provincia de Almería por distrito sanitario y municipio
+https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38665?CodOper=b3_2314&codConsulta=38665
+JSON: 
+Almería -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38665
+Cádiz -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38637
+Córdoba -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38666
+Granada -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38667
+Huelva -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38668
+Jaén -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38669
+Málaga -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38674
+Sevilla -> https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38676
+Provincia + distritos + municipios
+Totales
+- Población
+- Confirmados PDIA
+- Confirmados PDIA 14 días
+- Tasa PDIA 14 días
+- Confirmados PDIA 7 días
+- Total Confirmados
+- Curados
+- Fallecidos
+
+File-05
+Casos confirmados (PDIAy total), curados y fallecidos por COVID-19 por ZBS
+https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/42798?CodOper=b3_2314&codConsulta=42798
+JSON: https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/42798
+CA + provincias + distritos + zona sanitaria
+- Población
+- Confirmados PDIA
+- Tasa PDIA
+- Confirmados PDIA 14 días
+- Tasa PDIA 14 dias
+- Confirmados PDIA 7 días
+- Tasa PDIA 7 dias
+- Total Confirmados
+- Tasa total confirmados
+- Curados
+- Fallecidos
+
+
+Datos Sanidad
+------------------
+
+Informe vacunación
+https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/documentos/Informe_Comunicacion_20210127.ods
+CCAA
+Totales
+- Dosis entregadas Pfizer
+- Dosis entregadas Moderna
+- Total Dosis entregadas
+- Dosis administradas
+- % sobre entregadas
+- Nº Personas vacunadas (pauta completada)

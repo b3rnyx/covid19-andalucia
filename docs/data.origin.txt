@@ -1,0 +1,57 @@
+CA
+- confirmed > File-01 - provinces-total
+- increase > File-03 - provinces-accumulated (último día)
+- confirmed_7d > File-01 - provinces-total
+- confirmed_14d > File-01 - provinces-total
+- incidence_14d > File-01 - provinces-total
+- confirmed_total > File-01 - provinces-total
+- hospitalized > File-02 - provinces-daily (último día)
+- hospitalized_total > File-03 - provinces-accumulated (último día)
+- uci > File-02 - provinces-daily (último día)
+- uci_total > File-03 - provinces-accumulated (último día)
+- recovered > File-01 - provinces-total
+- dead > File-02 - provinces-daily (último día)
+- dead_total > File-01 - provinces-total
+
+Provincia
+- confirmed > File-01 - provinces-total
+- increase > File-03 - provinces-accumulated (último día)
+- confirmed_7d > File-01 - provinces-total
+- confirmed_14d > File-01 - provinces-total
+- incidence_14d > File-01 - provinces-total
+- confirmed_total > File-01 - provinces-total
+- hospitalized > File-02 - provinces-daily (último día)
+- hospitalized_total > File-03 - provinces-accumulated (último día)
+- uci > File-02 - provinces-daily (último día)
+- uci_total > File-03 - provinces-accumulated (último día)
+- recovered > File-01 - provinces-total
+- dead > File-02 - provinces-daily (último día)
+- dead_total > File-01 - provinces-total
+
+Distrito
+- confirmed > File-04 - cities-total
+- increase
+- confirmed_7d > File-04 - cities-total
+- confirmed_14d > File-04 - cities-total
+- incidence_14d > File-04 - cities-total
+- confirmed_total > File-04 - cities-total
+- hospitalized
+- hospitalized_total
+- uci
+- uci_total
+- recovered > File-04 - cities-total
+- dead_total > File-04 - cities-total
+
+Municipio
+- confirmed > File-04 - cities-total
+- increase
+- confirmed_7d > File-04 - cities-total
+- confirmed_14d > File-04 - cities-total
+- incidence_14d > File-04 - cities-total
+- confirmed_total > File-04 - cities-total
+- hospitalized
+- hospitalized_total
+- uci
+- uci_total
+- recovered > File-04 - cities-total
+- dead_total > File-04 - cities-total

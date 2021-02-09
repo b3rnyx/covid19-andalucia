@@ -1,0 +1,250 @@
+body {
+	padding: 0 0 80px 0;
+	background: rgba(40, 167, 69, 0.05);
+}
+
+header {
+	padding: 20px 0 0 0;
+}
+header h1 {
+	margin: 0;
+	padding: 0;
+	color: #28a745;
+	font-weight: 700;
+}
+header h2 {
+	margin: 0;
+	padding: 0;
+	color: #888888;
+	font-size: 20px;
+	font-weight: 600;
+}
+header .update {
+	padding: 25px 0 0 0;
+	color: #444;
+	font-weight: 700;
+}
+header .update mark {
+	padding: 4px 8px;
+	border: 1px solid #cccccc;
+	border-radius: 8px;
+	background: #fff;
+	color: #000;
+}
+
+section.selector {
+	width: 70%;
+	min-width: 350px;
+	margin: 25px auto 0 auto;
+	padding: 12px 15px;
+	border-radius: 12px;
+	background: rgba(40, 167, 69, 0.1);
+}
+section.selector label {
+	margin-bottom: 2px;
+}
+.select-selected label {
+	color: #28a745;
+	font-weight: 600;
+}
+.select-selected span.select2-selection {
+	border: 2px solid #28a745 !important;
+	box-shadow: 0px 0px 8px 0px rgba(40, 167, 69,0.2);
+}
+.select-district {
+	display: none;
+}
+
+section.info {
+	display: none;
+	overflow: hidden;
+	margin-top: 20px;
+	border-radius: 12px 12px 26px 26px;
+	background: rgba(40, 167, 69, 0.1);
+}
+section.info .title {
+	padding: 5px 25px 5px 25px;
+	background: #28a745;
+	color: #ffffff;
+}
+section.info .title .name {
+	display: inline-block;
+	padding-right: 15px;
+	font-size: 1.2em;
+	font-weight: 600;
+}
+section.info .title .name span {
+	font-size: 0.7em;
+	font-weight: 400;
+}
+section.info .population {
+	display: inline-block;
+	padding-left: 15px;
+	border-left: 1px solid rgba(255, 255, 255, 0.5);
+	font-size: 0.8em;
+}
+section.info .data {
+	padding: 5px 25px 0 25px;
+}
+section.info .data-switch {
+	padding-bottom: 8px;
+	line-height: auto;
+}
+section.info .data-switch label {
+	display: block;
+	margin-bottom: 0px;
+}
+section.info .data-switch strong {
+	font-size: 1.3em;
+}
+section.info .data-switch span {
+	display: block;
+	color: rgba(0, 0, 0, 0.3);
+	font-size: 0.75em;
+}
+section.info .level1 {
+	padding-top: 10px;
+	padding-bottom: 20px;
+	font-size: 1.3em;
+	line-height: 1.2;
+}
+section.info .level1 strong {
+	font-size: 1.5em;
+}
+section.info .level2 {
+	padding-top: 10px;
+	padding-bottom: 20px;
+	font-size: 1.0em;
+	line-height: 1.2;
+}
+section.info .style1 {
+	
+}
+section.info .style2 {
+	font-size: 1em;
+}
+section.info .style3 {
+	font-size: 0.8em;
+}
+section.info .stylep {
+	font-size: 0.8em;
+}
+
+section.graphs {
+	display: none;
+}
+section.graphs div.dates {
+	width: 50%;
+	min-width: 300px;
+	margin: 25px auto 20px auto;
+}
+div.graph-container {
+	margin-top: 20px;
+	padding: 20px 15px 0 15px;
+	border: 1px solid #bbbbbb;
+	border-radius: 16px;
+	background: #ffffff;
+	box-shadow: 3px 3px 12px 0px rgba(0,0,0,0.10);
+}
+
+footer {
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	padding: 6px 15px 8px 15px;
+	border-top: 1px solid #cccccc;
+	background: #ffffff;
+	font-size: 13px;
+	line-height: 1.2;
+	box-shadow: 0px -3px 12px 0px rgba(0,0,0,0.10);
+}
+footer .source ul {
+	margin: 0px 0 0 16px;
+	padding: 0px;
+}
+footer .share ul {
+	margin: 5px 0 0 0;
+	padding: 0px;
+}
+footer .share li {
+	display: inline-block;
+	margin: 0px;
+	padding: 0px 4px;
+	list-style-type: none;
+}
+footer .share a,
+footer .share button {
+	width: 28px;
+	height: 28px;
+	padding: 0px;
+	background: #000000;
+	border-radius: 100%;
+	border: none;
+	color: #ffffff;
+	line-height: 1.6;
+	text-align: center;
+}
+footer .share a:hover,
+footer .share button:hover {
+	background: #888888;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+@media only screen 
+   and (max-width : 767px) {
+
+		body {
+			padding-bottom: 0px;
+		}
+		footer {
+			position: relative;
+			width: 100%;
+			margin-top: 35px;
+			border-left: 1px solid #cccccc;
+			border-right: 1px solid #cccccc;
+		}
+		footer .source {
+			padding-top: 10px;
+		}
+		footer .share {
+			padding-top: 10px;
+		}
+}
+
+.loader {
+	display: none;
+}
+.loader-bkg {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	background-color: rgba(255, 255, 255, 0.7);
+	z-index: 99999;
+}
+.loader-bkg .msg {
+	position: fixed;
+	width: 230px;
+	height: 56px;
+	left: 50%;
+	top: 50%;
+	margin-left: -115px;
+	margin-top: -28px;
+	padding: 15px 0px;
+	border-radius: 8px;
+	border: 2px solid #dddddd;
+	background: #ffffff;
+	font-size: 14px;
+	text-align: center;
+	-webkit-box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.4);
+	-moz-box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.4);
+	box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.4);
+}
+.loader-bkg .msg i {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 24px;
+}

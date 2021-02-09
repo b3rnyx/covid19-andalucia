@@ -1,0 +1,15 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Pablo Fernandez
+
+# THANKS
+
+    https://github.com/Pakillo/COVID19-Andalucia
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5, PHP, MySQL
+    Apache Server Configs, jQuery, Modernizr, Normalize.css
