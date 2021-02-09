@@ -206,7 +206,18 @@ var app = {
 										enabled: false
 									},
 									toolbar: {
-										show: false,
+										show: true,
+										offsetX: -80,
+										offsetY: 0,
+										tools: {
+											download: '<i class="fa fa-cloud-download"></i>',
+											selection: false,
+											zoom: false,
+											zoomin: false,
+											zoomout: false,
+											pan: false,
+											reset: false,
+										}
 									}
 								},
 								dataLabels: {
@@ -297,7 +308,18 @@ var app = {
 									type: 'bar',
 									height: 350,
 									toolbar: {
-										show: false,
+										show: true,
+										offsetX: -80,
+										offsetY: 0,
+										tools: {
+											download: '<i class="fa fa-cloud-download"></i>',
+											selection: false,
+											zoom: false,
+											zoomin: false,
+											zoomout: false,
+											pan: false,
+											reset: false,
+										}
 									}
 								},
 								plotOptions: {

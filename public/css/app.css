@@ -146,6 +146,19 @@ div.graph-container {
 	background: #ffffff;
 	box-shadow: 3px 3px 12px 0px rgba(0,0,0,0.10);
 }
+.fa-cloud-download {
+	font-size: 20px !important;
+}
+.apexcharts-toolbar {
+	right: auto !important;
+	left: 220px !important;
+}
+.apexcharts-menu-icon {
+	color: #b4bcc2 !important;
+}
+.apexcharts-menu-icon:hover {
+	color: #6E8192 !important;
+}
 
 footer {
 	position: fixed;
