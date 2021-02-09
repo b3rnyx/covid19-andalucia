@@ -247,7 +247,7 @@ var app = {
 								},
 								xaxis: {
 									categories: ylabels,
-									tickAmount: 12,
+									tickAmount: 18,
 								},
 								yaxis: {
 									min: 0,
@@ -353,7 +353,7 @@ var app = {
 								},
 								xaxis: {
 									categories: ylabels,
-									tickAmount: 12,
+									tickAmount: 18,
 								},
 								yaxis: {
 									min: 0,
@@ -493,6 +493,24 @@ var app = {
 						break;
 
 					}
+
+					options.responsive = [
+						{
+							breakpoint: 1200,
+							options: {
+								xaxis: {
+									tickAmount: 10,
+								}
+							}
+						},{
+							breakpoint: 768,
+							options: {
+								xaxis: {
+									tickAmount: 5,
+								}
+							}
+						}
+					];
 
 					if (typeof app.cfg.items[i]['legend'] !== 'undefined') {
 						options.subtitle = {
