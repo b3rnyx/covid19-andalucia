@@ -494,8 +494,22 @@ var app = {
 
 					}
 
+					if (typeof app.cfg.items[i]['legend'] !== 'undefined') {
+						options.subtitle = {
+							text: app.cfg.items[i]['legend'],
+							margin: 0,
+							offsetY: 25,
+							style: {
+								fontSize: '12px',
+								color: '#aaaaaa',
+							}
+						};
+					}
+
 					if (typeof app.graphs.charts[i] !== 'undefined') {
+
 						app.graphs.charts[i].destroy();
+						
 					}
 
 					x = ylabels[ylabels.length - 1];
@@ -526,7 +540,7 @@ var app = {
 		expires = "; expires=" + date.toGMTString();
 
 		var value = $('#select_province').val() + '|' + $('#select_district').val() + '|' + $('#select_city').val();
-		console.log(app.cfg.cookie_name + "=" + value + expires + "; path=/");
+		
 		document.cookie = app.cfg.cookie_name + "=" + value + expires + "; path=/";
 		
 	},

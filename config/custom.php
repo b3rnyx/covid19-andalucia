@@ -112,6 +112,7 @@ return [
 		],
 		'hospitalized' => [
 			'name' => 'Hospitalizados diarios',
+			'legend' => 'Datos disponibles desde el 31/01/2021.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -139,6 +140,7 @@ return [
 		],
 		'uci' => [
 			'name' => 'Ingresados en UCI diarios',
+			'legend' => 'Datos disponibles desde el 31/01/2021.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -183,6 +185,7 @@ return [
 		],
 		'dead' => [
 			'name' => 'Fallecidos diarios',
+			'legend' => 'Datos disponibles desde el 08/02/2021.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
