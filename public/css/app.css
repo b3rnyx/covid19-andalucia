@@ -121,7 +121,7 @@ section.info .level1 label i {
 	font-size: 0.8em;
 }
 section.info .level1 strong {
-	font-size: 1.5em;
+	font-size: 1.6em;
 }
 section.info .level2 {
 	padding-top: 10px;
@@ -130,7 +130,10 @@ section.info .level2 {
 	line-height: 1.2;
 }
 section.info .style1 {
-	
+	padding: 15px 15px 10px 15px;
+	border-radius: 12px;
+	background: #ffffff;
+	text-align: center;
 }
 section.info .style2 {
 	font-size: 1em;
