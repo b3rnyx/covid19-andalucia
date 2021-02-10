@@ -38,7 +38,7 @@ header .update mark {
 section.selector {
 	width: 70%;
 	min-width: 350px;
-	margin: 25px auto 0 auto;
+	margin: 45px auto 0 auto;
 	padding: 12px 15px;
 	border-radius: 12px;
 	background: rgba(40, 167, 69, 0.1);
@@ -61,7 +61,7 @@ section.selector label {
 section.info {
 	display: none;
 	overflow: hidden;
-	margin-top: 20px;
+	margin-top: 40px;
 	border-radius: 12px 12px 26px 26px;
 	background: rgba(40, 167, 69, 0.1);
 }
@@ -151,10 +151,10 @@ section.graphs {
 section.graphs div.dates {
 	width: 50%;
 	min-width: 300px;
-	margin: 25px auto 20px auto;
+	margin: 45px auto 20px auto;
 }
 div.graph-container {
-	margin-top: 20px;
+	margin-top: 60px;
 	padding: 20px 15px 0 15px;
 	border: 1px solid #bbbbbb;
 	border-radius: 16px;
