@@ -41,6 +41,10 @@ var app = {
 			}, 2000);
 		});
 
+		$('.data-switch label i').tooltip({
+			placement: 'right',
+		});
+
 		app.selector.select();
 		
 	},
@@ -160,7 +164,7 @@ var app = {
 			for (var i in data.info) {
 
 				$('section.info div[data-item="' + i + '"] strong').html(data.info[i]);
-				$('section.info div[data-item="' + i + '"] i').removeClass().addClass(data.icons[i]);
+				$('section.info div[data-item="' + i + '"] div.num span').html(data.icons[i]);
 
 			}
 

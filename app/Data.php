@@ -67,7 +67,7 @@ class Data extends Model
 				if ($info[$k] < $last[$k]) {
 					// Se ha reducido
 
-					$icons[$k] = 'fa fa-caret-down';
+					$icons[$k] = '<i class="fa fa-caret-down';
 
 					if ($v['green'] == 'desc') {
 						$icons[$k] .= ' text-success';
@@ -75,10 +75,12 @@ class Data extends Model
 						$icons[$k] .= ' text-danger';
 					}
 
+					$icons[$k] .= '" title="Baja con respecto a día anterior"></i>';
+
 				} else if ($info[$k] > $last[$k]) {
 					// Ha aumentado
 
-					$icons[$k] = 'fa fa-caret-up';
+					$icons[$k] = '<i class="fa fa-caret-up';
 
 					if ($v['green'] == 'asc') {
 						$icons[$k] .= ' text-success';
@@ -86,10 +88,12 @@ class Data extends Model
 						$icons[$k] .= ' text-danger';
 					}
 
+					$icons[$k] .= '" title="Sube con respecto a día anterior"></i>';
+
 				} else {
 					// Se mantiene
 
-					$icons[$k] = 'fa fa-check text-black-50';
+					$icons[$k] = '<i class="fa fa-check text-black-50" title="Se mantiene con respecto a día anterior"></i>';
 
 				}
 

@@ -2,6 +2,9 @@ body {
 	padding: 0 0 130px 0;
 	background: rgba(40, 167, 69, 0.05);
 }
+.text-black-50 {
+	opacity: 0.5;
+}
 
 header {
 	padding: 20px 0 0 0;
@@ -94,10 +97,16 @@ section.info .data-switch label {
 	display: block;
 	margin-bottom: 0px;
 }
+section.info .data-switch label i {
+	opacity: 0.25;
+}
+section.info .data-switch label i:hover {
+	opacity: 0.8;
+}
 section.info .data-switch strong {
 	font-size: 1.3em;
 }
-section.info .data-switch span {
+section.info .data-switch span.legend {
 	display: block;
 	color: rgba(0, 0, 0, 0.3);
 	font-size: 0.75em;
@@ -107,6 +116,9 @@ section.info .level1 {
 	padding-bottom: 20px;
 	font-size: 1.3em;
 	line-height: 1.2;
+}
+section.info .level1 label i {
+	font-size: 0.8em;
 }
 section.info .level1 strong {
 	font-size: 1.5em;
@@ -145,6 +157,13 @@ div.graph-container {
 	border-radius: 16px;
 	background: #ffffff;
 	box-shadow: 3px 3px 12px 0px rgba(0,0,0,0.10);
+}
+div.graph-container div.description {
+	margin: -20px 0 0 0;
+	padding: 0 20px 10px 20px;
+	color: #888888;
+	font-size: 0.7em;
+	line-height: 1.2;
 }
 .fa-cloud-download {
 	font-size: 20px !important;

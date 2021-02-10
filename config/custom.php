@@ -49,6 +49,7 @@ return [
 
 		'incidence_14d' => [
 			'name' => 'Incidencia 14 días',
+			'description' => 'Indice en el que se basa la Junta de Andalucía para establecer las restricciones. Casos en los últimos 14 días de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación) por cada 100.000 habitantes.',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -63,6 +64,7 @@ return [
 		],
 		'increase' => [
 			'name' => 'Confirmados diarios',
+			'description' => 'Aumento con respecto al día anterior en el número de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -72,6 +74,7 @@ return [
 		],
 		'confirmed' => [
 			'name' => 'Confirmados totales',
+			'description' => 'Total acumulado de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'graph' => [
@@ -80,6 +83,7 @@ return [
 		],
 		'confirmed_14d' => [
 			'name' => 'Confirmados 14 días',
+			'description' => 'Número acumulado en los últimos 14 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -89,6 +93,7 @@ return [
 		],
 		'confirmed_7d' => [
 			'name' => 'Confirmados 7 días',
+			'description' => 'Número acumulado en los últimos 7 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'green' => 'desc',
@@ -98,7 +103,8 @@ return [
 		],
 		'incidence_7d' => [
 			'name' => 'Incidencia 7 días',
-			'legend' => 'Datos disponibles a partir del 10/02/2021.',
+			'legend' => 'Datos por municipios disponibles a partir del 29/01/2021.',
+			'description' => 'Casos en los últimos 7 días de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación) por cada 100.000 habitantes.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',

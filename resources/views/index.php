@@ -177,7 +177,10 @@ foreach (config('custom.stats-dates') as $k => $v) {
 foreach (config('custom.stats-items') as $k => $v) {
 
 	if (isset($v['graph'])) {
-		echo '<div id="graph-' . $k . '" class="graph-container data-switch switch-' . implode(' switch-', $v['allowed']) . ' col-md-12" data-item="' . $k . '"></div>';
+		echo '<div class="graph-container">
+						<div id="graph-' . $k . '" class="data-switch switch-' . implode(' switch-', $v['allowed']) . ' col-md-12" data-item="' . $k . '"></div>
+						' . (isset($v['description']) ? '<div class="description">' . $v['description'] . '</div>' : '') . '
+					</div>';
 	}
 
 }
