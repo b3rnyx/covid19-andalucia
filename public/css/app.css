@@ -34,6 +34,13 @@ header .update mark {
 	background: #fff;
 	color: #000;
 }
+header .update span {
+	display: block;
+	padding-top: 6px;
+	color: rgba(0, 0, 0, 0.4);
+	font-size: 0.7em;
+	font-weight: normal;
+}
 
 section.selector {
 	width: 70%;

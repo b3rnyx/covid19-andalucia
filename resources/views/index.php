@@ -45,6 +45,7 @@
 		
 		<div class="update">
 			Última actualización: <mark><?= $updated ?></mark>
+			<span>Los datos suelen actualizarse de lunes a viernes sobre las 13:00 (los fines de semana no hay actualización).</span>
 		</div>
 	</header>
 
@@ -177,8 +178,8 @@ foreach (config('custom.stats-dates') as $k => $v) {
 foreach (config('custom.stats-items') as $k => $v) {
 
 	if (isset($v['graph'])) {
-		echo '<div class="graph-container">
-						<div id="graph-' . $k . '" class="data-switch switch-' . implode(' switch-', $v['allowed']) . ' col-md-12" data-item="' . $k . '"></div>
+		echo '<div class="graph-container" class="data-switch switch-' . implode(' switch-', $v['allowed']) . ' col-md-12">
+						<div id="graph-' . $k . '" class="graph" data-item="' . $k . '"></div>
 						' . (isset($v['description']) ? '<div class="description">' . $v['description'] . '</div>' : '') . '
 					</div>';
 	}
