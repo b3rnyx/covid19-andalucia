@@ -93,6 +93,10 @@ section.info .population {
 	border-left: 1px solid rgba(255, 255, 255, 0.5);
 	font-size: 0.8em;
 }
+section.info label span {
+	color: #008FFB;
+	font-weight: strong;
+}
 section.info .data {
 	padding: 5px 25px 0 25px;
 }
@@ -151,6 +155,16 @@ section.info .style3 {
 section.info .stylep {
 	font-size: 0.8em;
 }
+.info-note {
+	padding: 3px 15px 0 0;
+	color: #888888;
+	font-size: 12px;
+	text-align: right;
+}
+.info-note span {
+	color: #008FFB;
+	font-weight: bold;
+}
 
 section.graphs {
 	display: none;
@@ -180,7 +194,7 @@ div.graph-container div.description {
 }
 .apexcharts-toolbar {
 	right: auto !important;
-	left: 220px !important;
+	left: 260px !important;
 }
 .apexcharts-menu-icon {
 	color: #b4bcc2 !important;

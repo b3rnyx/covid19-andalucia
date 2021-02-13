@@ -28,20 +28,31 @@ class CreateDataTable extends Migration
 				$table->string('district', 5)->nullable();
 				$table->string('city', 5)->nullable();
 
-				$table->integer('confirmed')->nullable();
-				$table->integer('increase')->nullable();
-				$table->integer('confirmed_7d')->nullable();
-				$table->decimal('incidence_7d', 12, 5)->nullable();
+				$table->integer('confirmed_total')->nullable();
+				$table->integer('confirmed_increment')->nullable();
+				
 				$table->integer('confirmed_14d')->nullable();
 				$table->decimal('incidence_14d', 12, 5)->nullable();
-				$table->integer('confirmed_total')->nullable();
-				$table->integer('hospitalized')->nullable();
+				$table->integer('confirmed_7d')->nullable();
+				$table->decimal('incidence_7d', 12, 5)->nullable();
+				
 				$table->integer('hospitalized_total')->nullable();
-				$table->integer('uci')->nullable();
+				$table->integer('hospitalized_increment')->nullable();
+
 				$table->integer('uci_total')->nullable();
-				$table->integer('recovered')->nullable();
-				$table->integer('dead')->nullable();
+				$table->integer('uci_increment')->nullable();
+				
+				$table->integer('recovered_total')->nullable();
+				$table->integer('recovered_increment')->nullable();
+
 				$table->integer('dead_total')->nullable();
+				$table->integer('dead_increment')->nullable();
+
+				$table->integer('legacy_confirmed_total')->nullable();
+				$table->integer('legacy_increase')->nullable();
+				$table->integer('legacy_hospitalized')->nullable();
+				$table->integer('legacy_uci')->nullable();
+				$table->integer('legacy_dead')->nullable();
 
 				// Índices
 				$table->index(

@@ -68,8 +68,8 @@ class ImportController extends Controller
 			$province = isset($d[0]['cod'][1]) ? $d[0]['cod'][1] : null;
 
 			$c = $province == null ? Region::where('code', 'C01')->firstOrFail() : Province::where('code', $province)->firstOrFail();
-			$confirmed_total = isset($d[1]) ? $d[1]['val'] : 0;
-			$recovered = isset($d[9]) ? $d[9]['val'] : 0;
+			$legacy_confirmed_total = isset($d[1]) ? $d[1]['val'] : 0;
+			$recovered_total = isset($d[9]) ? $d[9]['val'] : 0;
 
 			$data_provinces[$province] = [
 				'date' => $date,
@@ -77,14 +77,14 @@ class ImportController extends Controller
 				'province' => $province,
 				'district' => null,
 				'city' => null,
-				'confirmed' => isset($d[3]) ? $d[3]['val'] : null,
-				'confirmed_7d' => isset($d[7]) ? $d[7]['val'] : null,
-				'incidence_7d' => isset($d[8]) ? $d[8]['val'] : null,
+				'confirmed_total' => isset($d[3]) ? $d[3]['val'] : null,
 				'confirmed_14d' => isset($d[5]) ? $d[5]['val'] : null,
 				'incidence_14d' => isset($d[6]) ? $d[6]['val'] : null,
-				'confirmed_total' => isset($d[1]) ? $d[1]['val'] : null,
-				'recovered' => isset($d[9]) ? $d[9]['val'] : null,
+				'confirmed_7d' => isset($d[7]) ? $d[7]['val'] : null,
+				'incidence_7d' => isset($d[8]) ? $d[8]['val'] : null,
+				'recovered_total' => isset($d[9]) ? $d[9]['val'] : null,
 				'dead_total' => isset($d[10]) ? $d[10]['val'] : null,
+				'legacy_confirmed_total' => isset($d[1]) ? $d[1]['val'] : null,
 			];
 
 		}
@@ -116,9 +116,9 @@ class ImportController extends Controller
 
 			$province = isset($d[1]['cod'][1]) ? $d[1]['cod'][1] : null;
 
-			$data_provinces[$province]['hospitalized'] = isset($d[4]) ? $d[4]['val'] : null;
-			$data_provinces[$province]['uci'] = isset($d[5]) ? $d[5]['val'] : null;
-			$data_provinces[$province]['dead'] = isset($d[6]) ? $d[6]['val'] : null;
+			$data_provinces[$province]['legacy_hospitalized'] = isset($d[4]) ? $d[4]['val'] : null;
+			$data_provinces[$province]['legacy_uci'] = isset($d[5]) ? $d[5]['val'] : null;
+			$data_provinces[$province]['legacy_dead'] = isset($d[6]) ? $d[6]['val'] : null;
 
 		}
 
@@ -149,9 +149,9 @@ class ImportController extends Controller
 
 			$province = isset($d[1]['cod'][1]) ? $d[1]['cod'][1] : null;
 
-			$data_provinces[$province]['increase'] = isset($d[3]) ? $d[3]['val'] : null;
 			$data_provinces[$province]['hospitalized_total'] = isset($d[7]) ? $d[7]['val'] : null;
 			$data_provinces[$province]['uci_total'] = isset($d[8]) ? $d[8]['val'] : null;
+			$data_provinces[$province]['legacy_increase'] = isset($d[3]) ? $d[3]['val'] : null;
 
 		}
 
@@ -165,18 +165,20 @@ class ImportController extends Controller
 			->where('province', null)
 			->where('district', null)
 			->where('city', null)
-			->where('confirmed', $data_provinces[null]['confirmed'])
 			->where('confirmed_total', $data_provinces[null]['confirmed_total'])
-			->where('recovered', $data_provinces[null]['recovered'])
-			->where('dead_total', $data_provinces[null]['dead_total'])
 			->where('hospitalized_total', $data_provinces[null]['hospitalized_total'])
+			->where('recovered_total', $data_provinces[null]['recovered_total'])
+			->where('dead_total', $data_provinces[null]['dead_total'])
+			->where('legacy_confirmed_total', $data_provinces[null]['legacy_confirmed_total'])
 			->get();
 		
 		if (count($q) == 0) {
 
 			foreach ($data_provinces as $d) {
 
-				Data::create($d);
+				$increments = $d->getIncrements();
+
+				Data::create(array_merge($d, $increments));
 
 			}
 
@@ -216,10 +218,6 @@ class ImportController extends Controller
 				if ($city !== null && !in_array($city, config('custom.import.cities-unknown'))) { // Casos especiales
 					// Es un municipio
 
-					$c = City::where('code', $city)->firstOrFail();
-					$confirmed_total = isset($d[6]) ? $d[6]['val'] : 0;
-					$recovered = isset($d[7]) ? $d[7]['val'] : 0;
-
 					// Insertamos datos
 					array_push($data_cities, [
 						'date' => $date,
@@ -227,13 +225,13 @@ class ImportController extends Controller
 						'province' => $province,
 						'district' => $district,
 						'city' => $city,
-						'confirmed' => isset($d[2]) ? $d[2]['val'] : null,
-						'confirmed_7d' => isset($d[5]) ? $d[5]['val'] : null,
+						'confirmed_total' => isset($d[2]) ? $d[2]['val'] : null,
 						'confirmed_14d' => isset($d[3]) ? $d[3]['val'] : null,
 						'incidence_14d' => isset($d[4]) ? $d[4]['val'] : null,
-						'confirmed_total' => isset($d[6]) ? $d[6]['val'] : null,
-						'recovered' => isset($d[7]) ? $d[7]['val'] : null,
+						'confirmed_7d' => isset($d[5]) ? $d[5]['val'] : null,
+						'recovered_total' => isset($d[7]) ? $d[7]['val'] : null,
 						'dead_total' => isset($d[8]) ? $d[8]['val'] : null,
+						'legacy_confirmed_total' => isset($d[6]) ? $d[6]['val'] : null,
 					]);
 
 				}
@@ -260,10 +258,10 @@ class ImportController extends Controller
 				->where('province', $sample['province'])
 				->where('district', $sample['district'])
 				->where('city', $sample['city'])
-				->where('confirmed', $sample['confirmed'])
 				->where('confirmed_total', $sample['confirmed_total'])
-				->where('recovered', $sample['recovered'])
+				->where('recovered_total', $sample['recovered_total'])
 				->where('dead_total', $sample['dead_total'])
+				->where('legacy_confirmed_total', $sample['legacy_confirmed_total'])
 				->get();
 			
 			if (count($q) == 0) {
@@ -277,7 +275,9 @@ class ImportController extends Controller
 
 			foreach ($data_cities as $d) {
 
-				Data::create($d);
+				$increments = $d->getIncrements();
+
+				Data::create(array_merge($d, $increments));
 
 			}
 
@@ -537,15 +537,15 @@ class ImportController extends Controller
 				}
 
 				switch (trim($data[2])) {
-					case 'Confirmados PDIA': $field = 'confirmed'; break;
-					case 'Aumento': $field = 'increase'; break;
+					case 'Confirmados PDIA': $field = 'confirmed_total'; break;
+					case 'Aumento': $field = 'legacy_increase'; break;
 					case 'Confirmados PDIA 14 días': $field = 'confirmed_14d'; break;
 					case 'Confirmados PDIA 7 días': $field = 'confirmed_7d'; break;
-					case 'Total confirmados': $field = 'confirmed_total'; break;
+					case 'Total confirmados': $field = 'legacy_confirmed_total'; break;
 					case 'Hospitalizados': $field = 'hospitalized_total'; break;
-					case 'Total UCI': $field = 'uci'; break;
+					case 'Total UCI': $field = 'uci_total'; break;
 					case 'Fallecidos': $field = 'dead_total'; break;
-					case 'Curados': $field = 'recovered'; break;
+					case 'Curados': $field = 'recovered_total'; break;
 				}
 
 				$inserts[$date][$data[1]][$field] = $data[3] == '' ? 0 : $data[3];
@@ -573,15 +573,15 @@ class ImportController extends Controller
 					'province' => $loc == 'Andalucía' ? null : $provinces[$loc]['code'],
 					'district' => null,
 					'city' => null,
-					'confirmed' => $d['confirmed'],
-					'increase' => $d['increase'],
+					'confirmed_total' => $d['confirmed_total'],
+					'legacy_increase' => $d['legacy_increase'],
 					'confirmed_7d' => $d['confirmed_7d'],
 					'confirmed_14d' => $d['confirmed_14d'],
 					'incidence_14d' => $d['confirmed_14d'] / ($population / 100000),
-					'confirmed_total' => $d['confirmed_total'],
+					'legacy_confirmed_total' => $d['legacy_confirmed_total'],
 					'hospitalized_total' => $d['hospitalized_total'],
-					'uci' => $d['uci'],
-					'recovered' => $d['recovered'],
+					'uci_total' => $d['uci_total'],
+					'recovered_total' => $d['recovered_total'],
 					'dead_total' => $d['dead_total'],
 				]);
 
@@ -625,10 +625,10 @@ class ImportController extends Controller
 					'district' => $districts[$data[2]]['code'],
 					'city' => $cities[$data[3]]['code'],
 					'population' => $cities[$data[3]]['population'],
-					'confirmed' => $data[4] == 'NA' ? 0 : $data[4],
+					'confirmed_total' => $data[4] == 'NA' ? 0 : $data[4],
 					'confirmed_14d' => $data[5] == 'NA' ? 0 : $data[5],
 					'incidence_14d' => $data[6] == 'NA' ? 0 : $data[6],
-					'confirmed_total' => $data[7] == 'NA' ? 0 : $data[7],
+					'legacy_confirmed_total' => $data[7] == 'NA' ? 0 : $data[7],
 					'dead_total' => $data[8] == 'NA' ? 0 : $data[8],
 				]);
 
@@ -648,18 +648,41 @@ class ImportController extends Controller
 				'province' => $d['province'],
 				'district' => $d['district'],
 				'city' => $d['city'],
-				'confirmed' => $d['confirmed'],
-				'increase' => null,
+				'confirmed_total' => $d['confirmed_total'],
+				'legacy_increase' => null,
 				'confirmed_7d' => null,
 				'confirmed_14d' => $d['confirmed_14d'],
 				'incidence_14d' => $d['incidence_14d'],
-				'confirmed_total' => $d['confirmed_total'],
+				'legacy_confirmed_total' => $d['legacy_confirmed_total'],
 				'hospitalized_total' => null,
-				'uci' => null,
-				'recovered' => null,
+				'uci_total' => null,
+				'recovered_total' => null,
 				'dead_total' => $d['dead_total'],
 			]);
 			
+		}
+
+		die('ok');
+
+	}
+
+	// Actualizamos los incrementos de la base de datos
+	public function updateIncrements()
+	{
+
+		// Aumentamos tiempo de ejecución del script a 5 minutos
+		set_time_limit(0);
+		// Aumento de memoria
+		ini_set('memory_limit', '1024M');
+
+		$data = Data::orderBy('id', 'asc')->get();
+
+		foreach ($data as $d) {
+
+			$increments = $d->getIncrements();
+
+			$d->update($increments);
+
 		}
 
 		die('ok');

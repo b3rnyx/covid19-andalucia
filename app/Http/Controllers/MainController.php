@@ -250,21 +250,21 @@ class MainController extends Controller
 
 			// Añadimos los porcentajes
 			
-			$output['info']['confirmed_percent'] = $output['info']['population'] == 0 ? 0 : ($output['info']['confirmed'] / $output['info']['population']) * 100;
-			$output['info']['hospitalized_percent'] = $output['info']['confirmed'] == 0 ? 0 : ($output['info']['hospitalized_total'] / $output['info']['confirmed']) * 100;
+			$output['info']['confirmed_percent'] = $output['info']['population'] == 0 ? 0 : ($output['info']['confirmed_total'] / $output['info']['population']) * 100;
+			$output['info']['hospitalized_percent'] = $output['info']['confirmed_total'] == 0 ? 0 : ($output['info']['hospitalized_total'] / $output['info']['confirmed_total']) * 100;
 			$output['info']['uci_percent'] = $output['info']['hospitalized_total'] == 0 ? 0 : ($output['info']['uci_total'] / $output['info']['hospitalized_total']) * 100;
-			$output['info']['recovered_percent'] = $output['info']['confirmed'] == 0 ? 0 : ($output['info']['recovered'] / $output['info']['confirmed']) * 100;
-			$output['info']['dead_percent'] = $output['info']['confirmed'] == 0 ? 0 : ($output['info']['dead_total'] / $output['info']['confirmed']) * 100;
+			$output['info']['recovered_percent'] = $output['info']['confirmed_total'] == 0 ? 0 : ($output['info']['recovered_total'] / $output['info']['confirmed_total']) * 100;
+			$output['info']['dead_percent'] = $output['info']['confirmed_total'] == 0 ? 0 : ($output['info']['dead_total'] / $output['info']['confirmed_total']) * 100;
 
 			// Formateamos los datos de las gráficas
 			foreach ($output['data'] as $k => $v) {
 
 				$output['data'][$k]['date'] = date('d/m/Y', strtotime($v['date']));
-				$output['data'][$k]['confirmed_percent'] = $output['info']['population'] == 0 ? 0 : ($v['confirmed'] / $output['info']['population']) * 100;
-				$output['data'][$k]['hospitalized_percent'] = $v['confirmed'] == 0 ? 0 : ($v['hospitalized_total'] / $v['confirmed']) * 100;
+				$output['data'][$k]['confirmed_percent'] = $output['info']['population'] == 0 ? 0 : ($v['confirmed_total'] / $output['info']['population']) * 100;
+				$output['data'][$k]['hospitalized_percent'] = $v['confirmed_total'] == 0 ? 0 : ($v['hospitalized_total'] / $v['confirmed_total']) * 100;
 				$output['data'][$k]['uci_percent'] = $v['hospitalized_total'] == 0 ? 0 : ($v['uci_total'] / $v['hospitalized_total']) * 100;
-				$output['data'][$k]['recovered_percent'] = $v['confirmed'] == 0 ? 0 : ($v['recovered'] / $v['confirmed']) * 100;
-				$output['data'][$k]['dead_percent'] = $v['confirmed'] == 0 ? 0 : ($v['dead_total'] / $v['confirmed']) * 100;
+				$output['data'][$k]['recovered_percent'] = $v['confirmed_total'] == 0 ? 0 : ($v['recovered_total'] / $v['confirmed_total']) * 100;
+				$output['data'][$k]['dead_percent'] = $v['confirmed_total'] == 0 ? 0 : ($v['dead_total'] / $v['confirmed_total']) * 100;
 
 			}
 

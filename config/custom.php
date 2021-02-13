@@ -62,23 +62,25 @@ return [
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 		],
-		'increase' => [
-			'name' => 'Confirmados diarios',
-			'description' => 'Aumento con respecto al día anterior en el número de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'columns',
-			],
-		],
-		'confirmed' => [
+		
+		'confirmed_total' => [
 			'name' => 'Confirmados totales',
 			'description' => 'Total acumulado de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'graph' => [
 				'type' => 'line',
+			],
+		],
+		'confirmed_increment' => [
+			'name' => 'Incremento de confirmados',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'columns',
 			],
 		],
 		'confirmed_14d' => [
@@ -103,7 +105,7 @@ return [
 		],
 		'incidence_7d' => [
 			'name' => 'Incidencia 7 días',
-			'legend' => 'Datos por municipios disponibles a partir del 29/01/2021.',
+			'legend' => 'Datos disponibles a partir del 10/02/2021.',
 			'description' => 'Casos en los últimos 7 días de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación) por cada 100.000 habitantes.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
@@ -112,14 +114,6 @@ return [
 				'type' => 'line',
 			],
 		],
-		/*'confirmed_total' => [
-			'name' => 'Total confirmados',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
-			'graph' => [
-				'type' => 'line',
-			],
-		],*/
 		'confirmed_percent' => [
 			'name' => 'Porcentaje confirmados',
 			'legend' => 'Respecto a la población.',
@@ -127,16 +121,6 @@ return [
 			'type' => 'percent',
 			'graph' => [
 				'type' => 'line',
-			],
-		],
-		'hospitalized' => [
-			'name' => 'Hospitalizados diarios',
-			'legend' => 'Datos disponibles a partir del 31/01/2021.',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'columns',
 			],
 		],
 		'hospitalized_total' => [
@@ -148,6 +132,17 @@ return [
 				'type' => 'line',
 			],
 		],
+		'hospitalized_increment' => [
+			'name' => 'Incremento de hospitalizados',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número de hospitalizados.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'columns',
+			],
+		],
 		'hospitalized_percent' => [
 			'name' => 'Porcentaje Hospitalizados',
 			'legend' => 'Respecto a confirmados.',
@@ -155,16 +150,6 @@ return [
 			'type' => 'percent',
 			'graph' => [
 				'type' => 'line',
-			],
-		],
-		'uci' => [
-			'name' => 'Ingresados en UCI diarios',
-			'legend' => 'Datos disponibles a partir del 31/01/2021.',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'columns',
 			],
 		],
 		'uci_total' => [
@@ -176,6 +161,17 @@ return [
 				'type' => 'line',
 			],
 		],
+		'uci_increment' => [
+			'name' => 'Incremento de ingresados en UCI',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número de ingresados en UCI.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'columns',
+			],
+		],
 		'uci_percent' => [
 			'name' => 'Porcentaje ingresados UCI',
 			'legend' => 'Respecto a hospitalizados totales.',
@@ -185,13 +181,24 @@ return [
 				'type' => 'line',
 			],
 		],
-		'recovered' => [
+		'recovered_total' => [
 			'name' => 'Curados totales',
 			'legend' => 'Datos por municipios disponibles a partir del 29/01/2021.',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'graph' => [
 				'type' => 'line',
+			],
+		],
+		'recovered_increment' => [
+			'name' => 'Incremento de curados',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número de curados.',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'asc',
+			'graph' => [
+				'type' => 'columns',
 			],
 		],
 		'recovered_percent' => [
@@ -203,22 +210,23 @@ return [
 				'type' => 'line',
 			],
 		],
-		'dead' => [
-			'name' => 'Fallecidos diarios',
-			'legend' => 'Datos disponibles a partir del 08/02/2021.',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'columns',
-			],
-		],
 		'dead_total' => [
 			'name' => 'Fallecidos totales',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 			'graph' => [
 				'type' => 'line',
+			],
+		],
+		'dead_increment' => [
+			'name' => 'Incremento de fallecidos',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número de fallecidos.',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'columns',
 			],
 		],
 		'dead_percent' => [
@@ -230,6 +238,46 @@ return [
 				'type' => 'line',
 			],
 		],
+
+		// Datos descartados
+
+		/*
+		'legacy_confirmed_total' => [
+			'name' => 'Total confirmados',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'graph' => [
+				'type' => 'line',
+			],
+		],'legacy_increase' => [
+			'name' => 'Confirmados diarios',
+			'description' => 'Aumento con respecto al día anterior en el número de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'legacy_hospitalized' => [
+			'name' => 'Hospitalizados diarios',
+			'legend' => 'Datos disponibles a partir del 31/01/2021.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'legacy_uci' => [
+			'name' => 'Ingresados en UCI diarios',
+			'legend' => 'Datos disponibles a partir del 31/01/2021.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'legacy_dead' => [
+			'name' => 'Fallecidos diarios',
+			'legend' => 'Datos disponibles a partir del 08/02/2021.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		*/
 
 	],
 

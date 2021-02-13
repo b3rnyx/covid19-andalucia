@@ -40,3 +40,7 @@ $router->get('/import/lists', [
 	'as' => 'import-lists',
 	'uses' => 'ImportController@loadLists',
 ]);
+$router->get('/import/update_increments', [
+	'as' => 'import-update',
+	'uses' => 'ImportController@updateIncrements',
+]);
