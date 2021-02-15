@@ -49,44 +49,47 @@ class Data extends Model
 	// ============================================
 	// Propiedades
 	
-	public function getIncrements()
+	
+	
+	
+	// ============================================
+	// Métodos
+
+	// Calcula los incrementos
+	public static function getIncrements($data)
 	{
 
-		$previous = Data::where('region', $this->region)
-			->where('province', $this->province)
-			->where('district', $this->district)
-			->where('city', $this->city)
-			->where('date', '<', $this->date)
+		$previous = Data::where('region', $data['region'])
+			->where('province', $data['province'])
+			->where('district', $data['district'])
+			->where('city', $data['city'])
+			->where('date', '<', $data['date'])
 			->orderBy('date', 'desc')
 			->first();
 
 		if (count($previous) > 0) {
 
 			return [
-				'confirmed_increment' => $this->confirmed_total != null ? $this->confirmed_total - $previous->confirmed_total : null,
-				'hospitalized_increment' => $this->hospitalized_total != null ? $this->hospitalized_total - $previous->hospitalized_total : null,
-				'uci_increment' => $this->uci_total != null ? $this->uci_total - $previous->uci_total : null,
-				'recovered_increment' => $this->recovered_total != null ? $this->recovered_total - $previous->recovered_total : null,
-				'dead_increment' => $this->dead_total != null ? $this->dead_total - $previous->dead_total : null,
+				'confirmed_increment' => isset($data['confirmed_total']) && $data['confirmed_total'] != null ? $data['confirmed_total'] - $previous->confirmed_total : null,
+				'hospitalized_increment' => isset($data['hospitalized_total']) && $data['hospitalized_total'] != null ? $data['hospitalized_total'] - $previous->hospitalized_total : null,
+				'uci_increment' => isset($data['uci_total']) && $data['uci_total'] != null ? $data['uci_total'] - $previous->uci_total : null,
+				'recovered_increment' => isset($data['recovered_total']) && $data['recovered_total'] != null ? $data['recovered_total'] - $previous->recovered_total : null,
+				'dead_increment' => isset($data['dead_total']) && $data['dead_total'] != null ? $data['dead_total'] - $previous->dead_total : null,
 			];
 
 		} else {
 
 			return [
-				'confirmed_increment' => $this->confirmed_total != null ? 0 : null,
-				'hospitalized_increment' => $this->hospitalized_total != null ? 0 : null,
-				'uci_increment' => $this->uci_total != null ? 0 : null,
-				'recovered_increment' => $this->recovered_total != null ? 0 : null,
-				'dead_increment' => $this->dead_total != null ? 0 : null,
+				'confirmed_increment' => isset($data['confirmed_total']) && $data['confirmed_total'] != null ? 0 : null,
+				'hospitalized_increment' => isset($data['hospitalized_total']) && $data['hospitalized_total'] != null ? 0 : null,
+				'uci_increment' => isset($data['uci_total']) && $data['uci_total'] != null ? 0 : null,
+				'recovered_increment' => isset($data['recovered_total']) && $data['recovered_total'] != null ? 0 : null,
+				'dead_increment' => isset($data['dead_total']) && $data['dead_total'] != null ? 0 : null,
 			];
 
 		}
 
 	}
-	
-	
-	// ============================================
-	// Métodos
 
 	// Genera los iconos de comparación
 	public static function compareIcons($info, $last) {

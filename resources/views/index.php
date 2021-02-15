@@ -118,7 +118,7 @@
 				</div>
 
 				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('confirmed_increment', 'Incremento confirmados<span>*</span>', 'style2'); ?>
+					<?php echo htmlInfo('confirmed_increment', 'Nuevos confirmados<span>*</span>', 'style2'); ?>
 					<?php echo htmlInfo('confirmed_total', 'Confirmados totales', 'style2'); ?>
 					<?php echo htmlInfo('confirmed_14d', 'Confirmados 14 días', 'style3'); ?>
 					<?php echo htmlInfo('confirmed_7d', 'Confirmados 7 días', 'style3'); ?>
@@ -127,25 +127,25 @@
 				</div>
 
 				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('recovered_increment', 'Incremento curados<span>*</span>', 'style2'); ?>
+					<?php echo htmlInfo('recovered_increment', 'Nuevos curados<span>*</span>', 'style2'); ?>
 					<?php echo htmlInfo('recovered_total', 'Curados totales', 'style2'); ?>
 					<?php echo htmlInfo('recovered_percent', 'Porcentaje curados', 'stylep', 'Respecto a confirmados totales'); ?>
 				</div>
 
 				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('dead_increment', 'Incremento fallecidos<span>*</span>', 'style2'); ?>
+					<?php echo htmlInfo('dead_increment', 'Nuevos fallecidos<span>*</span>', 'style2'); ?>
 					<?php echo htmlInfo('dead_total', 'Fallecidos totales', 'style2'); ?>
 					<?php echo htmlInfo('dead_percent', 'Porcentaje fallecidos', 'stylep', 'Respecto a confirmados totales'); ?>
 				</div>
 
 				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('hospitalized_increment', 'Incremento hospitalizados<span>*</span>', 'style2'); ?>
+					<?php echo htmlInfo('hospitalized_increment', 'Nuevos hospitalizados<span>*</span>', 'style2'); ?>
 					<?php echo htmlInfo('hospitalized_total', 'Hospitalizados totales', 'style3'); ?>
 					<?php echo htmlInfo('hospitalized_percent', 'Porcentaje hospitalizados', 'stylep', 'Respecto a confirmados totales'); ?>
 				</div>
 
 				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('uci_increment', 'Incremento ingresados UCI<span>*</span>', 'style2'); ?>
+					<?php echo htmlInfo('uci_increment', 'Nuevos ingresos UCI<span>*</span>', 'style2'); ?>
 					<?php echo htmlInfo('uci_total', 'Ingresados UCI totales', 'style3'); ?>
 					<?php echo htmlInfo('uci_percent', 'Porcentaje ingresados UCI', 'stylep', 'Respecto a hospitalizados totales'); ?>
 				</div>

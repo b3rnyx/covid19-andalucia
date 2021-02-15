@@ -176,7 +176,7 @@ class ImportController extends Controller
 
 			foreach ($data_provinces as $d) {
 
-				$increments = $d->getIncrements();
+				$increments = Data::getIncrements($d);
 
 				Data::create(array_merge($d, $increments));
 
@@ -275,7 +275,7 @@ class ImportController extends Controller
 
 			foreach ($data_cities as $d) {
 
-				$increments = $d->getIncrements();
+				$increments = Data::getIncrements($d);
 
 				Data::create(array_merge($d, $increments));
 
@@ -679,7 +679,7 @@ class ImportController extends Controller
 
 		foreach ($data as $d) {
 
-			$increments = $d->getIncrements();
+			$increments = Data::getIncrements($d->toArray());
 
 			$d->update($increments);
 
