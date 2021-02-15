@@ -73,7 +73,7 @@ return [
 			],
 		],
 		'confirmed_increment' => [
-			'name' => 'Nuevos confirmados',
+			'name' => 'Nuevos confirmados cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
 			'description' => 'Aumento con respecto al día anterior en el número total de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
@@ -133,7 +133,7 @@ return [
 			],
 		],
 		'hospitalized_increment' => [
-			'name' => 'Nuevos hospitalizados',
+			'name' => 'Nuevos hospitalizados cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
 			'description' => 'Aumento con respecto al día anterior en el número total de hospitalizados.',
 			'allowed' => ['region', 'province'],
@@ -162,7 +162,7 @@ return [
 			],
 		],
 		'uci_increment' => [
-			'name' => 'Nuevos ingresos en UCI',
+			'name' => 'Nuevos ingresos en UCI cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
 			'description' => 'Aumento con respecto al día anterior en el número total de ingresados en UCI.',
 			'allowed' => ['region', 'province'],
@@ -191,7 +191,7 @@ return [
 			],
 		],
 		'recovered_increment' => [
-			'name' => 'Nuevos curados',
+			'name' => 'Nuevos curados cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
 			'description' => 'Aumento con respecto al día anterior en el número total de curados.',
 			'allowed' => ['region', 'province', 'district', 'city'],
@@ -219,7 +219,7 @@ return [
 			],
 		],
 		'dead_increment' => [
-			'name' => 'Nuevos fallecidos',
+			'name' => 'Nuevos fallecidos cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
 			'description' => 'Aumento con respecto al día anterior en el número total de fallecidos.',
 			'allowed' => ['region', 'province', 'district', 'city'],
