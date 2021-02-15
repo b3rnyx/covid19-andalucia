@@ -266,6 +266,11 @@ class MainController extends Controller
 				$output['data'][$k]['recovered_percent'] = $v['confirmed_total'] == 0 ? 0 : ($v['recovered_total'] / $v['confirmed_total']) * 100;
 				$output['data'][$k]['dead_percent'] = $v['confirmed_total'] == 0 ? 0 : ($v['dead_total'] / $v['confirmed_total']) * 100;
 
+				// Caso especial para municipios
+				if ($output['info']['city'] !== null && $v['date'] <= '2021-01-28') {
+					$output['data'][$k]['recovered_percent'] = null;
+				}
+
 			}
 
 			$output['info'] = Data::infoFormat($output['info']);
