@@ -37,7 +37,9 @@ class MainController extends Controller
 			];
 			
 			// Última actualización
-			$updated = date('d/m/Y', strtotime(Data::select('date')->whereNotNull('city')->orderBy('date', 'desc')->limit(1)->first()->date));
+			// No disponemos en servidor del locale es_ES
+			$time = strtotime(Data::select('date')->whereNotNull('city')->orderBy('date', 'desc')->limit(1)->first()->date);
+			$updated = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'][date('N', $time)] . ' ' . date('d/m/Y', $time);
 
 			$selected_province = '';
 			$selected_district = '';
