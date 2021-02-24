@@ -37,7 +37,7 @@ return [
 		'14' => 'Mostrar datos de las últimas 2 semanas', 
 		'30' => 'Mostrar datos del último mes',
 		'90' => 'Mostrar datos de los últimos 3 meses',
-		'180' => 'Mostrar datos de los últimos 180 días',
+		'180' => 'Mostrar datos de los últimos 6 meses',
 		'365' => 'Mostrar datos del último año',
 	],
 
