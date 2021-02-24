@@ -62,7 +62,7 @@ class MainController extends Controller
 
 			$days = isset(config('custom.stats-dates')[$request->input('dates')]) ? $request->input('dates') : 30;
 
-			if ($request->input('selected') == 'city') {
+			if ($request->input('selected') == 'city' && $request->input('value') != '') {
 				// Es una ciudad
 
 				$city = City::where('code', $request->input('value'))->firstOrFail();
@@ -149,10 +149,13 @@ class MainController extends Controller
 					'updated' => date('d/m/Y', strtotime($info['date'])),
 				];
 				
-			} else if ($request->input('selected') == 'province' && $request->input('value') != '') {
+			} else if (($request->input('selected') == 'province' && $request->input('value') != '')
+								|| $request->input('selected') == 'city' && $request->input('value') == '') {
 				// Es una provincia
 
-				$province = Province::where('code', $request->input('value'))->firstOrFail();
+				$province = $request->input('selected') == 'province'
+					? Province::where('code', $request->input('value'))->firstOrFail() 
+					: Province::where('code', $request->input('province'))->firstOrFail();
 
 				// Info
 				$info = Data::where('province', $province->code)

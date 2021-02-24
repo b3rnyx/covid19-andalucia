@@ -97,6 +97,7 @@ var app = {
 				data: {
 					selected: selected,
 					value: value,
+					province: $('#select_province').val(),
 					dates: $('#select_dates').val(),
 				}
 			})
