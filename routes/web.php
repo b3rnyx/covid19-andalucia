@@ -44,3 +44,8 @@ $router->get('/import/update_increments', [
 	'as' => 'import-update',
 	'uses' => 'ImportController@updateIncrements',
 ]);
+// Restaurar un día perdido (parámetro date)
+$router->get('/import/restore', [
+	'as' => 'import-restore',
+	'uses' => 'ImportController@restore',
+]);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use \App\Region;
 use \App\Province;
 use \App\District;
@@ -67,30 +69,25 @@ class ImportController extends Controller
 
 			$province = isset($d[0]['cod'][1]) ? $d[0]['cod'][1] : null;
 
-			$c = $province == null ? Region::where('code', 'C01')->firstOrFail() : Province::where('code', $province)->firstOrFail();
-			$legacy_confirmed_total = isset($d[1]) ? $d[1]['val'] : 0;
-			$recovered_total = isset($d[9]) ? $d[9]['val'] : 0;
-
 			$data_provinces[$province] = [
 				'date' => $date,
 				'region' => 'C01',
 				'province' => $province,
 				'district' => null,
 				'city' => null,
-				'confirmed_total' => isset($d[3]) ? $d[3]['val'] : null,
-				'confirmed_14d' => isset($d[5]) ? $d[5]['val'] : null,
-				'incidence_14d' => isset($d[6]) ? $d[6]['val'] : null,
-				'confirmed_7d' => isset($d[7]) ? $d[7]['val'] : null,
-				'incidence_7d' => isset($d[8]) ? $d[8]['val'] : null,
-				'recovered_total' => isset($d[9]) ? $d[9]['val'] : null,
-				'dead_total' => isset($d[10]) ? $d[10]['val'] : null,
-				'legacy_confirmed_total' => isset($d[1]) ? $d[1]['val'] : null,
+				'confirmed_total' => isset($d[5]) ? $d[5]['val'] : null,
+				'confirmed_14d' => isset($d[7]) ? $d[7]['val'] : null,
+				'incidence_14d' => isset($d[8]) ? $d[8]['val'] : null,
+				'confirmed_7d' => isset($d[9]) ? $d[9]['val'] : null,
+				'incidence_7d' => isset($d[10]) ? $d[10]['val'] : null,
+				'recovered_total' => isset($d[11]) ? $d[11]['val'] : null,
+				'dead_total' => isset($d[12]) ? $d[12]['val'] : null,
+				'legacy_confirmed_total' => isset($d[3]) ? $d[3]['val'] : null,
 			];
 
 		}
 
 		$log .= "File 'provinces-total' loaded and parsed (" . round(microtime(true) - $lapse) . " seconds).\n";
-
 		// Archivo diario de provincias
 
 		$log .= "Starting load of file 'provinces-daily'.\n";
@@ -156,7 +153,7 @@ class ImportController extends Controller
 		}
 
 		$log .= "File 'provinces-accumulated' loaded and parsed (" . round(microtime(true) - $lapse) . " seconds).\n";
-		
+
 		// Comprobamos si los datos son nuevos
 
 		$lapse = microtime(true);
@@ -504,7 +501,189 @@ class ImportController extends Controller
 		$start = microtime(true);
 
 		// Limpiamos
-		\DB::table('data')->truncate();
+		//\DB::table('data')->truncate();
+
+		// Obtenemos los datos de comunidades, provincias, distritos y municipios
+		// Key por nombre
+
+		$regions = Region::getListByName();
+		$provinces = Province::getListByName();
+		$districts = District::getListByName();
+		$cities = City::getListByName();
+
+		// Importación de datos por CA y provincias
+		// https://github.com/Pakillo/COVID19-Andalucia/raw/master/datos/acumulados.csv
+
+		$inserts = [];
+
+		$file = fopen('https://github.com/Pakillo/COVID19-Andalucia/raw/master/datos/acumulados.csv', 'r');
+		$row = 0;
+		
+		while (($data = fgetcsv($file, 0, ";")) !== false) {
+			
+			if ($row > 0 && strpos($data['0'], '/') !== false) {
+
+				$t = explode('/', $data[0]);
+				$date = $t[2] . '-' . $t[1] . '-' . $t[0];
+				
+				if (!isset($inserts[$date])) {
+					$inserts[$date] = [];
+				}
+				if (!isset($inserts[$date][$data[1]])) {
+					$inserts[$date][$data[1]] = [];
+				}
+
+				switch (trim($data[2])) {
+					case 'Confirmados PDIA': $field = 'confirmed_total'; break;
+					case 'Aumento': $field = 'legacy_increase'; break;
+					case 'Confirmados PDIA 14 días': $field = 'confirmed_14d'; break;
+					case 'Confirmados PDIA 7 días': $field = 'confirmed_7d'; break;
+					case 'Total confirmados': $field = 'legacy_confirmed_total'; break;
+					case 'Hospitalizados': $field = 'hospitalized_total'; break;
+					case 'Total UCI': $field = 'uci_total'; break;
+					case 'Fallecidos': $field = 'dead_total'; break;
+					case 'Curados': $field = 'recovered_total'; break;
+				}
+
+				$inserts[$date][$data[1]][$field] = $data[3] == '' ? 0 : $data[3];
+
+			}
+
+			$row++;
+
+		}
+
+		fclose($file);
+
+		$inserts = array_reverse($inserts);
+
+		// Insertamos datos en base de datos
+
+		foreach ($inserts as $date => $v) {
+			foreach ($v as $loc => $d) {
+
+				$population = $loc == 'Andalucía' ? $regions[$loc]['population'] : $provinces[$loc]['population'];
+
+				\DB::table('data')->insert([
+					'date' => $date,
+					'region' => 'C01',
+					'province' => $loc == 'Andalucía' ? null : $provinces[$loc]['code'],
+					'district' => null,
+					'city' => null,
+					'confirmed_total' => $d['confirmed_total'],
+					'legacy_increase' => $d['legacy_increase'],
+					'confirmed_7d' => $d['confirmed_7d'],
+					'confirmed_14d' => $d['confirmed_14d'],
+					'incidence_14d' => $d['confirmed_14d'] / ($population / 100000),
+					'legacy_confirmed_total' => $d['legacy_confirmed_total'],
+					'hospitalized_total' => $d['hospitalized_total'],
+					'uci_total' => $d['uci_total'],
+					'recovered_total' => $d['recovered_total'],
+					'dead_total' => $d['dead_total'],
+				]);
+
+			}
+		}
+		
+		// Importación de datos por municipios
+		// https://github.com/Pakillo/COVID19-Andalucia/raw/master/datos/municipios.csv
+
+		$inserts = [];
+
+		$file = fopen('https://github.com/Pakillo/COVID19-Andalucia/raw/master/datos/municipios.csv', 'r');
+		$row = 0;
+		
+		while (($data = fgetcsv($file, 0, ",")) !== false) {
+
+			if ($row > 0) {
+				
+				if (!isset($cities[$data[3]])) {
+					die('Ciudad no reconocida: ' . $data[3]);
+				}
+
+				// Casos especiales
+				if (in_array($data[3], ['Castellar de la Frontera', 'Jimena de la Frontera', 'Línea de la Concepción (La)', 'San Roque', 'San Martín del Tesorillo'])) {
+					$data[2] = 'Campo de Gibraltar Este';
+				}
+				if (in_array($data[3], ['Algeciras', 'Barrios (Los)', 'Tarifa'])) {
+					$data[2] = 'Campo de Gibraltar Oeste';
+				}
+
+				if (!isset($districts[$data[2]])) {
+					die('Distrito no reconocido: ' . $data[2]);
+				}
+				if (!isset($provinces[$data[1]])) {
+					die('Provincia no reconocida: ' . $data[1]);
+				}
+
+				array_push($inserts, [
+					'date' => $data[0],
+					'province' => $provinces[$data[1]]['code'],
+					'district' => $districts[$data[2]]['code'],
+					'city' => $cities[$data[3]]['code'],
+					'population' => $cities[$data[3]]['population'],
+					'confirmed_total' => $data[4] == 'NA' ? 0 : $data[4],
+					'confirmed_14d' => $data[5] == 'NA' ? 0 : $data[5],
+					'incidence_14d' => $data[6] == 'NA' ? 0 : $data[6],
+					'legacy_confirmed_total' => $data[7] == 'NA' ? 0 : $data[7],
+					'dead_total' => $data[8] == 'NA' ? 0 : $data[8],
+				]);
+
+			}
+
+			$row++;
+
+		}
+
+		fclose($file);
+		
+		foreach ($inserts as $d) {
+
+			\DB::table('data')->insert([
+				'date' => $d['date'],
+				'region' => 'C01',
+				'province' => $d['province'],
+				'district' => $d['district'],
+				'city' => $d['city'],
+				'confirmed_total' => $d['confirmed_total'],
+				'legacy_increase' => null,
+				'confirmed_7d' => null,
+				'confirmed_14d' => $d['confirmed_14d'],
+				'incidence_14d' => $d['incidence_14d'],
+				'legacy_confirmed_total' => $d['legacy_confirmed_total'],
+				'hospitalized_total' => null,
+				'uci_total' => null,
+				'recovered_total' => null,
+				'dead_total' => $d['dead_total'],
+			]);
+			
+		}
+
+		die('ok');
+
+	}
+
+	// Restaura un día perdido
+	// Datos procedentes de:
+	// https://github.com/Pakillo/COVID19-Andalucia
+	public function restore(Request $request)
+	{
+
+		// Aumentamos tiempo de ejecución del script a 5 minutos
+		set_time_limit(0);
+		// Aumento de memoria
+		ini_set('memory_limit', '1024M');
+		// Contexto para evitar la comprobación de certificados en el file_get_contents()
+		$arrContextOptions = [
+			'ssl' => [
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+			],
+		];
+
+		$start = microtime(true);
+
+		$restore_date = $request->date;
 
 		// Obtenemos los datos de comunidades, provincias, distritos y municipios
 		// Key por nombre
@@ -529,6 +708,10 @@ class ImportController extends Controller
 				$t = explode('/', $data[0]);
 				$date = $t[2] . '-' . $t[1] . '-' . $t[0];
 
+				if ($date != $restore_date) {
+					continue;
+				}
+				
 				if (!isset($inserts[$date])) {
 					$inserts[$date] = [];
 				}
@@ -600,6 +783,10 @@ class ImportController extends Controller
 
 			if ($row > 0) {
 
+				if ($data[0] != $restore_date) {
+					continue;
+				}
+
 				if (!isset($cities[$data[3]])) {
 					die('Ciudad no reconocida: ' . $data[3]);
 				}
@@ -639,7 +826,7 @@ class ImportController extends Controller
 		}
 
 		fclose($file);
-
+		
 		foreach ($inserts as $d) {
 
 			\DB::table('data')->insert([
@@ -662,12 +849,15 @@ class ImportController extends Controller
 			
 		}
 
+		// Actualización de incrementos
+		$this->updateIncrements($restore_date);
+
 		die('ok');
 
 	}
 
 	// Actualizamos los incrementos de la base de datos
-	public function updateIncrements()
+	public function updateIncrements($date = null)
 	{
 
 		// Aumentamos tiempo de ejecución del script a 5 minutos
@@ -675,7 +865,15 @@ class ImportController extends Controller
 		// Aumento de memoria
 		ini_set('memory_limit', '1024M');
 
-		$data = Data::orderBy('id', 'asc')->get();
+		if ($date == null) {
+
+			$data = Data::orderBy('id', 'asc')->get();
+
+		} else {
+
+			$data = Data::where('date', $date)->orderBy('id', 'asc')->get();
+
+		}
 
 		foreach ($data as $d) {
 
@@ -685,7 +883,9 @@ class ImportController extends Controller
 
 		}
 
-		die('ok');
+		if ($date == null) {
+			die('ok');
+		}
 
 	}
 
