@@ -48,6 +48,28 @@ class CreateDataTable extends Migration
 				$table->integer('dead_total')->nullable();
 				$table->integer('dead_increment')->nullable();
 
+				$table->integer('hosp_beds')->nullable();
+				$table->integer('hosp_beds_covid')->nullable();
+				$table->integer('hosp_beds_covid_increment')->nullable();
+				$table->integer('hosp_beds_nocovid')->nullable();
+				$table->integer('hosp_admissions')->nullable();
+				$table->integer('hosp_admissions_increment')->nullable();
+				$table->integer('hosp_discharges')->nullable();
+				$table->integer('hosp_uci_resp_beds')->nullable();
+				$table->integer('hosp_uci_resp_beds_covid')->nullable();
+				$table->integer('hosp_uci_resp_beds_covid_increment')->nullable();
+				$table->integer('hosp_uci_resp_beds_nocovid')->nullable();
+				$table->integer('hosp_uci_resp_admissions')->nullable();
+				$table->integer('hosp_uci_resp_admissions_increment')->nullable();
+				$table->integer('hosp_uci_resp_discharges')->nullable();
+				$table->integer('hosp_uci_beds')->nullable();
+				$table->integer('hosp_uci_beds_covid')->nullable();
+				$table->integer('hosp_uci_beds_covid_increment')->nullable();
+				$table->integer('hosp_uci_beds_nocovid')->nullable();
+				$table->integer('hosp_uci_admissions')->nullable();
+				$table->integer('hosp_uci_admissions_increment')->nullable();
+				$table->integer('hosp_uci_discharges')->nullable();
+
 				$table->integer('legacy_confirmed_total')->nullable();
 				$table->integer('legacy_increase')->nullable();
 				$table->integer('legacy_hospitalized')->nullable();

@@ -22,7 +22,10 @@ class ImportController extends Controller
 
 	public function __construct()
 	{
-			//
+		// Aumentamos tiempo de ejecución del script a 5 minutos
+		set_time_limit(0);
+		// Aumento de memoria
+		ini_set('memory_limit', '1024M');
 	}
 
 	public function import()
@@ -30,10 +33,6 @@ class ImportController extends Controller
 
 		$log = "IMPORT START: " . date('Y-m-d H:i:s') . "\n";
 
-		// Aumentamos tiempo de ejecución del script a 5 minutos
-		set_time_limit(0);
-		// Aumento de memoria
-		ini_set('memory_limit', '1024M');
 		// Contexto para evitar la comprobación de certificados en el file_get_contents()
 		$arrContextOptions = [
 			'ssl' => [
@@ -296,7 +295,189 @@ class ImportController extends Controller
 			'text' => $log,
 		]);
 		
-		die('<pre>' . $log);
+		die($log);
+
+	}
+
+	// Importa datos de ocupación hospitalaria de la web del ministerio
+	public function importHospitals()
+	{
+
+		$log = "IMPORT HOSPITALS START: " . date('Y-m-d H:i:s') . "\n";
+
+		$start = microtime(true);
+
+		// Datos iniciales
+		$date_file = date('Y-m-d');
+		$date_data = date('Y-m-d', strtotime('yesterday'));
+		$province_codes = array_map(function ($v) { return intval($v); }, Province::all()->pluck('code')->toArray());
+
+		// Comprobación
+		$i = Data::where('date', $date_data)
+							->whereNotNull('hosp_beds')
+							->first();
+
+		if ($i) {
+			// Ya se han eimportado los datos
+
+			$log .= "Skipped: data already imported.\n";
+
+			\DB::table('log')->insert([
+				'date' => date('Y-m-d H:i:s'),
+				'action' => 'import_hospitals',
+				'text' => $log,
+			]);
+			
+			die($log);
+
+		}
+
+
+		// --------------
+		// Importación de archivo
+
+		$file_path = str_replace('[dmY]', date('dmY', strtotime($date_file)), config('custom.import.urls.hospitals'));
+
+		$log .= "Starting load of file '" . $file_path . "'.\n";
+
+		$data = [];
+
+		$lapse = microtime(true);
+
+		try {
+
+			$file = fopen($file_path, 'r');
+
+		} catch (\Exception $e) {
+			// ERROR: No se encontró el archivo
+			
+			$log .= "ERROR: " . $e->getMessage() . "\n";
+
+			\DB::table('log')->insert([
+				'date' => date('Y-m-d H:i:s'),
+				'action' => 'import_hospitals',
+				'text' => $log,
+			]);
+			
+			die($log);
+			
+		}
+
+		$inserts = [];
+		$row = 0;
+		
+		while (($data = fgetcsv($file, 0, ";")) !== false) {
+			
+			if ($row > 0 && strpos($data['0'], '/') !== false) {
+
+				$t = explode('/', trim($data[0]));
+				$d = $t[2] . '-' . $t[1] . '-' . $t[0];
+				$unit = utf8_encode(trim($data[1]));
+				$province = trim($data[4]);
+
+				if ($d != $date_data || !in_array($province, $province_codes)) {
+					continue;
+				}
+				
+				$p = str_pad($province, 2, '0', STR_PAD_LEFT);
+
+				if (!isset($inserts[$p])) {
+					$inserts[$p] = [];
+				}
+
+				switch ($unit) {
+
+					case 'Hospitalización convencional':
+						$inserts[$p]['hosp_beds'] = intval(trim($data[6]));
+						$inserts[$p]['hosp_beds_covid'] = intval(trim($data[7]));
+						$inserts[$p]['hosp_beds_nocovid'] = intval(trim($data[8]));
+						$inserts[$p]['hosp_admissions'] = intval(trim($data[9]));
+						$inserts[$p]['hosp_discharges'] = intval(trim($data[10]));
+						break;
+
+					case 'U. Críticas CON respirador':
+						$inserts[$p]['hosp_uci_resp_beds'] = intval(trim($data[6]));
+						$inserts[$p]['hosp_uci_resp_beds_covid'] = intval(trim($data[7]));
+						$inserts[$p]['hosp_uci_resp_beds_nocovid'] = intval(trim($data[8]));
+						$inserts[$p]['hosp_uci_resp_admissions'] = intval(trim($data[9]));
+						$inserts[$p]['hosp_uci_resp_discharges'] = intval(trim($data[10]));
+						break;
+
+					case 'U. Críticas SIN respirador':
+						$inserts[$p]['hosp_uci_beds'] = intval(trim($data[6]));
+						$inserts[$p]['hosp_uci_beds_covid'] = intval(trim($data[7]));
+						$inserts[$p]['hosp_uci_beds_nocovid'] = intval(trim($data[8]));
+						$inserts[$p]['hosp_uci_admissions'] = intval(trim($data[9]));
+						$inserts[$p]['hosp_uci_discharges'] = intval(trim($data[10]));
+						break;
+
+				}
+
+			}
+
+			$row++;
+
+		}
+
+		fclose($file);
+
+		$log .= "File '" . $file_path . "' loaded and parsed (" . round(microtime(true) - $lapse) . " seconds).\n";
+
+		// Actualizamos/insertamos los datos
+
+		$lapse = microtime(true);
+
+		foreach ($inserts as $p => $d) {
+
+			$increments = Data::getHospitalIncrements($date_data, $p, $d);
+
+			Data::updateOrCreate(
+				[
+					'date' => $date_data,
+					'region' => 'C01',
+					'province' => $p, 
+					'city' => null
+				],
+				[
+					'hosp_beds' => $d['hosp_beds'],
+					'hosp_beds_covid' => $d['hosp_beds_covid'],
+					'hosp_beds_covid_increment' => $increments['hosp_beds_covid_increment'],
+					'hosp_beds_nocovid' => $d['hosp_beds_nocovid'],
+					'hosp_admissions' => $d['hosp_admissions'],
+					'hosp_admissions_increment' => $increments['hosp_admissions_increment'],
+					'hosp_discharges' => $d['hosp_discharges'],
+					'hosp_uci_resp_beds' => $d['hosp_uci_resp_beds'],
+					'hosp_uci_resp_beds_covid' => $d['hosp_uci_resp_beds_covid'],
+					'hosp_uci_resp_beds_covid_increment' => $increments['hosp_uci_resp_beds_covid_increment'],
+					'hosp_uci_resp_beds_nocovid' => $d['hosp_uci_resp_beds_nocovid'],
+					'hosp_uci_resp_admissions' => $d['hosp_uci_resp_admissions'],
+					'hosp_uci_resp_admissions_increment' => $increments['hosp_uci_resp_admissions_increment'],
+					'hosp_uci_resp_discharges' => $d['hosp_uci_resp_discharges'],
+					'hosp_uci_beds' => $d['hosp_uci_beds'],
+					'hosp_uci_beds_covid' => $d['hosp_uci_beds_covid'],
+					'hosp_uci_beds_covid_increment' => $increments['hosp_uci_beds_covid_increment'],
+					'hosp_uci_beds_nocovid' => $d['hosp_uci_beds_nocovid'],
+					'hosp_uci_admissions' => $d['hosp_uci_admissions'],
+					'hosp_uci_admissions_increment' => $increments['hosp_uci_admissions_increment'],
+					'hosp_uci_discharges' => $d['hosp_uci_discharges'],
+				]
+			);
+
+		}
+
+		$log .= "Data stored, " . count($inserts) . " items (" . round(microtime(true) - $lapse) . " seconds).\n";
+
+		// Import finished
+		
+		$log .= "IMPORT FINISHED: " . date('Y-m-d H:i:s') . " (" . round(microtime(true) - $start) . " seconds).\n\n";
+		
+		\DB::table('log')->insert([
+			'date' => date('Y-m-d H:i:s'),
+			'action' => 'import_hospitals',
+			'text' => $log,
+		]);
+		
+		die($log);
 
 	}
 
@@ -306,10 +487,6 @@ class ImportController extends Controller
 
 		$log = "IMPORT (LOAD LISTS) START: " . date('Y-m-d H:i:s') . "\n";
 
-		// Aumentamos tiempo de ejecución del script a 5 minutos
-		set_time_limit(0);
-		// Aumento de memoria
-		ini_set('memory_limit', '1024M');
 		// Contexto para evitar la comprobación de certificados en el file_get_contents()
 		$arrContextOptions = [
 			'ssl' => [
@@ -476,7 +653,7 @@ class ImportController extends Controller
 			'text' => $log,
 		]);
 		
-		die('<pre>' . $log);
+		die($log);
 
 	}
 
@@ -486,10 +663,6 @@ class ImportController extends Controller
 	public function init()
 	{
 
-		// Aumentamos tiempo de ejecución del script a 5 minutos
-		set_time_limit(0);
-		// Aumento de memoria
-		ini_set('memory_limit', '1024M');
 		// Contexto para evitar la comprobación de certificados en el file_get_contents()
 		$arrContextOptions = [
 			'ssl' => [
@@ -663,16 +836,182 @@ class ImportController extends Controller
 
 	}
 
+	// Inicializa los datos de ocupación hospitalaria
+	public function initHospitals()
+	{
+
+		$log = "IMPORT HOSPITALS START: " . date('Y-m-d H:i:s') . "\n";
+
+		$start = microtime(true);
+
+		// Datos iniciales
+		$date_file = '2022-01-11';
+		$province_codes = array_map(function ($v) { return intval($v); }, Province::all()->pluck('code')->toArray());
+
+		// --------------
+		// Importación de archivo
+
+		$file_path = str_replace('[dmY]', date('dmY', strtotime($date_file)), config('custom.import.urls.hospitals'));
+
+		$log .= "Starting load of file '" . $file_path . "'.\n";
+
+		$data = [];
+
+		$lapse = microtime(true);
+
+		try {
+
+			$file = fopen($file_path, 'r');
+
+		} catch (\Exception $e) {
+			// ERROR: No se encontró el archivo
+			
+			$log .= "ERROR: " . $e->getMessage() . "\n";
+			
+			die($log);
+			
+		}
+
+		$inserts = [];
+		$row = 0;
+		
+		while (($data = fgetcsv($file, 0, ";")) !== false) {
+			
+			if ($row > 0 && strpos($data['0'], '/') !== false) {
+
+				$t = explode('/', trim($data[0]));
+				$d = $t[2] . '-' . $t[1] . '-' . $t[0];
+				$unit = utf8_encode(trim($data[1]));
+				$province = trim($data[4]);
+
+				if (!in_array($province, $province_codes)) {
+					continue;
+				}
+				
+				$p = str_pad($province, 2, '0', STR_PAD_LEFT);
+
+				if (!isset($inserts[$d])) {
+					$inserts[$p] = [];
+				}
+				if (!isset($inserts[$d][$p])) {
+					$inserts[$d][$p] = [];
+				}
+
+				switch ($unit) {
+
+					case 'Hospitalización convencional':
+						$inserts[$d][$p]['hosp_beds'] = intval(trim($data[6]));
+						$inserts[$d][$p]['hosp_beds_covid'] = intval(trim($data[7]));
+						$inserts[$d][$p]['hosp_beds_nocovid'] = intval(trim($data[8]));
+						$inserts[$d][$p]['hosp_admissions'] = intval(trim($data[9]));
+						$inserts[$d][$p]['hosp_discharges'] = intval(trim($data[10]));
+						break;
+
+					case 'U. Críticas CON respirador':
+						$inserts[$d][$p]['hosp_uci_resp_beds'] = intval(trim($data[6]));
+						$inserts[$d][$p]['hosp_uci_resp_beds_covid'] = intval(trim($data[7]));
+						$inserts[$d][$p]['hosp_uci_resp_beds_nocovid'] = intval(trim($data[8]));
+						$inserts[$d][$p]['hosp_uci_resp_admissions'] = intval(trim($data[9]));
+						$inserts[$d][$p]['hosp_uci_resp_discharges'] = intval(trim($data[10]));
+						break;
+
+					case 'U. Críticas SIN respirador':
+						$inserts[$d][$p]['hosp_uci_beds'] = intval(trim($data[6]));
+						$inserts[$d][$p]['hosp_uci_beds_covid'] = intval(trim($data[7]));
+						$inserts[$d][$p]['hosp_uci_beds_nocovid'] = intval(trim($data[8]));
+						$inserts[$d][$p]['hosp_uci_admissions'] = intval(trim($data[9]));
+						$inserts[$d][$p]['hosp_uci_discharges'] = intval(trim($data[10]));
+						break;
+
+				}
+
+			}
+
+			$row++;
+
+		}
+
+		fclose($file);
+
+		$log .= "File '" . $file_path . "' loaded and parsed (" . round(microtime(true) - $lapse) . " seconds).\n";
+
+		// Actualizamos/insertamos los datos
+
+		$lapse = microtime(true);
+
+		foreach ($inserts as $date => $data) {
+			foreach ($data as $p => $d) {
+
+				//$increments = Data::getHospitalIncrements($date, $p, $d);
+
+				$item = Data::where('date', $date)
+									->where('region', 'C01')
+									->where('province', $p)
+									->whereNull('city')
+									->orderBy('id', 'asc')
+									->first();
+				
+				if ($item) {
+
+					$item->update([
+						'hosp_beds' => $d['hosp_beds'],
+						'hosp_beds_covid' => $d['hosp_beds_covid'],
+						'hosp_beds_nocovid' => $d['hosp_beds_nocovid'],
+						'hosp_admissions' => $d['hosp_admissions'],
+						'hosp_discharges' => $d['hosp_discharges'],
+						'hosp_uci_resp_beds' => $d['hosp_uci_resp_beds'],
+						'hosp_uci_resp_beds_covid' => $d['hosp_uci_resp_beds_covid'],
+						'hosp_uci_resp_beds_nocovid' => $d['hosp_uci_resp_beds_nocovid'],
+						'hosp_uci_resp_admissions' => $d['hosp_uci_resp_admissions'],
+						'hosp_uci_resp_discharges' => $d['hosp_uci_resp_discharges'],
+						'hosp_uci_beds' => $d['hosp_uci_beds'],
+						'hosp_uci_beds_covid' => $d['hosp_uci_beds_covid'],
+						'hosp_uci_beds_nocovid' => $d['hosp_uci_beds_nocovid'],
+						'hosp_uci_admissions' => $d['hosp_uci_admissions'],
+						'hosp_uci_discharges' => $d['hosp_uci_discharges'],
+					]);
+
+				}
+
+			}
+		}
+
+		// Actualizamos incrementos
+		$i = Data::whereNotNull('hosp_beds')
+								->orderBy('id', 'asc')
+								->get();
+
+		foreach ($i as $item) {
+
+			$increments = Data::getHospitalIncrements($item->date, $item->province, $item->toArray());
+
+			$item->update([
+				'hosp_beds_covid_increment' => $increments['hosp_beds_covid_increment'],
+				'hosp_admissions_increment' => $increments['hosp_admissions_increment'],
+				'hosp_uci_resp_beds_covid_increment' => $increments['hosp_uci_resp_beds_covid_increment'],
+				'hosp_uci_resp_admissions_increment' => $increments['hosp_uci_resp_admissions_increment'],
+				'hosp_uci_beds_covid_increment' => $increments['hosp_uci_beds_covid_increment'],
+				'hosp_uci_admissions_increment' => $increments['hosp_uci_admissions_increment'],
+			]);
+
+		}
+
+		$log .= "Data stored, " . count($inserts) . " items (" . round(microtime(true) - $lapse) . " seconds).\n";
+
+		// Import finished
+		
+		$log .= "IMPORT FINISHED: " . date('Y-m-d H:i:s') . " (" . round(microtime(true) - $start) . " seconds).\n\n";
+		
+		die($log);
+
+	}
+
 	// Restaura un día perdido
 	// Datos procedentes de:
 	// https://github.com/Pakillo/COVID19-Andalucia
 	public function restore(Request $request)
 	{
 
-		// Aumentamos tiempo de ejecución del script a 5 minutos
-		set_time_limit(0);
-		// Aumento de memoria
-		ini_set('memory_limit', '1024M');
 		// Contexto para evitar la comprobación de certificados en el file_get_contents()
 		$arrContextOptions = [
 			'ssl' => [
@@ -859,11 +1198,6 @@ class ImportController extends Controller
 	// Actualizamos los incrementos de la base de datos
 	public function updateIncrements($date = null)
 	{
-
-		// Aumentamos tiempo de ejecución del script a 5 minutos
-		set_time_limit(0);
-		// Aumento de memoria
-		ini_set('memory_limit', '1024M');
 
 		if ($date == null) {
 

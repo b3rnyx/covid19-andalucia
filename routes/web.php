@@ -32,15 +32,28 @@ $router->get('/import/' . config('app.import-slug'), [
 	'as' => 'import',
 	'uses' => 'ImportController@import',
 ]);
-$router->get('/import/init', [
+// Import datos ministerio de ocupación hospitalaria
+$router->get('/import/' . config('app.import-slug') . '/hospitals', [
+	'as' => 'import-hospital',
+	'uses' => 'ImportController@importHospitals',
+]);
+// Inicializa las tablas de datos
+$router->get('/import/' . config('app.import-slug') . '/init', [
 	'as' => 'import-init',
 	'uses' => 'ImportController@init',
 ]);
-$router->get('/import/lists', [
+// Inicializa los datos de ocupación hospitalaria
+$router->get('/import/' . config('app.import-slug') . '/init_hospitals', [
+	'as' => 'import-init-hospitals',
+	'uses' => 'ImportController@initHospitals',
+]);
+// Inicializa las listas
+$router->get('/import/' . config('app.import-slug') . '/lists', [
 	'as' => 'import-lists',
 	'uses' => 'ImportController@loadLists',
 ]);
-$router->get('/import/update_increments', [
+// Actualiza los índices de incremento
+$router->get('/import/' . config('app.import-slug') . '/update_increments', [
 	'as' => 'import-update',
 	'uses' => 'ImportController@updateIncrements',
 ]);

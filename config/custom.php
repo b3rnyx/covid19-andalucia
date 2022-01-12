@@ -15,6 +15,7 @@ return [
 			'provinces-daily' => 'https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/39409',
 			'provinces-accumulated' => 'https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/39464',
 			'cities-total' => 'https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/',
+			'hospitals' => 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/documentos/Datos_Capacidad_Asistencial_Historico_[dmY].csv',
 		],
 		// Listado de querys de provincias
 		'provinces' => [

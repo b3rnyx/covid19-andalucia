@@ -91,6 +91,45 @@ class Data extends Model
 
 	}
 
+	// Calcula los incrementos de hospitalización
+	public static function getHospitalIncrements($date, $province, $data)
+	{
+
+		$previous = Data::where('region', 'C01')
+			->where('province', $province)
+			->whereNull('district')
+			->whereNull('city')
+			->whereNotNull('hosp_beds')
+			->where('date', '<', $date)
+			->orderBy('date', 'desc')
+			->first();
+
+		if (count($previous) > 0) {
+
+			return [
+				'hosp_beds_covid_increment' => isset($data['hosp_beds_covid']) && $data['hosp_beds_covid'] !== null ? $data['hosp_beds_covid'] - $previous->hosp_beds_covid : null,
+				'hosp_admissions_increment' => isset($data['hosp_admissions']) && $data['hosp_admissions'] !== null ? $data['hosp_admissions'] - $previous->hosp_admissions : null,
+				'hosp_uci_resp_beds_covid_increment' => isset($data['hosp_uci_resp_beds_covid']) && $data['hosp_uci_resp_beds_covid'] !== null ? $data['hosp_uci_resp_beds_covid'] - $previous->hosp_uci_resp_beds_covid : null,
+				'hosp_uci_resp_admissions_increment' => isset($data['hosp_uci_resp_admissions']) && $data['hosp_uci_resp_admissions'] !== null ? $data['hosp_uci_resp_admissions'] - $previous->hosp_uci_resp_admissions : null,
+				'hosp_uci_beds_covid_increment' => isset($data['hosp_uci_beds_covid']) && $data['hosp_uci_beds_covid'] !== null ? $data['hosp_uci_beds_covid'] - $previous->hosp_uci_beds_covid : null,
+				'hosp_uci_admissions_increment' => isset($data['hosp_uci_admissions']) && $data['hosp_uci_admissions'] !== null ? $data['hosp_uci_admissions'] - $previous->hosp_uci_admissions : null,
+			];
+
+		} else {
+
+			return [
+				'hosp_beds_covid_increment' => isset($data['hosp_beds_covid']) && $data['hosp_beds_covid'] !== null ? 0 : null,
+				'hosp_admissions_increment' => isset($data['hosp_admissions']) && $data['hosp_admissions'] !== null ? 0 : null,
+				'hosp_uci_resp_beds_covid_increment' => isset($data['hosp_uci_resp_beds_covid']) && $data['hosp_uci_resp_beds_covid'] !== null ? 0 : null,
+				'hosp_uci_resp_admissions_increment' => isset($data['hosp_uci_resp_admissions']) && $data['hosp_uci_resp_admissions'] !== null ? 0 : null,
+				'hosp_uci_beds_covid_increment' => isset($data['hosp_uci_beds_covid']) && $data['hosp_uci_beds_covid'] !== null ? 0 : null,
+				'hosp_uci_admissions_increment' => isset($data['hosp_uci_admissions']) && $data['hosp_uci_admissions'] !== null ? 0 : null,
+			];
+
+		}
+
+	}
+
 	// Genera los iconos de comparación
 	public static function compareIcons($info, $last) {
 
