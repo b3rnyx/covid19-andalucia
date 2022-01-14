@@ -162,6 +162,7 @@ class ImportController extends Controller
 			->where('district', null)
 			->where('city', null)
 			->where('confirmed_total', $data_provinces[null]['confirmed_total'])
+			->where('confirmed_14d', $data_provinces[null]['incidence_14d'])
 			->where('hospitalized_total', $data_provinces[null]['hospitalized_total'])
 			->where('recovered_total', $data_provinces[null]['recovered_total'])
 			->where('dead_total', $data_provinces[null]['dead_total'])
@@ -169,7 +170,14 @@ class ImportController extends Controller
 			->get();
 		
 		if (count($q) == 0) {
+			// Son datos nuevos, insertamos
 
+			// Primero borramos los datos antiguos (si los hubiese)
+			$delete = Data::where('date', $date)
+									->whereNull('city')
+									->delete();
+
+			// Insertamos datos
 			foreach ($data_provinces as $d) {
 
 				$increments = Data::getIncrements($d);
@@ -255,6 +263,7 @@ class ImportController extends Controller
 				->where('district', $sample['district'])
 				->where('city', $sample['city'])
 				->where('confirmed_total', $sample['confirmed_total'])
+				->where('confirmed_14d', $sample['confirmed_14d'])
 				->where('recovered_total', $sample['recovered_total'])
 				->where('dead_total', $sample['dead_total'])
 				->where('legacy_confirmed_total', $sample['legacy_confirmed_total'])
@@ -268,7 +277,14 @@ class ImportController extends Controller
 		}
 		
 		if ($insert) {
+			// Son datos nuevos, insertamos
 
+			// Primero borramos los datos antiguos (si los hubiese)
+			$delete = Data::where('date', $date)
+									->whereNotNull('city')
+									->delete();
+
+			// Insertamos datos
 			foreach ($data_cities as $d) {
 
 				$increments = Data::getIncrements($d);
