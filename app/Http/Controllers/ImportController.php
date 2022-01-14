@@ -1239,4 +1239,88 @@ class ImportController extends Controller
 
 	}
 
+	// Borra los elementos duplicados (se queda con los últimos insertados)
+	public function deleteDuplicated()
+	{
+
+		echo "Iniciando borrado de duplicados...<br>";
+
+		// Fechas
+		$dates = Data::whereNotNull('date')
+									->groupBy('date')
+									->orderBy('date', 'asc')
+									->get()
+									->pluck('date')
+									->toArray();
+		
+		// Elementos
+		$regions = Region::all();
+		$provinces = Province::all();
+		$cities = City::all();
+
+		foreach ($dates as $date) {
+
+			echo $date . ": ";
+
+			// Regiones
+			$num = 0;
+			foreach ($regions as $element) {
+				$last = Data::where('region', $element->code)
+										->whereNull('province')
+										->where('date', $date)
+										->orderBy('id', 'desc')
+										->first();
+				if ($last) {
+					$deleted = Data::where('region', $element->code)
+													->whereNull('province')
+													->where('date', $date)
+													->where('id', '!=', $last->id)
+													->delete();
+					$num += $deleted;
+				}
+			}
+			echo $num . " en Regiones. ";
+
+			// Provincias
+			$num = 0;
+			foreach ($provinces as $element) {
+				$last = Data::where('province', $element->code)
+										->whereNull('city')
+										->where('date', $date)
+										->orderBy('id', 'desc')
+										->first();
+				if ($last) {
+					$deleted = Data::where('province', $element->code)
+													->whereNull('city')
+													->where('date', $date)
+													->where('id', '!=', $last->id)
+													->delete();
+					$num += $deleted;
+				}
+			}
+			echo $num . " en Provincias.";
+
+			// Municipios
+			$num = 0;
+			foreach ($cities as $element) {
+				$last = Data::where('city', $element->code)
+										->where('date', $date)
+										->orderBy('id', 'desc')
+										->first();
+				if ($last) {
+					$deleted = Data::where('city', $element->code)
+													->where('date', $date)
+													->where('id', '!=', $last->id)
+													->delete();
+					$num += $deleted;
+				}
+			}
+			echo $num . " en Ciudades.<br>";
+
+		}
+
+		die('ok');
+
+	}
+
 }

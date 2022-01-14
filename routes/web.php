@@ -27,6 +27,8 @@ $router->post('/load', [
 	'uses' => 'MainController@load',
 ]);
 
+// IMPORT
+
 // Import
 $router->get('/import/' . config('app.import-slug'), [
 	'as' => 'import',
@@ -37,6 +39,9 @@ $router->get('/import/' . config('app.import-slug') . '/hospitals', [
 	'as' => 'import-hospital',
 	'uses' => 'ImportController@importHospitals',
 ]);
+
+// INIT
+
 // Inicializa las tablas de datos
 $router->get('/import/' . config('app.import-slug') . '/init', [
 	'as' => 'import-init',
@@ -52,6 +57,9 @@ $router->get('/import/' . config('app.import-slug') . '/lists', [
 	'as' => 'import-lists',
 	'uses' => 'ImportController@loadLists',
 ]);
+
+// TOOLS
+
 // Actualiza los índices de incremento
 $router->get('/import/' . config('app.import-slug') . '/update_increments', [
 	'as' => 'import-update',
@@ -61,4 +69,9 @@ $router->get('/import/' . config('app.import-slug') . '/update_increments', [
 $router->get('/import/restore', [
 	'as' => 'import-restore',
 	'uses' => 'ImportController@restore',
+]);
+// Borra los duplicados
+$router->get('/import/' . config('app.import-slug') . '/delete_duplicated', [
+	'as' => 'import-delete-duplicated',
+	'uses' => 'ImportController@deleteDuplicated',
 ]);
