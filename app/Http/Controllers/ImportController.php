@@ -166,7 +166,6 @@ class ImportController extends Controller
 			->where('hospitalized_total', $data_provinces[null]['hospitalized_total'])
 			->where('recovered_total', $data_provinces[null]['recovered_total'])
 			->where('dead_total', $data_provinces[null]['dead_total'])
-			->where('legacy_confirmed_total', $data_provinces[null]['legacy_confirmed_total'])
 			->get();
 		
 		if (count($q) == 0) {
@@ -266,7 +265,6 @@ class ImportController extends Controller
 				->where('confirmed_14d', $sample['confirmed_14d'])
 				->where('recovered_total', $sample['recovered_total'])
 				->where('dead_total', $sample['dead_total'])
-				->where('legacy_confirmed_total', $sample['legacy_confirmed_total'])
 				->get();
 			
 			if (count($q) == 0) {
