@@ -66,7 +66,7 @@ $router->get('/import/' . config('app.import-slug') . '/update_increments', [
 	'uses' => 'ImportController@updateIncrements',
 ]);
 // Restaurar un día perdido (parámetro date)
-$router->get('/import/restore', [
+$router->get('/import/' . config('app.import-slug') . '/restore', [
 	'as' => 'import-restore',
 	'uses' => 'ImportController@restore',
 ]);
