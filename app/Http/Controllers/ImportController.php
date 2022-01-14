@@ -197,6 +197,19 @@ class ImportController extends Controller
 		// --------------
 		// Importación de archivo de municipios
 
+		/*
+		Índices usados:
+		1 -> Población
+		2 -> Confirmados PDIA
+		3 -> Confirmados PDIA 14 días
+		4 -> Tasa PDIA 14 días
+		5 -> Confirmados PDIA 7 días
+		6 -> Tasa PDIA 7 días
+		7 -> Total confirmados
+		8 -> Curados
+		9 -> Fallecidos
+		*/
+
 		$log .= "Starting load of files 'cities-total'.\n";
 
 		$data_cities = [];
@@ -233,9 +246,10 @@ class ImportController extends Controller
 						'confirmed_14d' => isset($d[3]) ? $d[3]['val'] : null,
 						'incidence_14d' => isset($d[4]) ? $d[4]['val'] : null,
 						'confirmed_7d' => isset($d[5]) ? $d[5]['val'] : null,
-						'recovered_total' => isset($d[7]) ? $d[7]['val'] : null,
-						'dead_total' => isset($d[8]) ? $d[8]['val'] : null,
-						'legacy_confirmed_total' => isset($d[6]) ? $d[6]['val'] : null,
+						'incidence_7d' => isset($d[6]) ? $d[6]['val'] : null,
+						'recovered_total' => isset($d[8]) ? $d[8]['val'] : null,
+						'dead_total' => isset($d[9]) ? $d[9]['val'] : null,
+						'legacy_confirmed_total' => isset($d[7]) ? $d[7]['val'] : null,
 						'created_at' => date('Y-m-d H:i:s'),
 					]);
 
@@ -1042,6 +1056,10 @@ class ImportController extends Controller
 		$start = microtime(true);
 
 		$restore_date = $request->date;
+
+		// Primero borramos los datos antiguos (si los hubiese)
+		$delete = Data::where('date', $restore_date)
+								->delete();
 
 		// Obtenemos los datos de comunidades, provincias, distritos y municipios
 		// Key por nombre
