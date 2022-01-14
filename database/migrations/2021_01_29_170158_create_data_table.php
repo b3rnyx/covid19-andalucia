@@ -76,6 +76,8 @@ class CreateDataTable extends Migration
 				$table->integer('legacy_uci')->nullable();
 				$table->integer('legacy_dead')->nullable();
 
+				$table->dateTime('created_at')->nullable();
+
 				// Índices
 				$table->index(
 					[

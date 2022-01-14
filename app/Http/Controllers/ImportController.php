@@ -82,6 +82,7 @@ class ImportController extends Controller
 				'recovered_total' => isset($d[11]) ? $d[11]['val'] : null,
 				'dead_total' => isset($d[12]) ? $d[12]['val'] : null,
 				'legacy_confirmed_total' => isset($d[3]) ? $d[3]['val'] : null,
+				'created_at' => date('Y-m-d H:i:s'),
 			];
 
 		}
@@ -235,6 +236,7 @@ class ImportController extends Controller
 						'recovered_total' => isset($d[7]) ? $d[7]['val'] : null,
 						'dead_total' => isset($d[8]) ? $d[8]['val'] : null,
 						'legacy_confirmed_total' => isset($d[6]) ? $d[6]['val'] : null,
+						'created_at' => date('Y-m-d H:i:s'),
 					]);
 
 				}
@@ -474,6 +476,7 @@ class ImportController extends Controller
 					'hosp_uci_admissions' => $d['hosp_uci_admissions'],
 					'hosp_uci_admissions_increment' => $increments['hosp_uci_admissions_increment'],
 					'hosp_uci_discharges' => $d['hosp_uci_discharges'],
+					'created_at' => date('Y-m-d H:i:s'),
 				]
 			);
 
@@ -767,6 +770,7 @@ class ImportController extends Controller
 					'uci_total' => $d['uci_total'],
 					'recovered_total' => $d['recovered_total'],
 					'dead_total' => $d['dead_total'],
+					'created_at' => date('Y-m-d H:i:s'),
 				]);
 
 			}
@@ -842,6 +846,7 @@ class ImportController extends Controller
 				'uci_total' => null,
 				'recovered_total' => null,
 				'dead_total' => $d['dead_total'],
+				'created_at' => date('Y-m-d H:i:s'),
 			]);
 			
 		}
@@ -1119,6 +1124,7 @@ class ImportController extends Controller
 					'uci_total' => $d['uci_total'],
 					'recovered_total' => $d['recovered_total'],
 					'dead_total' => $d['dead_total'],
+					'created_at' => date('Y-m-d H:i:s'),
 				]);
 
 			}
@@ -1198,6 +1204,7 @@ class ImportController extends Controller
 				'uci_total' => null,
 				'recovered_total' => null,
 				'dead_total' => $d['dead_total'],
+				'created_at' => date('Y-m-d H:i:s'),
 			]);
 			
 		}
