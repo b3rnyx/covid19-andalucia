@@ -42,9 +42,15 @@
 			Consulta los datos históricos por municipios de COVID-19 en Andalucía.
 		</h2>
 		
-		<div class="update">
-			Última actualización: <mark><?= $updated ?></mark>
-			<span>Los datos suelen actualizarse de lunes a viernes sobre las 13:00 (los fines de semana no hay actualización).</span>
+		<div class="update row">
+			<div class="col-md-6">
+				Última actualización: <mark><?= $updated ?></mark>
+				<span>Los datos suelen actualizarse de lunes a viernes sobre las 13:00 (los fines de semana no hay actualización).</span>
+			</div>
+			<div class="col-md-6">
+				Última actualización datos hospitalarios: <mark><?= $updated_hospitals ?></mark>
+				<span>Los datos de ocupación hospitalaria suelen actualizarse con los datos del día anterior de lunes a viernes sobre las 15:30 (los fines de semana no hay actualización).</span>
+			</div>
 		</div>
 	</header>
 
@@ -52,44 +58,35 @@
 
 		<section class="selector row">
 
-			<div class="select-province col-md-6">
-				<div class="form-group">
-					<label for="select_province">Provincia</label>
-					<select id="select_province" name="select_province" class="form-control">
-						<option value=""<?php echo $selected_province == '' ? ' selected' : '' ?>>Andalucía</option>
-	<?php
+			<div class="col-md-6">
 
-	foreach ($lists['provinces'] as $i) {
-		echo '<option value="' . $i['code'] . '"' . ($selected_province == $i['code'] ? ' selected' : '')  .'>' . $i['name'] . '</option>';
-	}
+				<div class="select-province row">
+					<div class="col-12">
+						<label>Elige Provincia</label>
+						<button type="button" data-code="" class="province-button btn<?= ($selected_province == '' && $selected_city != '') ? ' selected' : '' ?>">Andalucía</button>
+					</div>
+<?php
 
-	?>
-					</select>
+foreach ($lists['provinces'] as $i) {
+	echo '<div class="col-3">
+					<button type="button" data-code="' . $i['code'] . '" class="province-button btn' . ($selected_province == $i['code'] ? ' selected' : '')  .'">
+						' . $i['name'] . '
+					</button>
+				</div>';
+}
+
+?>
 				</div>
 			</div>
 
-			<div class="select-district col-md-4">
-				<div class="form-group">
-					<label for="select_district">Distrito</label>
-					<select id="select_district" name="select_district" class="form-control">
-						<option value=""<?php echo $selected_district == '' ? ' selected' : '' ?>>Elige distrito</option>
-	<?php
-
-	foreach ($lists['districts'] as $i) {
-		echo '<option value="' . $i['code'] . '"' . ($selected_district == $i['code'] ? ' selected' : '')  .'>' . $i['name'] . '</option>';
-	}
-
-	?>
-					</select>
-				</div>
-			</div>
-
+			<input type="hidden" id="select_district" name="select_district" value="<?= $selected_district ?>">
 			
-			<div class="select-city col-md-6">
-				<div class="form-group">
-					<label for="select_city">Municipio</label>
+			<div class="col-md-6">
+
+				<div class="select-city form-group">
+					<label for="select_city">Elige Municipio</label>
 					<select id="select_city" name="select_city" class="form-control">
-						<option value=""<?php echo $selected_city == '' ? ' selected' : '' ?>>Elige municipio</option>
+						<option value=""<?= $selected_city == '' ? ' selected' : '' ?>>Elige municipio</option>
 	<?php
 
 	foreach ($lists['cities'] as $i) {
@@ -99,6 +96,27 @@
 	?>
 					</select>
 				</div>
+
+				<div class="dates">
+					<div class="input-group">
+						<label for="select_dates">Elige fechas</label>
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa fa-calendar"></i></span>
+						</div>
+						<select id="select_dates" class="form-control">
+<?php
+
+foreach (config('custom.stats-dates') as $k => $v) {
+
+	echo '<option value="' . $k . '">' . $v . '</option>';
+
+}
+
+?>
+						</select>
+					</div>
+				</div>
+
 			</div>
 
 		</section>
@@ -154,25 +172,6 @@
 		<div class="info-note">Los datos marcados con <span>*</span> son <strong>datos no oficiales</strong> mostrados a título orientativo.</div>
 
 		<section class="graphs">
-
-			<div class="dates">
-				<div class="input-group">
-  				<div class="input-group-prepend">
-    				<span class="input-group-text"><i class="fa fa-calendar"></i></span>
-  				</div>
-					<select id="select_dates" class="form-control">
-<?php
-
-foreach (config('custom.stats-dates') as $k => $v) {
-
-	echo '<option value="' . $k . '">' . $v . '</option>';
-
-}
-
-?>
-					</select>
-				</div>
-			</div>
 
 <?php
 

@@ -5,6 +5,9 @@ body {
 .text-black-50 {
 	opacity: 0.5;
 }
+.select2 {
+	width: 100% !important;
+}
 
 header {
 	padding: 20px 0 0 0;
@@ -43,7 +46,7 @@ header .update span {
 }
 
 section.selector {
-	width: 70%;
+	width: 80%;
 	min-width: 350px;
 	margin: 45px auto 0 auto;
 	padding: 12px 15px;
@@ -51,6 +54,8 @@ section.selector {
 	background: rgba(40, 167, 69, 0.1);
 }
 section.selector label {
+	display: block;
+	width: 100%;
 	margin-bottom: 2px;
 }
 .select-selected label {
@@ -59,7 +64,40 @@ section.selector label {
 }
 .select-selected span.select2-selection {
 	border: 2px solid #28a745 !important;
+	background: #28a745 !important;
 	box-shadow: 0px 0px 8px 0px rgba(40, 167, 69,0.2);
+}
+.select-selected span.select2-selection span {
+	color: #fff !important;
+	font-weight: bold !important;
+}
+.select-selected span.select2-selection b {
+	border-color: #ffffff transparent transparent !important;
+}
+.select-province {
+	padding-right: 20px;
+}
+.select-province .col-12,
+.select-province .col-3 {
+	padding: 2px 3px;
+}
+.select-province button {
+	display: block;
+	width: 100%;
+	border-radius: 4px;
+	background: #ffffff;
+	font-size: 14px;
+}
+.select-province button:hover {
+	background: #28a7461b;
+}
+.select-province button.selected {
+	background: #28a745;
+	color: #fff !important;
+	font-weight: bold !important;
+}
+.select-province button.selected:hover {
+	background: #28a746bd;
 }
 .select-district {
 	display: none;
@@ -249,10 +287,29 @@ footer .share button:hover {
 }
 
 @media only screen 
+   and (max-width : 1199px) {
+
+		section.selector {
+			width: 100%;
+		}
+}
+
+@media only screen 
+   and (max-width : 991px) {
+
+		.select-province {
+			padding-right: 5px;
+		}
+}
+
+@media only screen 
    and (max-width : 767px) {
 
 		body {
 			padding-bottom: 0px;
+		}
+		div.select-city {
+			padding-top: 15px;
 		}
 		footer {
 			position: relative;

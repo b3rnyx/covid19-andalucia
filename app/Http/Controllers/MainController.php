@@ -38,8 +38,11 @@ class MainController extends Controller
 			
 			// Última actualización
 			// No disponemos en servidor del locale es_ES
-			$time = strtotime(Data::select('date')->whereNotNull('city')->orderBy('date', 'desc')->limit(1)->first()->date);
-			$updated = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'][date('N', $time)] . ' ' . date('d/m/Y', $time);
+			$time = strtotime(Data::select('date')->whereNotNull('city')->whereNotNull('confirmed_total')->orderBy('date', 'desc')->limit(1)->first()->date);
+			$updated = config('custom.weekdays')[date('N', $time)] . ' ' . date('d/m/Y', $time);
+			// Datos hospitalarios
+			$time = strtotime(Data::select('date')->whereNotNull('hosp_beds')->orderBy('date', 'desc')->limit(1)->first()->date);
+			$updated_hospitals = config('custom.weekdays')[date('N', $time)] . ' ' . date('d/m/Y', $time);
 
 			$selected_province = '';
 			$selected_district = '';
@@ -48,12 +51,12 @@ class MainController extends Controller
 			// Cargamos información de la cookie
 			if (isset($_COOKIE[config('custom.cookie-name')])) {
 				$t = explode('|', $_COOKIE[config('custom.cookie-name')]);
-				$selected_province = isset($t[0]) && $t[0] != '' ? filter_var($t[0], FILTER_SANITIZE_STRING) : '';
-				$selected_district = isset($t[1]) && $t[1] != '' ? filter_var($t[1], FILTER_SANITIZE_STRING) : '';
-				$selected_city = isset($t[2]) && $t[2] != '' ? filter_var($t[2], FILTER_SANITIZE_STRING) : '';
+				$selected_province = isset($t[0]) && $t[0] != '' && $t[0] != 'undefined' ? filter_var($t[0], FILTER_SANITIZE_STRING) : '';
+				$selected_district = isset($t[1]) && $t[1] != '' && $t[1] != 'undefined' ? filter_var($t[1], FILTER_SANITIZE_STRING) : '';
+				$selected_city = isset($t[2]) && $t[2] != '' && $t[2] != 'undefined' ? filter_var($t[2], FILTER_SANITIZE_STRING) : '';
 			}
 			
-			return view('index', compact('lists', 'updated', 'selected_province', 'selected_district', 'selected_city'));
+			return view('index', compact('lists', 'updated', 'updated_hospitals', 'selected_province', 'selected_district', 'selected_city'));
 
 		}
 
@@ -92,8 +95,8 @@ class MainController extends Controller
 					->toArray();
 
 				$output = [
-					'province' => $city->province,
-					'district' => $city->district,
+					'province' => '',
+					'district' => '',
 					'city' => $city->code,
 					'mode' => 'city',
 					'name' => $city->name,
@@ -137,7 +140,7 @@ class MainController extends Controller
 					->toArray();
 
 				$output = [
-					'province' => $district->province,
+					'province' => '',
 					'district' => $district->code,
 					'city' => '',
 					'mode' => 'district',

@@ -42,6 +42,11 @@ return [
 		'365' => 'Mostrar datos del último año',
 	],
 
+	// Días de la semana
+	'weekdays' => [
+		'', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo',
+	],
+
 	// Nombre de la cookie
 	'cookie-name' => 'covid19and',
 

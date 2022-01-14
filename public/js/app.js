@@ -14,8 +14,9 @@ var app = {
 		
 		$('#select_dates').val('30');
 
+		$('section.selector div.select-province button').on('click', app.selector.select);
 		$('section.selector select, section.graphs div.dates select').on('change', app.selector.select);
-		$('section.selector select').select2({
+		$('section.selector select[name="select_city"]').select2({
 			theme: "bootstrap"
 		});
 
@@ -57,7 +58,12 @@ var app = {
 
 			app.aux.pageLock();
 
-			if (typeof $(this).attr('name') === 'undefined') {
+			if ($(this).prop('nodeName') == 'BUTTON') {
+
+				selected = 'province';
+				value = $(this).attr('data-code');
+
+			} else if (typeof $(this).attr('name') === 'undefined') {
 				
 				if ($('#select_city').val() != '') {
 					selected = 'city';
@@ -97,13 +103,15 @@ var app = {
 				data: {
 					selected: selected,
 					value: value,
-					province: $('#select_province').val(),
 					dates: $('#select_dates').val(),
 				}
 			})
 			.done(function (data, textStatus, jqXHR) {
 
-				$('#select_province').val(data.province).trigger('change.select2');
+				$('section.selector div.select-province button').removeClass('selected');
+				if (data.province != '' || data.city == '') {
+					$('section.selector div.select-province button[data-code="' + data.province + '"]').addClass('selected');
+				}
 				$('#select_district').val(data.district).trigger('change.select2');
 				$('#select_city').val(data.city).trigger('change.select2');
 

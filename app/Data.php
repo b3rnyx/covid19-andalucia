@@ -63,6 +63,7 @@ class Data extends Model
 			->where('province', $data['province'])
 			->where('district', $data['district'])
 			->where('city', $data['city'])
+			->whereNotNull('confirmed_total')
 			->where('date', '<', $data['date'])
 			->orderBy('date', 'desc')
 			->first();

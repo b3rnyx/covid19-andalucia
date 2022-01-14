@@ -25,7 +25,7 @@ class ImportController extends Controller
 		// Aumentamos tiempo de ejecución del script a 5 minutos
 		set_time_limit(0);
 		// Aumento de memoria
-		ini_set('memory_limit', '1024M');
+		ini_set('memory_limit', '2048M');
 	}
 
 	public function import()
