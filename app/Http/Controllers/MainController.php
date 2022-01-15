@@ -25,7 +25,7 @@ class MainController extends Controller
         //
     }
 
-		public function index()
+		public function index(Request $request)
 		{
 
 			// Cargamos listas
@@ -54,6 +54,52 @@ class MainController extends Controller
 				$selected_province = isset($t[0]) && $t[0] != '' && $t[0] != 'undefined' ? filter_var($t[0], FILTER_SANITIZE_STRING) : '';
 				$selected_district = isset($t[1]) && $t[1] != '' && $t[1] != 'undefined' ? filter_var($t[1], FILTER_SANITIZE_STRING) : '';
 				$selected_city = isset($t[2]) && $t[2] != '' && $t[2] != 'undefined' ? filter_var($t[2], FILTER_SANITIZE_STRING) : '';
+			}
+			
+			// Cargamos información de la url
+			if ($request->input('province')) {
+				$selected_province = filter_var($request->input('province'), FILTER_SANITIZE_STRING);
+				$selected_district = '';
+				$selected_city = '';
+			}
+			if ($request->input('district')) {
+				$selected_province = '';
+				$selected_district = filter_var($request->input('district'), FILTER_SANITIZE_STRING);
+				$selected_city = '';
+			}
+			if ($request->input('city')) {
+				$selected_province = '';
+				$selected_district = '';
+				$selected_city = filter_var($request->input('city'), FILTER_SANITIZE_STRING);
+			}
+
+			// Comprobación de validez de los datos
+			if ($selected_province != '') {
+				$ok = false;
+				foreach ($lists['provinces'] as $item) {
+					if ($selected_province == $item['code']) {
+						$ok = true;
+					}
+				}
+				if (!$ok) { die('Ooooops!'); }
+			}
+			if ($selected_district != '') {
+				$ok = false;
+				foreach ($lists['districts'] as $item) {
+					if ($selected_district == $item['code']) {
+						$ok = true;
+					}
+				}
+				if (!$ok) { die('Ooooops!'); }
+			}
+			if ($selected_city != '') {
+				$ok = false;
+				foreach ($lists['cities'] as $item) {
+					if ($selected_city == $item['code']) {
+						$ok = true;
+					}
+				}
+				if (!$ok) { die('Ooooops!'); }
 			}
 			
 			return view('index', compact('lists', 'updated', 'updated_hospitals', 'selected_province', 'selected_district', 'selected_city'));

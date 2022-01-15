@@ -73,7 +73,7 @@ var app = {
 					value = $('#select_district').val();
 				} else {
 					selected = 'province';
-					value = $('#select_province').val();
+					value = $('section.selector div.select-province button.selected').attr('data-code');
 				}
 
 			} else {
