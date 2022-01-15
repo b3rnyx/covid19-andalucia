@@ -73,7 +73,7 @@ var app = {
 					value = $('#select_district').val();
 				} else {
 					selected = 'province';
-					value = $('section.selector div.select-province button.selected').attr('data-code');
+					value = app.selector.getSelectedProvince();
 				}
 
 			} else {
@@ -81,7 +81,7 @@ var app = {
 				switch ($(this).attr('name')) {
 					case 'select_province':
 						selected = 'province';
-						value = $('#select_province').val();
+						value = app.selector.getSelectedProvince();
 						break;
 					case 'select_district':
 						selected = 'district';
@@ -149,6 +149,16 @@ var app = {
 				app.aux.pageUnlock();
 
 			});
+
+		},
+
+		getSelectedProvince: function () {
+
+			if ($('section.selector div.select-province button.selected').length > 0) {
+				return $('section.selector div.select-province button.selected').attr('data-code');
+			} else {
+				return '';
+			}
 
 		}
 
@@ -595,7 +605,7 @@ var app = {
 		date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
 		expires = "; expires=" + date.toGMTString();
 
-		var value = $('#select_province').val() + '|' + $('#select_district').val() + '|' + $('#select_city').val();
+		var value = app.selector.getSelectedProvince() + '|' + $('#select_district').val() + '|' + $('#select_city').val();
 		
 		document.cookie = app.cfg.cookie_name + "=" + value + expires + "; path=/";
 		
