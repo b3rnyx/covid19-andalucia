@@ -92,6 +92,36 @@ class Data extends Model
 
 	}
 
+	// Añade la información hospitalaria al array de datos
+	public static function addHospitalData($data, $hospital_data)
+	{
+
+		$data['hosp_beds'] = $hospital_data['hosp_beds'];
+		$data['hosp_beds_covid'] = $hospital_data['hosp_beds_covid'];
+		$data['hosp_beds_covid_increment'] = $hospital_data['hosp_beds_covid_increment'];
+		$data['hosp_beds_nocovid'] = $hospital_data['hosp_beds_nocovid'];
+		$data['hosp_admissions'] = $hospital_data['hosp_admissions'];
+		$data['hosp_admissions_increment'] = $hospital_data['hosp_admissions_increment'];
+		$data['hosp_discharges'] = $hospital_data['hosp_discharges'];
+		$data['hosp_uci_resp_beds'] = $hospital_data['hosp_uci_resp_beds'];
+		$data['hosp_uci_resp_beds_covid'] = $hospital_data['hosp_uci_resp_beds_covid'];
+		$data['hosp_uci_resp_beds_covid_increment'] = $hospital_data['hosp_uci_resp_beds_covid_increment'];
+		$data['hosp_uci_resp_beds_nocovid'] = $hospital_data['hosp_uci_resp_beds_nocovid'];
+		$data['hosp_uci_resp_admissions'] = $hospital_data['hosp_uci_resp_admissions'];
+		$data['hosp_uci_resp_admissions_increment'] = $hospital_data['hosp_uci_resp_admissions_increment'];
+		$data['hosp_uci_resp_discharges'] = $hospital_data['hosp_uci_resp_discharges'];
+		$data['hosp_uci_beds'] = $hospital_data['hosp_uci_beds'];
+		$data['hosp_uci_beds_covid'] = $hospital_data['hosp_uci_beds_covid'];
+		$data['hosp_uci_beds_covid_increment'] = $hospital_data['hosp_uci_beds_covid_increment'];
+		$data['hosp_uci_beds_nocovid'] = $hospital_data['hosp_uci_beds_nocovid'];
+		$data['hosp_uci_admissions'] = $hospital_data['hosp_uci_admissions'];
+		$data['hosp_uci_admissions_increment'] = $hospital_data['hosp_uci_admissions_increment'];
+		$data['hosp_uci_discharges'] = $hospital_data['hosp_uci_discharges'];
+
+		return $data;
+
+	}
+
 	// Calcula los incrementos de hospitalización
 	public static function getHospitalIncrements($date, $province, $data)
 	{
@@ -128,6 +158,29 @@ class Data extends Model
 			];
 
 		}
+
+	}
+
+	// Crea los sumatorios de datios hospitalarios
+	public static function getHospitalSums($item)
+	{
+
+		$item['hosp_beds_total'] = intval($item['hosp_beds']) + intval($item['hosp_uci_resp_beds']) + intval($item['hosp_uci_beds']);
+		$item['hosp_beds_covid_total'] = intval($item['hosp_beds_covid']) + intval($item['hosp_uci_resp_beds_covid']) + intval($item['hosp_uci_beds_covid']);
+		$item['hosp_beds_covid_increment_total'] = intval($item['hosp_beds_covid_increment']) + intval($item['hosp_uci_resp_beds_covid_increment']) + intval($item['hosp_uci_beds_covid_increment']);
+		$item['hosp_beds_nocovid_total'] = intval($item['hosp_beds_nocovid']) + intval($item['hosp_uci_resp_beds_nocovid']) + intval($item['hosp_uci_beds_nocovid']);
+		$item['hosp_admissions_total'] = intval($item['hosp_admissions']) + intval($item['hosp_uci_resp_admissions']) + intval($item['hosp_uci_admissions']);
+		$item['hosp_admissions_increment_total'] = intval($item['hosp_admissions_increment']) + intval($item['hosp_uci_resp_admissions_increment']) + intval($item['hosp_uci_admissions_increment']);
+		$item['hosp_discharges_total'] = intval($item['hosp_discharges']) + intval($item['hosp_uci_resp_discharges']) + intval($item['hosp_uci_discharges']);
+		$item['uci_beds'] = intval($item['hosp_uci_resp_beds']) + intval($item['hosp_uci_beds']);
+		$item['uci_beds_covid'] = intval($item['hosp_uci_resp_beds_covid']) + intval($item['hosp_uci_beds_covid']);
+		$item['uci_beds_covid_increment'] = intval($item['hosp_uci_resp_beds_covid_increment']) + intval($item['hosp_uci_beds_covid_increment']);
+		$item['uci_beds_nocovid'] = intval($item['hosp_uci_resp_beds_nocovid']) + intval($item['hosp_uci_beds_nocovid']);
+		$item['uci_admissions'] = intval($item['hosp_uci_resp_admissions']) + intval($item['hosp_uci_admissions']);
+		$item['uci_admissions_increment'] = intval($item['hosp_uci_resp_admissions_increment']) + intval($item['hosp_uci_admissions_increment']);
+		$item['uci_discharges'] = intval($item['hosp_uci_resp_discharges']) + intval($item['hosp_uci_discharges']);
+
+		return $item;
 
 	}
 

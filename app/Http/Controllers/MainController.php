@@ -106,15 +106,23 @@ class MainController extends Controller
 
 		}
 
+		// Carga de datos para el front
 		public function load(Request $request)
 		{
 
 			$days = isset(config('custom.stats-days')[$request->input('days')]) ? $request->input('days') : 30;
+			$request_type = $request->input('selected');
+			$request_value = $request->input('value');
 
-			if ($request->input('selected') == 'city' && $request->input('value') != '') {
+
+			if ($request_type == 'city' && $request_value == '') {
+				$request_type = 'province';
+			}
+
+			if ($request_type == 'city' && $request_value != '') {
 				// Es una ciudad
 
-				$city = City::where('code', $request->input('value'))->firstOrFail();
+				$city = City::where('code', $request_value)->firstOrFail();
 
 				// Info
 				$info = Data::where('city', $city->code)
@@ -156,10 +164,10 @@ class MainController extends Controller
 					'updated' => date('d/m/Y', strtotime($info['date'])),
 				];
 
-			} else if ($request->input('selected') == 'district') {
+			} else if ($request_type == 'district') {
 				// Es un distrito
 
-				$district = District::where('code', $request->input('value'))->firstOrFail();
+				$district = District::where('code', $request_value)->firstOrFail();
 
 				// Info
 				$info = Data::where('district', $district->code)
@@ -204,107 +212,95 @@ class MainController extends Controller
 					'updated' => date('d/m/Y', strtotime($info['date'])),
 				];
 				
-			} else if (($request->input('selected') == 'province' && $request->input('value') != '')
-								|| $request->input('selected') == 'city' && $request->input('value') == '') {
+			} else if ($request_type == 'province') {
 				// Es una provincia
 
-				$province = $request->input('selected') == 'province'
-					? Province::where('code', $request->input('value'))->firstOrFail() 
-					: Province::where('code', $request->input('province'))->firstOrFail();
+				$item = ($request_value == '')
+					? Region::where('code', 'C01')->firstOrFail() // Es una región
+					: Province::where('code', $request_value)->firstOrFail(); // Es una provincia
+
+				$province_code = $request_value == '' ? null : $request_value;
+				$mode = $request_value == '' ? 'region' : 'province';
 
 				// Info
-				$info = Data::where('province', $province->code)
-					->whereNull('district')
-					->whereNull('city')
-					->whereNotNull('confirmed_total')
-					->orderBy('date', 'desc')
-					->take(1)
-					->first()
-					->toArray();
+				$info = Data::where('province', $province_code)
+										->whereNull('district')
+										->whereNull('city')
+										->whereNotNull('confirmed_total')
+										->orderBy('date', 'desc')
+										->take(1)
+										->first()
+										->toArray();
 				
-				$info['population'] = $province->population;
+				$info['population'] = $item->population;
+
+				if ($info['hosp_beds'] == null) {
+					// No hay datos hospitalarios este día, cogemos el último
+
+					$info_hospitals = Data::where('province', $province_code)
+																	->whereNull('district')
+																	->whereNull('city')
+																	->whereNotNull('hosp_beds')
+																	->orderBy('date', 'desc')
+																	->take(1)
+																	->first()
+																	->toArray();
+
+					$info = Data::addHospitalData($info, $info_hospitals);
+
+				}
 
 				// Last
-				$last = Data::where('province', $province->code)
-					->whereNull('district')
-					->whereNull('city')
-					->whereNotNull('confirmed_total')
-					->where('date', '<', $info['date'])
-					->orderBy('date', 'desc')
-					->take(1)
-					->first()
-					->toArray();
+				$last = Data::where('province', $province_code)
+										->whereNull('district')
+										->whereNull('city')
+										->whereNotNull('confirmed_total')
+										->where('date', '<', $info['date'])
+										->orderBy('date', 'desc')
+										->take(1)
+										->first()
+										->toArray();
+
+				if ($last['hosp_beds'] == null) {
+					// No hay datos hospitalarios este día, cogemos el último
+
+					$last_hospitals = Data::where('province', $province_code)
+																->whereNull('district')
+																->whereNull('city')
+																->whereNotNull('hosp_beds')
+																->where('date', '<', $last['date'])
+																->orderBy('date', 'desc')
+																->take(1)
+																->first()
+																->toArray();
+
+					$last = Data::addHospitalData($last, $last_hospitals);
+
+				}
 
 				// Data
-				$data = Data::where('province', $province->code)
-					->whereNull('district')
-					->whereNull('city')
-					->whereNotNull('confirmed_total')
-					->orderBy('date', 'desc')
-					->take($days)
-					->get()
-					->toArray();
+				$data = Data::where('province', $province_code)
+										->whereNull('district')
+										->whereNull('city')
+										->whereNotNull('confirmed_total')
+										->orderBy('date', 'desc')
+										->take($days)
+										->get()
+										->toArray();
+
+				// Operaciones especiales para datos hospitalarios
+				$info = Data::getHospitalSums($info);
+				$last = Data::getHospitalSums($last);
+				foreach ($data as $n => $d) {
+					$data[$n] = Data::getHospitalSums($d);
+				}
 
 				$output = [
-					'province' => $province->code,
+					'province' => $province_code == null ? '' : $province_code,
 					'district' => '',
 					'city' => '',
-					'mode' => 'province',
-					'name' => $province->name,
-					'info' => $info,
-					'last' => $last,
-					'icons' => Data::compareIcons($info, $last),
-					'data' => array_reverse($data),
-					'updated' => date('d/m/Y', strtotime($info['date'])),
-				];
-
-			} else {
-				// Es una región
-				
-				$region = Region::where('code', 'C01')->firstOrFail();
-
-				// Info
-				$info = Data::where('region', 'C01')
-					->whereNull('province')
-					->whereNull('district')
-					->whereNull('city')
-					->whereNotNull('confirmed_total')
-					->orderBy('date', 'desc')
-					->take(1)
-					->first()
-					->toArray();
-				
-				$info['population'] = $region->population;
-
-				// Last
-				$last = Data::where('region', 'C01')
-					->whereNull('province')
-					->whereNull('district')
-					->whereNull('city')
-					->whereNotNull('confirmed_total')
-					->where('date', '<', $info['date'])
-					->orderBy('date', 'desc')
-					->take(1)
-					->first()
-					->toArray();
-
-				// Data
-				$data = Data::where('region', 'C01')
-					->whereNull('province')
-					->whereNull('district')
-					->whereNull('city')
-					->whereNotNull('confirmed_total')
-					->orderBy('date', 'desc')
-					->take($days)
-					->get()
-					->toArray();
-				
-				$output = [
-					'province' => '',
-					'district' => '',
-					'city' => '',
-					'mode' => 'region',
-					'name' => $region->name,
+					'mode' => $mode,
+					'name' => $item->name,
 					'info' => $info,
 					'last' => $last,
 					'icons' => Data::compareIcons($info, $last),
