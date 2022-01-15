@@ -102,6 +102,13 @@ section.selector label {
 .select-province button.selected:hover {
 	background: #28a746bd;
 }
+.select-province small {
+	display: block;
+	padding: 7px 0 0 4px;
+	color: #888888;
+	font-size: 12px;
+	line-height: 1;
+}
 .select-district {
 	display: none;
 }
@@ -109,10 +116,28 @@ section.selector label {
 section.info {
 	display: none;
 	overflow: hidden;
-	margin-top: 40px;
+	margin: 40px auto 0 auto;
 	border-radius: 12px 12px 26px 26px;
 	background: rgba(40, 167, 69, 0.1);
 }
+section.info.city {
+	width: 80%;
+}
+/*section.info.city .col-lg-2 {
+  -ms-flex: 0 0 33.333333%;
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+section.info.city .col-lg-10 {
+  -ms-flex: 0 0 66.666667%;
+  flex: 0 0 66.666667%;
+  max-width: 66.666667%;
+}
+section.info.city .col-lg-3 {
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+}*/
 section.info .title {
 	padding: 5px 25px 5px 25px;
 	background: #28a745;
@@ -308,6 +333,10 @@ footer .share button:hover {
 		.select-province {
 			padding-right: 5px;
 		}
+		section.info.city {
+			width: 100%;
+		}
+
 }
 
 @media only screen 
@@ -333,6 +362,43 @@ footer .share button:hover {
 			padding-top: 10px;
 		}
 }
+
+
+section.info.city .level2 {
+	-ms-flex: 0 0 50% !important;
+	flex: 0 0 50% !important;
+	max-width: 50% !important;
+}
+@media only screen 
+   and (max-width : 575px) {
+
+		section.info .level2 {
+			-ms-flex: 0 0 50% !important;
+			flex: 0 0 50% !important;
+			max-width: 50% !important;
+		}
+
+}
+@media only screen 
+   and (min-width : 992px) {
+
+		section.info.city .level1 {
+			-ms-flex: 0 0 33.333333% !important;
+			flex: 0 0 33.333333% !important;
+			max-width: 33.333333% !important;
+		}
+		section.info.city .level-group {
+			-ms-flex: 0 0 66.666667% !important;
+			flex: 0 0 66.666667% !important;
+			max-width: 66.666667% !important;
+		}
+
+}
+
+
+
+
+
 
 .loader {
 	display: none;

@@ -76,7 +76,9 @@ foreach ($lists['provinces'] as $i) {
 }
 
 ?>
+					<small>Los datos de ocupación hospitalaria sólo están disponibles por provincias.</small>
 				</div>
+
 			</div>
 
 			<input type="hidden" id="select_district" name="select_district" value="<?= $selected_district ?>">
@@ -99,7 +101,7 @@ foreach ($lists['provinces'] as $i) {
 
 				<div class="days">
 					<div class="input-group">
-						<label for="select_days">Elige fechas</label>
+						<label for="select_days">Elige fechas para las gráficas</label>
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fa fa-calendar"></i></span>
 						</div>
@@ -130,38 +132,38 @@ foreach (config('custom.stats-days') as $k => $v) {
 
 			<div class="data row justify-content-center">
 
-				<div class="level1 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('incidence_14d', 'Incidencia<br>14 días', 'style1'); ?>
+				<div class="level1 col-lg-2 col-md-4 col-sm-6">
+					<?= htmlInfo('incidence_14d', 'Incidencia<br>14 días', 'style1'); ?>
 				</div>
 
-				<div class="col-lg-10 col-md-8 col-sm-12 col-12">
+				<div class="level-group col-lg-10 col-md-8 col-sm-12 col-12">
 
 					<div class="row">
 
-						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
-							<?php echo htmlInfo('confirmed_increment', 'Nuevos confirmados<span>*</span>', 'style2'); ?>
-							<?php echo htmlInfo('confirmed_total', 'Confirmados totales', 'style2'); ?>
-							<?php echo htmlInfo('confirmed_14d', 'Confirmados 14 días', 'style3'); ?>
-							<?php echo htmlInfo('confirmed_7d', 'Confirmados 7 días', 'style3'); ?>
-							<?php echo htmlInfo('incidence_7d', 'Incidencia 7 días', 'style3'); ?>
+						<div class="level2 col-lg-3 col-md-6 col-sm-6">
+							<?= htmlInfo('confirmed_increment', 'Nuevos confirmados<span>*</span>', 'style2'); ?>
+							<?= htmlInfo('confirmed_total', 'Confirmados totales', 'style2'); ?>
+							<?= htmlInfo('confirmed_14d', 'Confirmados 14 días', 'style3'); ?>
+							<?= htmlInfo('confirmed_7d', 'Confirmados 7 días', 'style3'); ?>
+							<?= htmlInfo('incidence_7d', 'Incidencia 7 días', 'style3'); ?>
 						</div>
 
-						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
-							<?php echo htmlInfo('dead_increment', 'Nuevos fallecidos<span>*</span>', 'style2'); ?>
-							<?php echo htmlInfo('dead_total', 'Fallecidos totales', 'style2'); ?>
-							<?php echo htmlInfo('dead_percent', 'Porcentaje fallecidos', 'stylep', 'Respecto a confirmados totales'); ?>
+						<div class="level2 col-lg-3 col-md-6 col-sm-6">
+							<?= htmlInfo('dead_increment', 'Nuevos fallecidos<span>*</span>', 'style2'); ?>
+							<?= htmlInfo('dead_total', 'Fallecidos totales', 'style2'); ?>
+							<?= htmlInfo('dead_percent', 'Porcentaje fallecidos', 'stylep', 'Respecto a confirmados totales'); ?>
 						</div>
 
-						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
-							<?php echo htmlInfo('hospitalized_increment', 'Nuevos hospitalizados<span>*</span>', 'style2'); ?>
-							<?php echo htmlInfo('hospitalized_total', 'Hospitalizados totales', 'style3'); ?>
-							<?php echo htmlInfo('hospitalized_percent', 'Porcentaje hospitalizados', 'stylep', 'Respecto a confirmados totales'); ?>
+						<div class="level2 col-lg-3 col-md-6 col-sm-6">
+							<?= htmlInfo('hospitalized_increment', 'Nuevos hospitalizados<span>*</span>', 'style2'); ?>
+							<?= htmlInfo('hospitalized_total', 'Hospitalizados totales', 'style3'); ?>
+							<?= htmlInfo('hospitalized_percent', 'Porcentaje hospitalizados', 'stylep', 'Respecto a confirmados totales'); ?>
 						</div>
 
-						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
-							<?php echo htmlInfo('uci_increment', 'Nuevos ingresos UCI<span>*</span>', 'style2'); ?>
-							<?php echo htmlInfo('uci_total', 'Ingresados UCI totales', 'style3'); ?>
-							<?php echo htmlInfo('uci_percent', 'Porcentaje ingresados UCI', 'stylep', 'Respecto a hospitalizados totales'); ?>
+						<div class="level2 col-lg-3 col-md-6 col-sm-6">
+							<?= htmlInfo('uci_increment', 'Nuevos ingresos UCI<span>*</span>', 'style2'); ?>
+							<?= htmlInfo('uci_total', 'Ingresados UCI totales', 'style3'); ?>
+							<?= htmlInfo('uci_percent', 'Porcentaje ingresados UCI', 'stylep', 'Respecto a hospitalizados totales'); ?>
 						</div>
 
 					</div>

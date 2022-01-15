@@ -180,6 +180,8 @@ var app = {
 
 			}
 
+			$('section.info').removeClass().addClass('info').addClass(data.mode);
+
 			$('section.info div.title div.name').html(title);
 			$('section.info div.title div.population strong').html(data.info.population);
 			
