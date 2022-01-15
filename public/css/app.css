@@ -259,10 +259,15 @@ div.graph-container div.description {
 	font-size: 20px !important;
 }
 .apexcharts-toolbar {
-	right: auto !important;
-	left: 260px !important;
+	right: 0px !important;
+	left: auto !important;
+}
+.apexcharts-toolbar .apexcharts-menu-icon::before {
+	content: "Descargar ";
 }
 .apexcharts-menu-icon {
+	display: block;
+	width: 150px !important;
 	color: #b4bcc2 !important;
 }
 .apexcharts-menu-icon:hover {
