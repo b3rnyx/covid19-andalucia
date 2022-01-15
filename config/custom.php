@@ -111,20 +111,11 @@ return [
 		],
 		'incidence_7d' => [
 			'name' => 'Incidencia 7 días',
-			'legend' => 'Datos disponibles a partir del 10/02/2021.',
+			'legend' => 'Datos disponibles a partir del 10/02/2021. Datos por municipios disponibles a partir del 14/01/2022.',
 			'description' => 'Casos en los últimos 7 días de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación) por cada 100.000 habitantes.',
-			'allowed' => ['region', 'province'],
+			'allowed' => ['region', 'province', 'city'],
 			'type' => 'number',
 			'green' => 'desc',
-			'graph' => [
-				'type' => 'line',
-			],
-		],
-		'confirmed_percent' => [
-			'name' => 'Porcentaje confirmados',
-			'legend' => 'Respecto a la población.',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'percent',
 			'graph' => [
 				'type' => 'line',
 			],
@@ -187,35 +178,6 @@ return [
 				'type' => 'line',
 			],
 		],
-		'recovered_total' => [
-			'name' => 'Curados totales',
-			'legend' => 'Datos por municipios disponibles a partir del 29/01/2021.',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
-			'graph' => [
-				'type' => 'line',
-			],
-		],
-		'recovered_increment' => [
-			'name' => 'Nuevos curados cada día',
-			'legend' => 'Datos no oficiales mostrados a título orientativo.',
-			'description' => 'Aumento con respecto al día anterior en el número total de curados.',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
-			'green' => 'asc',
-			'graph' => [
-				'type' => 'columns',
-			],
-		],
-		'recovered_percent' => [
-			'name' => 'Porcentaje curados',
-			'legend' => 'Respecto a confirmados. Datos por municipios disponibles a partir del 29/01/2021.',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'percent',
-			'graph' => [
-				'type' => 'line',
-			],
-		],
 		'dead_total' => [
 			'name' => 'Fallecidos totales',
 			'allowed' => ['region', 'province', 'district', 'city'],
@@ -248,6 +210,44 @@ return [
 		// Datos descartados
 
 		/*
+		'confirmed_percent' => [
+			'name' => 'Porcentaje confirmados',
+			'legend' => 'Respecto a la población.',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'percent',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'recovered_total' => [
+			'name' => 'Curados totales',
+			'legend' => 'Datos por municipios disponibles a partir del 29/01/2021.',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'recovered_increment' => [
+			'name' => 'Nuevos curados cada día',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número total de curados.',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'asc',
+			'graph' => [
+				'type' => 'columns',
+			],
+		],
+		'recovered_percent' => [
+			'name' => 'Porcentaje curados',
+			'legend' => 'Respecto a confirmados. Datos por municipios disponibles a partir del 29/01/2021.',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'percent',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
 		'legacy_confirmed_total' => [
 			'name' => 'Total confirmados',
 			'allowed' => ['region', 'province', 'district', 'city'],

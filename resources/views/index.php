@@ -128,43 +128,44 @@ foreach (config('custom.stats-dates') as $k => $v) {
 				<div class="population">Población: <strong></strong></div>
 			</div>
 
-			<div class="data row">
+			<div class="data row justify-content-center">
 
 				<div class="level1 col-lg-2 col-md-4 col-sm-6 col-6">
 					<?php echo htmlInfo('incidence_14d', 'Incidencia<br>14 días', 'style1'); ?>
 				</div>
 
-				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('confirmed_increment', 'Nuevos confirmados<span>*</span>', 'style2'); ?>
-					<?php echo htmlInfo('confirmed_total', 'Confirmados totales', 'style2'); ?>
-					<?php echo htmlInfo('confirmed_14d', 'Confirmados 14 días', 'style3'); ?>
-					<?php echo htmlInfo('confirmed_7d', 'Confirmados 7 días', 'style3'); ?>
-					<?php echo htmlInfo('incidence_7d', 'Incidencia 7 días', 'style3'); ?>
-					<?php echo htmlInfo('confirmed_percent', 'Porcentaje confirmados', 'stylep', 'Respecto a la población'); ?>
-				</div>
+				<div class="col-lg-10 col-md-8 col-sm-12 col-12">
 
-				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('recovered_increment', 'Nuevos curados<span>*</span>', 'style2'); ?>
-					<?php echo htmlInfo('recovered_total', 'Curados totales', 'style2'); ?>
-					<?php echo htmlInfo('recovered_percent', 'Porcentaje curados', 'stylep', 'Respecto a confirmados totales'); ?>
-				</div>
+					<div class="row">
 
-				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('dead_increment', 'Nuevos fallecidos<span>*</span>', 'style2'); ?>
-					<?php echo htmlInfo('dead_total', 'Fallecidos totales', 'style2'); ?>
-					<?php echo htmlInfo('dead_percent', 'Porcentaje fallecidos', 'stylep', 'Respecto a confirmados totales'); ?>
-				</div>
+						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
+							<?php echo htmlInfo('confirmed_increment', 'Nuevos confirmados<span>*</span>', 'style2'); ?>
+							<?php echo htmlInfo('confirmed_total', 'Confirmados totales', 'style2'); ?>
+							<?php echo htmlInfo('confirmed_14d', 'Confirmados 14 días', 'style3'); ?>
+							<?php echo htmlInfo('confirmed_7d', 'Confirmados 7 días', 'style3'); ?>
+							<?php echo htmlInfo('incidence_7d', 'Incidencia 7 días', 'style3'); ?>
+						</div>
 
-				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('hospitalized_increment', 'Nuevos hospitalizados<span>*</span>', 'style2'); ?>
-					<?php echo htmlInfo('hospitalized_total', 'Hospitalizados totales', 'style3'); ?>
-					<?php echo htmlInfo('hospitalized_percent', 'Porcentaje hospitalizados', 'stylep', 'Respecto a confirmados totales'); ?>
-				</div>
+						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
+							<?php echo htmlInfo('dead_increment', 'Nuevos fallecidos<span>*</span>', 'style2'); ?>
+							<?php echo htmlInfo('dead_total', 'Fallecidos totales', 'style2'); ?>
+							<?php echo htmlInfo('dead_percent', 'Porcentaje fallecidos', 'stylep', 'Respecto a confirmados totales'); ?>
+						</div>
 
-				<div class="level2 col-lg-2 col-md-4 col-sm-6 col-6">
-					<?php echo htmlInfo('uci_increment', 'Nuevos ingresos UCI<span>*</span>', 'style2'); ?>
-					<?php echo htmlInfo('uci_total', 'Ingresados UCI totales', 'style3'); ?>
-					<?php echo htmlInfo('uci_percent', 'Porcentaje ingresados UCI', 'stylep', 'Respecto a hospitalizados totales'); ?>
+						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
+							<?php echo htmlInfo('hospitalized_increment', 'Nuevos hospitalizados<span>*</span>', 'style2'); ?>
+							<?php echo htmlInfo('hospitalized_total', 'Hospitalizados totales', 'style3'); ?>
+							<?php echo htmlInfo('hospitalized_percent', 'Porcentaje hospitalizados', 'stylep', 'Respecto a confirmados totales'); ?>
+						</div>
+
+						<div class="level2 col-lg-3 col-md-6 col-sm-6 col-6">
+							<?php echo htmlInfo('uci_increment', 'Nuevos ingresos UCI<span>*</span>', 'style2'); ?>
+							<?php echo htmlInfo('uci_total', 'Ingresados UCI totales', 'style3'); ?>
+							<?php echo htmlInfo('uci_percent', 'Porcentaje ingresados UCI', 'stylep', 'Respecto a hospitalizados totales'); ?>
+						</div>
+
+					</div>
+
 				</div>
 				
 			</div>
@@ -194,18 +195,18 @@ foreach (config('custom.stats-items') as $k => $v) {
 
 	<footer>
 		<div class="row">
-			<div class="develop col-md-4">
+			<div class="develop col-md-3">
 				Desarrollado por Pablo Fernández (<a href="https://twitter.com/b3rny" title="Visitar perfil en Twitter">@b3rny</a>).
-				<br><span>Código fuente disponible en <a href="https://github.com/b3rnyx/covid19-andalucia" title="Ver código fuente en Github">GitHub</a>.</span>
+				<br><span>Código fuente: <a href="https://github.com/b3rnyx/covid19-andalucia" title="Ver código fuente en Github">GitHub</a>.</span>
 			</div>
-			<div class="source col-md-4">
-				Fuentes de datos:
-				<ul>
-					<li>Diario <span>(desde el 01/02/2021)</span>: <a href="https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/informe/anual?CodOper=b3_2314&idNode=42348">Junta de Andalucía</a>.</li>
-					<li>Histórico <span>(hasta el 31/01/2021)</span>: <a href="https://github.com/Pakillo/COVID19-Andalucia">COVID19-Andalucia</a> por <a href="https://github.com/Pakillo">Pakillo</a>.</li>
+			<div class="source col-md-6">
+				Fuentes de datos:<br>
+				<a href="https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/informe/anual?CodOper=b3_2314&idNode=42348">Junta de Andalucía</a>, 
+				<a href="https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/capacidadAsistencial.htm">Ministerio de Sanidad</a> 
+				y <a href="https://github.com/Pakillo/COVID19-Andalucia">COVID19-Andalucia</a> (por <a href="https://github.com/Pakillo">Pakillo</a>). 
 				</ul>
 			</div>
-			<div class="share col-md-4">
+			<div class="share col-md-3">
 				¡Comparte!
 				<ul>
 					<li><a href="https://twitter.com/intent/tweet?text=<?= urlencode(config('app.name') . ' - ' . config('custom.social.share-text') . ': ' . config('app.url')) ?>" class="btn" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
