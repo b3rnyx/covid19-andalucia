@@ -241,6 +241,7 @@ section.graphs div.days {
 	margin: 45px auto 20px auto;
 }
 div.graph-container {
+	position: relative;
 	margin-top: 60px;
 	padding: 20px 15px 0 15px;
 	border: 1px solid #bbbbbb;
@@ -249,25 +250,44 @@ div.graph-container {
 	box-shadow: 3px 3px 12px 0px rgba(0,0,0,0.10);
 }
 div.graph-container div.description {
-	margin: -20px 0 0 0;
+	margin: -40px 0 0 0;
 	padding: 0 20px 10px 20px;
 	color: #888888;
 	font-size: 0.7em;
 	line-height: 1.2;
 }
+div.graph-container .graph-expand {
+	position: absolute;
+	right: 45px;
+	top: 16px;
+}
+div.graph-container .graph-expand button {
+	border: none;
+	background: none;
+	color: #b4bcc2 !important;
+	font-size: 14px;
+}
+div.graph-container .graph-expand button i {
+	font-size: 20px;
+}
+div.graph-container .graph-expand button span {
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 2px;
+}
+div.graph-container .graph-expand button:hover {
+	color: #6E8192 !important;
+}
 .fa-cloud-download {
 	font-size: 20px !important;
 }
 .apexcharts-toolbar {
-	right: 0px !important;
+	right: 100px !important;
 	left: auto !important;
-}
-.apexcharts-toolbar .apexcharts-menu-icon::before {
-	content: "Descargar ";
 }
 .apexcharts-menu-icon {
 	display: block;
-	width: 150px !important;
+	width: 125px !important;
 	color: #b4bcc2 !important;
 }
 .apexcharts-menu-icon:hover {

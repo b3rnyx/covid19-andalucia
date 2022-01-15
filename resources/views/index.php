@@ -184,6 +184,9 @@ foreach (config('custom.stats-items') as $k => $v) {
 		echo '<div class="graph-container data-switch switch-' . implode(' switch-', $v['allowed']) . ' col-md-12">
 						<div id="graph-' . $k . '" class="graph" data-item="' . $k . '"></div>
 						' . (isset($v['description']) ? '<div class="description">' . $v['description'] . '</div>' : '') . '
+						<div class="graph-expand">
+							<button type="button" class="btn expand" title="Expandir este gráfico" data-item="' . $k . '"><i class="fa fa-angle-double-down"></i><span> Expandir</span></button>
+						</div>
 					</div>';
 	}
 

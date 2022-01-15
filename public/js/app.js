@@ -42,6 +42,8 @@ var app = {
 			}, 2000);
 		});
 
+		$('button.expand').on('click', app.graphs.heightToggle);
+
 		$('i.tooltip-switch').tooltip({
 			placement: 'right',
 		});
@@ -248,7 +250,7 @@ var app = {
 										offsetX: -80,
 										offsetY: 0,
 										tools: {
-											download: '<i class="fa fa-cloud-download"></i>',
+											download: '<i class="fa fa-cloud-download"></i> Descargar',
 											selection: false,
 											zoom: false,
 											zoomin: false,
@@ -256,7 +258,7 @@ var app = {
 											pan: false,
 											reset: false,
 										}
-									}
+									},
 								},
 								dataLabels: {
 									enabled: false
@@ -286,13 +288,13 @@ var app = {
 								xaxis: {
 									categories: ylabels,
 									tickAmount: 18,
-									labels: {
+									/*labels: {
 										formatter: function (value, timestamp, opts) {
 											if (typeof value !== 'undefined') {
 												return value.substr(0, 5);
 											}
 										}
-									},
+									},*/
 								},
 								yaxis: {
 									min: 0,
@@ -399,13 +401,13 @@ var app = {
 								xaxis: {
 									categories: ylabels,
 									tickAmount: 18,
-									labels: {
+									/*labels: {
 										formatter: function (value, timestamp, opts) {
 											if (typeof value !== 'undefined') {
 												return value.substr(0, 5);
 											}
 										}
-									},
+									},*/
 								},
 								yaxis: {
 									min: 0,
@@ -609,6 +611,17 @@ var app = {
 			$('section.graphs').show();
 
 		},
+
+		heightToggle: function () {
+
+			var i = $(this).attr('data-item');
+			app.graphs.charts[i].updateOptions({
+				chart: {
+					height: 550,
+				}
+			});
+
+		}
 
 	},
 
