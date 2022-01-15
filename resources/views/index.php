@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>COVID-19 - Andalucía</title>
-	<meta name="description" content="Consulta los datos históricos por municipios de COVID-19 en Andalucía.">
+	<meta name="description" content="Consulta los datos históricos por provincias y municipios de COVID-19 en Andalucía.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<link rel="apple-touch-icon" href="favicon.ico">
@@ -12,7 +12,7 @@
 	<meta property="og:url" content="<?= config('app.url') ?>" />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="COVID-19 - Andalucía" />
-	<meta property="og:description" content="Consulta los datos históricos por municipios de COVID-19 en Andalucía." />
+	<meta property="og:description" content="Consulta los datos históricos por provincias y municipios de COVID-19 en Andalucía." />
 	<meta property="og:image" content="<?= config('app.url') ?>images/fb-share.jpg" />
 	
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -39,7 +39,7 @@
 	<header>
 		<h1>COVID-19 en Andalucía</h1>
 		<h2>
-			Consulta los datos históricos por municipios de COVID-19 en Andalucía.
+			Consulta los datos históricos por provincias y municipios de COVID-19 en Andalucía.
 		</h2>
 		
 		<div class="update row">
