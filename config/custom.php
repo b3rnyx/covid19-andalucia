@@ -68,16 +68,27 @@ return [
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 		],
-		
 		'confirmed_total' => [
 			'name' => 'Confirmados totales',
-			'description' => 'Total acumulado de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
-			'graph' => [
-				'type' => 'line',
-			],
 		],
+		'dead_total' => [
+			'name' => 'Fallecidos totales',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+		],
+		'hospitalized_total' => [
+			'name' => 'Hospitalizados totales',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+		],
+		'uci_total' => [
+			'name' => 'Ingresados en UCI totales',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+		],
+		
 		'confirmed_increment' => [
 			'name' => 'Nuevos confirmados cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
@@ -120,15 +131,6 @@ return [
 				'type' => 'line',
 			],
 		],
-		'hospitalized_total' => [
-			'name' => 'Hospitalizados totales',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'line',
-			],
-		],
 		'hospitalized_increment' => [
 			'name' => 'Nuevos hospitalizados cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
@@ -149,15 +151,6 @@ return [
 				'type' => 'line',
 			],
 		],
-		'uci_total' => [
-			'name' => 'Ingresados en UCI totales',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'line',
-			],
-		],
 		'uci_increment' => [
 			'name' => 'Nuevos ingresos en UCI cada día',
 			'legend' => 'Datos no oficiales mostrados a título orientativo.',
@@ -174,14 +167,6 @@ return [
 			'legend' => 'Respecto a hospitalizados totales.',
 			'allowed' => ['region', 'province'],
 			'type' => 'percent',
-			'graph' => [
-				'type' => 'line',
-			],
-		],
-		'dead_total' => [
-			'name' => 'Fallecidos totales',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
 			'graph' => [
 				'type' => 'line',
 			],
@@ -210,6 +195,15 @@ return [
 		// Datos descartados
 
 		/*
+		'confirmed_total' => [
+			'name' => 'Confirmados totales',
+			'description' => 'Total acumulado de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
 		'confirmed_percent' => [
 			'name' => 'Porcentaje confirmados',
 			'legend' => 'Respecto a la población.',
@@ -248,6 +242,32 @@ return [
 				'type' => 'line',
 			],
 		],
+		'hospitalized_total' => [
+			'name' => 'Hospitalizados totales',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'uci_total' => [
+			'name' => 'Ingresados en UCI totales',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'dead_total' => [
+			'name' => 'Fallecidos totales',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
 		'legacy_confirmed_total' => [
 			'name' => 'Total confirmados',
 			'allowed' => ['region', 'province', 'district', 'city'],
@@ -255,7 +275,8 @@ return [
 			'graph' => [
 				'type' => 'line',
 			],
-		],'legacy_increase' => [
+		],
+		'legacy_increase' => [
 			'name' => 'Confirmados diarios',
 			'description' => 'Aumento con respecto al día anterior en el número de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province'],
