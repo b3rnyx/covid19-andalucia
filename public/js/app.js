@@ -241,6 +241,7 @@ var app = {
 								}],
 								chart: {
 									height: 350,
+									parentHeightOffset: 0,
 									type: 'line',
 									zoom: {
 										enabled: false
@@ -359,7 +360,7 @@ var app = {
 										offsetX: -80,
 										offsetY: 0,
 										tools: {
-											download: '<i class="fa fa-cloud-download"></i>',
+											download: '<i class="fa fa-cloud-download"></i> Descargar',
 											selection: false,
 											zoom: false,
 											zoomin: false,
