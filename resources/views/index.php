@@ -97,16 +97,16 @@ foreach ($lists['provinces'] as $i) {
 					</select>
 				</div>
 
-				<div class="dates">
+				<div class="days">
 					<div class="input-group">
-						<label for="select_dates">Elige fechas</label>
+						<label for="select_days">Elige fechas</label>
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fa fa-calendar"></i></span>
 						</div>
-						<select id="select_dates" class="form-control">
+						<select id="select_days" class="form-control">
 <?php
 
-foreach (config('custom.stats-dates') as $k => $v) {
+foreach (config('custom.stats-days') as $k => $v) {
 
 	echo '<option value="' . $k . '">' . $v . '</option>';
 

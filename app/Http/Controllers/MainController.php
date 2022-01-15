@@ -63,7 +63,7 @@ class MainController extends Controller
 		public function load(Request $request)
 		{
 
-			$days = isset(config('custom.stats-dates')[$request->input('dates')]) ? $request->input('dates') : 30;
+			$days = isset(config('custom.stats-days')[$request->input('days')]) ? $request->input('days') : 30;
 
 			if ($request->input('selected') == 'city' && $request->input('value') != '') {
 				// Es una ciudad

@@ -210,7 +210,7 @@ section.info .stylep {
 section.graphs {
 	display: none;
 }
-section.graphs div.dates {
+section.graphs div.days {
 	width: 50%;
 	min-width: 300px;
 	margin: 45px auto 20px auto;

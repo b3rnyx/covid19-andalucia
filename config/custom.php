@@ -33,7 +33,7 @@ return [
 	],
 
 	// Fechas del selector de fechas
-	'stats-dates' => [
+	'stats-days' => [
 		'7' => 'Mostrar datos de la ultima semana',
 		'14' => 'Mostrar datos de las últimas 2 semanas', 
 		'30' => 'Mostrar datos del último mes',

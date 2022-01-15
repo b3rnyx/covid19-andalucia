@@ -12,10 +12,10 @@ var app = {
 	
 	init: function () {
 		
-		$('#select_dates').val('30');
+		$('#select_days').val('30');
 
 		$('section.selector div.select-province button').on('click', app.selector.select);
-		$('section.selector select, section.graphs div.dates select').on('change', app.selector.select);
+		$('section.selector select, section.graphs div.days select').on('change', app.selector.select);
 		$('section.selector select[name="select_city"]').select2({
 			theme: "bootstrap"
 		});
@@ -103,7 +103,7 @@ var app = {
 				data: {
 					selected: selected,
 					value: value,
-					dates: $('#select_dates').val(),
+					days: $('#select_days').val(),
 				}
 			})
 			.done(function (data, textStatus, jqXHR) {
@@ -134,8 +134,8 @@ var app = {
 				} else {
 					url = '?' + selected + '=' + value;
 				}
-				if ($('#select_dates').val() != '30') {
-					url += ((url.indexOf('?') == -1) ? '?days=' : '&days=') + $('#select_dates').val();
+				if ($('#select_days').val() != '30') {
+					url += ((url.indexOf('?') == -1) ? '?days=' : '&days=') + $('#select_days').val();
 				}
 
 				window.history.pushState('', '', url);
