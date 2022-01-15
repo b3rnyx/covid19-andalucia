@@ -457,6 +457,31 @@ class ImportController extends Controller
 
 		$lapse = microtime(true);
 
+		// Sumatorio para región
+		$data_sum = [
+			'hosp_beds' => 0,
+			'hosp_beds_covid' => 0,
+			'hosp_beds_covid_increment' => 0,
+			'hosp_beds_nocovid' => 0,
+			'hosp_admissions' => 0,
+			'hosp_admissions_increment' => 0,
+			'hosp_discharges' => 0,
+			'hosp_uci_resp_beds' => 0,
+			'hosp_uci_resp_beds_covid' => 0,
+			'hosp_uci_resp_beds_covid_increment' => 0,
+			'hosp_uci_resp_beds_nocovid' => 0,
+			'hosp_uci_resp_admissions' => 0,
+			'hosp_uci_resp_admissions_increment' => 0,
+			'hosp_uci_resp_discharges' => 0,
+			'hosp_uci_beds' => 0,
+			'hosp_uci_beds_covid' => 0,
+			'hosp_uci_beds_covid_increment' => 0,
+			'hosp_uci_beds_nocovid' => 0,
+			'hosp_uci_admissions' => 0,
+			'hosp_uci_admissions_increment' => 0,
+			'hosp_uci_discharges' => 0,
+		];
+
 		foreach ($inserts as $p => $d) {
 
 			$increments = Data::getHospitalIncrements($date_data, $p, $d);
@@ -494,7 +519,64 @@ class ImportController extends Controller
 				]
 			);
 
+			// Sumatorio
+			$data_sum['hosp_beds'] += $d['hosp_beds'];
+			$data_sum['hosp_beds_covid'] += $d['hosp_beds_covid'];
+			$data_sum['hosp_beds_covid_increment'] += $increments['hosp_beds_covid_increment'];
+			$data_sum['hosp_beds_nocovid'] += $d['hosp_beds_nocovid'];
+			$data_sum['hosp_admissions'] += $d['hosp_admissions'];
+			$data_sum['hosp_admissions_increment'] += $increments['hosp_admissions_increment'];
+			$data_sum['hosp_discharges'] += $d['hosp_discharges'];
+			$data_sum['hosp_uci_resp_beds'] += $d['hosp_uci_resp_beds'];
+			$data_sum['hosp_uci_resp_beds_covid'] += $d['hosp_uci_resp_beds_covid'];
+			$data_sum['hosp_uci_resp_beds_covid_increment'] += $increments['hosp_uci_resp_beds_covid_increment'];
+			$data_sum['hosp_uci_resp_beds_nocovid'] += $d['hosp_uci_resp_beds_nocovid'];
+			$data_sum['hosp_uci_resp_admissions'] += $d['hosp_uci_resp_admissions'];
+			$data_sum['hosp_uci_resp_admissions_increment'] += $increments['hosp_uci_resp_admissions_increment'];
+			$data_sum['hosp_uci_resp_discharges'] += $d['hosp_uci_resp_discharges'];
+			$data_sum['hosp_uci_beds'] += $d['hosp_uci_beds'];
+			$data_sum['hosp_uci_beds_covid'] += $d['hosp_uci_beds_covid'];
+			$data_sum['hosp_uci_beds_covid_increment'] += $increments['hosp_uci_beds_covid_increment'];
+			$data_sum['hosp_uci_beds_nocovid'] += $d['hosp_uci_beds_nocovid'];
+			$data_sum['hosp_uci_admissions'] += $d['hosp_uci_admissions'];
+			$data_sum['hosp_uci_admissions_increment'] += $increments['hosp_uci_admissions_increment'];
+			$data_sum['hosp_uci_discharges'] += $d['hosp_uci_discharges'];
+
 		}
+
+		// Insertamos sumatorio para región
+		Data::updateOrCreate(
+			[
+				'date' => $date_data,
+				'region' => 'C01',
+				'province' => null, 
+				'city' => null
+			],
+			[
+				'hosp_beds' => $data_sum['hosp_beds'],
+				'hosp_beds_covid' => $data_sum['hosp_beds_covid'],
+				'hosp_beds_covid_increment' => $data_sum['hosp_beds_covid_increment'],
+				'hosp_beds_nocovid' => $data_sum['hosp_beds_nocovid'],
+				'hosp_admissions' => $data_sum['hosp_admissions'],
+				'hosp_admissions_increment' => $data_sum['hosp_admissions_increment'],
+				'hosp_discharges' => $data_sum['hosp_discharges'],
+				'hosp_uci_resp_beds' => $data_sum['hosp_uci_resp_beds'],
+				'hosp_uci_resp_beds_covid' => $data_sum['hosp_uci_resp_beds_covid'],
+				'hosp_uci_resp_beds_covid_increment' => $data_sum['hosp_uci_resp_beds_covid_increment'],
+				'hosp_uci_resp_beds_nocovid' => $data_sum['hosp_uci_resp_beds_nocovid'],
+				'hosp_uci_resp_admissions' => $data_sum['hosp_uci_resp_admissions'],
+				'hosp_uci_resp_admissions_increment' => $data_sum['hosp_uci_resp_admissions_increment'],
+				'hosp_uci_resp_discharges' => $data_sum['hosp_uci_resp_discharges'],
+				'hosp_uci_beds' => $data_sum['hosp_uci_beds'],
+				'hosp_uci_beds_covid' => $data_sum['hosp_uci_beds_covid'],
+				'hosp_uci_beds_covid_increment' => $data_sum['hosp_uci_beds_covid_increment'],
+				'hosp_uci_beds_nocovid' => $data_sum['hosp_uci_beds_nocovid'],
+				'hosp_uci_admissions' => $data_sum['hosp_uci_admissions'],
+				'hosp_uci_admissions_increment' => $data_sum['hosp_uci_admissions_increment'],
+				'hosp_uci_discharges' => $data_sum['hosp_uci_discharges'],
+				'created_at' => date('Y-m-d H:i:s'),
+			]
+		);
 
 		$log .= "Data stored, " . count($inserts) . " items (" . round(microtime(true) - $lapse) . " seconds).\n";
 
@@ -878,7 +960,7 @@ class ImportController extends Controller
 		$start = microtime(true);
 
 		// Datos iniciales
-		$date_file = '2022-01-11';
+		$date_file = date('Y-m-d', strtotime('yesterday'));
 		$province_codes = array_map(function ($v) { return intval($v); }, Province::all()->pluck('code')->toArray());
 
 		// --------------
@@ -973,6 +1055,25 @@ class ImportController extends Controller
 		$lapse = microtime(true);
 
 		foreach ($inserts as $date => $data) {
+
+			$sum = [
+				'hosp_beds' => 0,
+				'hosp_beds_covid' => 0,
+				'hosp_beds_nocovid' => 0,
+				'hosp_admissions' => 0,
+				'hosp_discharges' => 0,
+				'hosp_uci_resp_beds' => 0,
+				'hosp_uci_resp_beds_covid' => 0,
+				'hosp_uci_resp_beds_nocovid' => 0,
+				'hosp_uci_resp_admissions' => 0,
+				'hosp_uci_resp_discharges' => 0,
+				'hosp_uci_beds' => 0,
+				'hosp_uci_beds_covid' => 0,
+				'hosp_uci_beds_nocovid' => 0,
+				'hosp_uci_admissions' => 0,
+				'hosp_uci_discharges' => 0,
+			];
+
 			foreach ($data as $p => $d) {
 
 				//$increments = Data::getHospitalIncrements($date, $p, $d);
@@ -1004,9 +1105,55 @@ class ImportController extends Controller
 						'hosp_uci_discharges' => $d['hosp_uci_discharges'],
 					]);
 
+					$sum['hosp_beds'] += $d['hosp_beds'];
+					$sum['hosp_beds_covid'] += $d['hosp_beds_covid'];
+					$sum['hosp_beds_nocovid'] += $d['hosp_beds_nocovid'];
+					$sum['hosp_admissions'] += $d['hosp_admissions'];
+					$sum['hosp_discharges'] += $d['hosp_discharges'];
+					$sum['hosp_uci_resp_beds'] += $d['hosp_uci_resp_beds'];
+					$sum['hosp_uci_resp_beds_covid'] += $d['hosp_uci_resp_beds_covid'];
+					$sum['hosp_uci_resp_beds_nocovid'] += $d['hosp_uci_resp_beds_nocovid'];
+					$sum['hosp_uci_resp_admissions'] += $d['hosp_uci_resp_admissions'];
+					$sum['hosp_uci_resp_discharges'] += $d['hosp_uci_resp_discharges'];
+					$sum['hosp_uci_beds'] += $d['hosp_uci_beds'];
+					$sum['hosp_uci_beds_covid'] += $d['hosp_uci_beds_covid'];
+					$sum['hosp_uci_beds_nocovid'] += $d['hosp_uci_beds_nocovid'];
+					$sum['hosp_uci_admissions'] += $d['hosp_uci_admissions'];
+					$sum['hosp_uci_discharges'] += $d['hosp_uci_discharges'];
+
 				}
 
 			}
+
+			$item = Data::where('date', $date)
+									->where('region', 'C01')
+									->whereNull('province')
+									->whereNull('city')
+									->orderBy('id', 'asc')
+									->first();
+				
+			if ($item) {
+
+				$item->update([
+					'hosp_beds' => $sum['hosp_beds'],
+					'hosp_beds_covid' => $sum['hosp_beds_covid'],
+					'hosp_beds_nocovid' => $sum['hosp_beds_nocovid'],
+					'hosp_admissions' => $sum['hosp_admissions'],
+					'hosp_discharges' => $sum['hosp_discharges'],
+					'hosp_uci_resp_beds' => $sum['hosp_uci_resp_beds'],
+					'hosp_uci_resp_beds_covid' => $sum['hosp_uci_resp_beds_covid'],
+					'hosp_uci_resp_beds_nocovid' => $sum['hosp_uci_resp_beds_nocovid'],
+					'hosp_uci_resp_admissions' => $sum['hosp_uci_resp_admissions'],
+					'hosp_uci_resp_discharges' => $sum['hosp_uci_resp_discharges'],
+					'hosp_uci_beds' => $sum['hosp_uci_beds'],
+					'hosp_uci_beds_covid' => $sum['hosp_uci_beds_covid'],
+					'hosp_uci_beds_nocovid' => $sum['hosp_uci_beds_nocovid'],
+					'hosp_uci_admissions' => $sum['hosp_uci_admissions'],
+					'hosp_uci_discharges' => $sum['hosp_uci_discharges'],
+				]);
+
+			}
+
 		}
 
 		// Actualizamos incrementos
