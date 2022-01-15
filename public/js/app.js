@@ -286,6 +286,13 @@ var app = {
 								xaxis: {
 									categories: ylabels,
 									tickAmount: 18,
+									labels: {
+										formatter: function (value, timestamp, opts) {
+											if (typeof value !== 'undefined') {
+												return value.substr(0, 5);
+											}
+										}
+									},
 								},
 								yaxis: {
 									min: 0,
@@ -392,6 +399,13 @@ var app = {
 								xaxis: {
 									categories: ylabels,
 									tickAmount: 18,
+									labels: {
+										formatter: function (value, timestamp, opts) {
+											if (typeof value !== 'undefined') {
+												return value.substr(0, 5);
+											}
+										}
+									},
 								},
 								yaxis: {
 									min: 0,
