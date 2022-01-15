@@ -159,11 +159,11 @@ class ImportController extends Controller
 		$lapse = microtime(true);
 
 		$q = Data::where('region', 'C01')
-			->where('province', null)
-			->where('district', null)
-			->where('city', null)
+			->whereNull('province')
+			->whereNull('district')
+			->whereNull('city')
 			->where('confirmed_total', $data_provinces[null]['confirmed_total'])
-			->where('confirmed_14d', $data_provinces[null]['incidence_14d'])
+			->where('confirmed_14d', $data_provinces[null]['confirmed_14d'])
 			->where('hospitalized_total', $data_provinces[null]['hospitalized_total'])
 			->where('recovered_total', $data_provinces[null]['recovered_total'])
 			->where('dead_total', $data_provinces[null]['dead_total'])
