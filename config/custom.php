@@ -70,6 +70,7 @@ return [
 		],
 		'confirmed_total' => [
 			'name' => 'Confirmados totales',
+			'description' => 'Total acumulado de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
 		],
@@ -82,11 +83,27 @@ return [
 			'name' => 'Hospitalizados totales',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
+			'green' => 'desc',
 		],
 		'uci_total' => [
 			'name' => 'Ingresados en UCI totales',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
+			'green' => 'desc',
+		],
+		'confirmed_14d' => [
+			'name' => 'Confirmados 14 días',
+			'description' => 'Número acumulado en los últimos 14 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'confirmed_7d' => [
+			'name' => 'Confirmados 7 días',
+			'description' => 'Número acumulado en los últimos 7 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'desc',
 		],
 		
 		'confirmed_increment' => [
@@ -98,26 +115,6 @@ return [
 			'green' => 'desc',
 			'graph' => [
 				'type' => 'columns',
-			],
-		],
-		'confirmed_14d' => [
-			'name' => 'Confirmados 14 días',
-			'description' => 'Número acumulado en los últimos 14 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'line',
-			],
-		],
-		'confirmed_7d' => [
-			'name' => 'Confirmados 7 días',
-			'description' => 'Número acumulado en los últimos 7 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'line',
 			],
 		],
 		'incidence_7d' => [
@@ -200,6 +197,26 @@ return [
 			'description' => 'Total acumulado de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'confirmed_14d' => [
+			'name' => 'Confirmados 14 días',
+			'description' => 'Número acumulado en los últimos 14 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'confirmed_7d' => [
+			'name' => 'Confirmados 7 días',
+			'description' => 'Número acumulado en los últimos 7 días de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+			'green' => 'desc',
 			'graph' => [
 				'type' => 'line',
 			],
