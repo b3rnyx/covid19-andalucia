@@ -118,6 +118,7 @@ class MainController extends Controller
 
 				// Info
 				$info = Data::where('city', $city->code)
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take(1)
 					->first()
@@ -127,6 +128,7 @@ class MainController extends Controller
 
 				// Last
 				$last = Data::where('city', $city->code)
+					->whereNotNull('confirmed_total')
 					->where('date', '<', $info['date'])
 					->orderBy('date', 'desc')
 					->take(1)
@@ -135,6 +137,7 @@ class MainController extends Controller
 
 				// Data
 				$data = Data::where('city', $city->code)
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take($days)
 					->get()
@@ -161,6 +164,7 @@ class MainController extends Controller
 				// Info
 				$info = Data::where('district', $district->code)
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take(1)
 					->first()
@@ -171,6 +175,7 @@ class MainController extends Controller
 				// Last
 				$last = Data::where('district', $district->code)
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->where('date', '<', $info['date'])
 					->orderBy('date', 'desc')
 					->take(1)
@@ -180,6 +185,7 @@ class MainController extends Controller
 				// Data
 				$data = Data::where('district', $district->code)
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take($days)
 					->get()
@@ -210,6 +216,7 @@ class MainController extends Controller
 				$info = Data::where('province', $province->code)
 					->whereNull('district')
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take(1)
 					->first()
@@ -221,6 +228,7 @@ class MainController extends Controller
 				$last = Data::where('province', $province->code)
 					->whereNull('district')
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->where('date', '<', $info['date'])
 					->orderBy('date', 'desc')
 					->take(1)
@@ -231,6 +239,7 @@ class MainController extends Controller
 				$data = Data::where('province', $province->code)
 					->whereNull('district')
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take($days)
 					->get()
@@ -259,6 +268,7 @@ class MainController extends Controller
 					->whereNull('province')
 					->whereNull('district')
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take(1)
 					->first()
@@ -271,6 +281,7 @@ class MainController extends Controller
 					->whereNull('province')
 					->whereNull('district')
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->where('date', '<', $info['date'])
 					->orderBy('date', 'desc')
 					->take(1)
@@ -282,6 +293,7 @@ class MainController extends Controller
 					->whereNull('province')
 					->whereNull('district')
 					->whereNull('city')
+					->whereNotNull('confirmed_total')
 					->orderBy('date', 'desc')
 					->take($days)
 					->get()
