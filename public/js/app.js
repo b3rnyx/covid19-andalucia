@@ -127,6 +127,19 @@ var app = {
 
 				app.setCookie();
 
+				var url;
+
+				if (selected == 'province' && (typeof value === 'undefined' || value == 'undefined' || value == '')) {
+					url = '/';
+				} else {
+					url = '?' + selected + '=' + value;
+				}
+				if ($('#select_dates').val() != '30') {
+					url += ((url.indexOf('?') == -1) ? '?days=' : '&days=') + $('#select_dates').val();
+				}
+
+				window.history.pushState('', '', url);
+
 				app.aux.pageUnlock();
 
 			})
