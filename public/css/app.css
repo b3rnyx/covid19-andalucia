@@ -233,7 +233,7 @@ section.info .stylep {
 }
 
 section.graphs {
-	display: none;
+	/*display: none;*/
 }
 section.graphs div.days {
 	width: 50%;
@@ -242,6 +242,7 @@ section.graphs div.days {
 }
 div.graph-container {
 	position: relative;
+	min-height: 300px;
 	margin-top: 60px;
 	padding: 20px 15px 0 15px;
 	border: 1px solid #bbbbbb;
@@ -250,7 +251,7 @@ div.graph-container {
 	box-shadow: 3px 3px 12px 0px rgba(0,0,0,0.10);
 }
 div.graph-container div.description {
-	margin: -40px 0 0 0;
+	margin: -35px 0 0 0;
 	padding: 0 20px 10px 20px;
 	color: #888888;
 	font-size: 0.7em;

@@ -608,8 +608,6 @@ var app = {
 
 			}
 
-			$('section.graphs').show();
-
 		},
 
 		heightToggle: function () {
