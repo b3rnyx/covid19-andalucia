@@ -8,6 +8,9 @@ body {
 .select2 {
 	width: 100% !important;
 }
+.bs-tooltip-right {
+	z-index: 1000;
+}
 
 header {
 	padding: 20px 0 0 0;
@@ -252,9 +255,14 @@ footer {
 	font-size: 13px;
 	line-height: 1.2;
 	box-shadow: 0px -3px 12px 0px rgba(0,0,0,0.10);
+	z-index: 999;
 }
 footer .source ul {
 	margin: 0px 0 0 16px;
+	padding: 0px;
+}
+footer .source ul li {
+	margin: 0px;
 	padding: 0px;
 }
 footer .share ul {

@@ -42,7 +42,7 @@ var app = {
 			}, 2000);
 		});
 
-		$('.data-switch label i').tooltip({
+		$('i.tooltip-switch').tooltip({
 			placement: 'right',
 		});
 
