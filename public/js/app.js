@@ -253,6 +253,8 @@ var app = {
 
 					for (var d in data.data) {
 
+						var insert = false;
+
 						if (typeof app.cfg.items[i]['graph'] !== 'undefined') {
 
 							for (var s in series) {
@@ -260,18 +262,30 @@ var app = {
 								if (typeof series[s]['data'] === 'undefined') {
 									series[s]['data'] = [];
 								}
+								
+								if (data.data[d][s] !== null) {
 
-								series[s]['data'].push(data.data[d][s]);
+									series[s]['data'].push(data.data[d][s]);
+									insert = true;
+
+								}
 
 							}
 
 						} else {
 
-							series[i]['data'].push(data.data[d][i]);
+							if (data.data[d][i] !== null) {
+
+								series[i]['data'].push(data.data[d][i]);
+								insert = true;
+
+							}
 
 						}
 
-						ylabels.push(data.data[d]['date']);
+						if (insert) {
+							ylabels.push(data.data[d]['date']);
+						}
 
 					}
 

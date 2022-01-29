@@ -114,7 +114,7 @@ return [
 				'colors' => ['#86558B', '#FF9800'],
 				'stroke' => [
 					'curve' => 'smooth',
-					'width' =>  2,
+					'width' =>  3,
 				],
 				'series' => [
 					'hosp_beds_covid' => [

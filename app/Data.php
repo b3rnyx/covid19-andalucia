@@ -165,25 +165,25 @@ class Data extends Model
 	public static function getHospitalSums($item)
 	{
 
-		$item['hosp_beds_total'] = intval($item['hosp_beds']) + intval($item['hosp_uci_resp_beds']) + intval($item['hosp_uci_beds']);
-		$item['hosp_beds_covid_total'] = intval($item['hosp_beds_covid']) + intval($item['hosp_uci_resp_beds_covid']) + intval($item['hosp_uci_beds_covid']);
-		$item['hosp_beds_covid_increment_total'] = intval($item['hosp_beds_covid_increment']) + intval($item['hosp_uci_resp_beds_covid_increment']) + intval($item['hosp_uci_beds_covid_increment']);
-		$item['hosp_beds_nocovid_total'] = intval($item['hosp_beds_nocovid']) + intval($item['hosp_uci_resp_beds_nocovid']) + intval($item['hosp_uci_beds_nocovid']);
-		$item['hosp_admissions_total'] = intval($item['hosp_admissions']) + intval($item['hosp_uci_resp_admissions']) + intval($item['hosp_uci_admissions']);
-		$item['hosp_admissions_increment_total'] = intval($item['hosp_admissions_increment']) + intval($item['hosp_uci_resp_admissions_increment']) + intval($item['hosp_uci_admissions_increment']);
-		$item['hosp_discharges_total'] = intval($item['hosp_discharges']) + intval($item['hosp_uci_resp_discharges']) + intval($item['hosp_uci_discharges']);
-		$item['uci_beds'] = intval($item['hosp_uci_resp_beds']) + intval($item['hosp_uci_beds']);
-		$item['uci_beds_covid'] = intval($item['hosp_uci_resp_beds_covid']) + intval($item['hosp_uci_beds_covid']);
-		$item['uci_beds_covid_increment'] = intval($item['hosp_uci_resp_beds_covid_increment']) + intval($item['hosp_uci_beds_covid_increment']);
-		$item['uci_beds_nocovid'] = intval($item['hosp_uci_resp_beds_nocovid']) + intval($item['hosp_uci_beds_nocovid']);
-		$item['uci_admissions'] = intval($item['hosp_uci_resp_admissions']) + intval($item['hosp_uci_admissions']);
-		$item['uci_admissions_increment'] = intval($item['hosp_uci_resp_admissions_increment']) + intval($item['hosp_uci_admissions_increment']);
-		$item['uci_discharges'] = intval($item['hosp_uci_resp_discharges']) + intval($item['hosp_uci_discharges']);
+		$item['hosp_beds_total'] = $item['hosp_beds'] == null ? null : intval($item['hosp_beds']) + intval($item['hosp_uci_resp_beds']) + intval($item['hosp_uci_beds']);
+		$item['hosp_beds_covid_total'] = $item['hosp_beds'] == null ? null : intval($item['hosp_beds_covid']) + intval($item['hosp_uci_resp_beds_covid']) + intval($item['hosp_uci_beds_covid']);
+		$item['hosp_beds_covid_increment_total'] = $item['hosp_beds'] == null ? null : intval($item['hosp_beds_covid_increment']) + intval($item['hosp_uci_resp_beds_covid_increment']) + intval($item['hosp_uci_beds_covid_increment']);
+		$item['hosp_beds_nocovid_total'] = $item['hosp_beds'] == null ? null : intval($item['hosp_beds_nocovid']) + intval($item['hosp_uci_resp_beds_nocovid']) + intval($item['hosp_uci_beds_nocovid']);
+		$item['hosp_admissions_total'] = $item['hosp_beds'] == null ? null : intval($item['hosp_admissions']) + intval($item['hosp_uci_resp_admissions']) + intval($item['hosp_uci_admissions']);
+		$item['hosp_admissions_increment_total'] = $item['hosp_beds'] == null ? null : intval($item['hosp_admissions_increment']) + intval($item['hosp_uci_resp_admissions_increment']) + intval($item['hosp_uci_admissions_increment']);
+		$item['hosp_discharges_total'] = $item['hosp_beds'] == null ? null : intval($item['hosp_discharges']) + intval($item['hosp_uci_resp_discharges']) + intval($item['hosp_uci_discharges']);
+		$item['uci_beds'] = $item['hosp_beds'] == null ? null : intval($item['hosp_uci_resp_beds']) + intval($item['hosp_uci_beds']);
+		$item['uci_beds_covid'] = $item['hosp_beds'] == null ? null : intval($item['hosp_uci_resp_beds_covid']) + intval($item['hosp_uci_beds_covid']);
+		$item['uci_beds_covid_increment'] = $item['hosp_beds'] == null ? null : intval($item['hosp_uci_resp_beds_covid_increment']) + intval($item['hosp_uci_beds_covid_increment']);
+		$item['uci_beds_nocovid'] = $item['hosp_beds'] == null ? null : intval($item['hosp_uci_resp_beds_nocovid']) + intval($item['hosp_uci_beds_nocovid']);
+		$item['uci_admissions'] = $item['hosp_beds'] == null ? null : intval($item['hosp_uci_resp_admissions']) + intval($item['hosp_uci_admissions']);
+		$item['uci_admissions_increment'] = $item['hosp_beds'] == null ? null : intval($item['hosp_uci_resp_admissions_increment']) + intval($item['hosp_uci_admissions_increment']);
+		$item['uci_discharges'] = $item['hosp_beds'] == null ? null : intval($item['hosp_uci_resp_discharges']) + intval($item['hosp_uci_discharges']);
 
-		$item['hosp_beds_covid_percent'] = $item['hosp_beds'] == 0 ? 0 : ($item['hosp_beds_covid'] / $item['hosp_beds']) * 100;
-		$item['hosp_beds_uci_covid_percent'] = ($item['hosp_uci_resp_beds'] + $item['hosp_uci_beds']) == 0 ? 0 : (($item['hosp_uci_resp_beds_covid'] + $item['hosp_uci_beds_covid']) / ($item['hosp_uci_resp_beds'] + $item['hosp_uci_beds'])) * 100;
-		$item['hosp_beds_total_percent'] = $item['hosp_beds'] == 0 ? 0 : (($item['hosp_beds_covid'] + $item['hosp_beds_nocovid']) / $item['hosp_beds']) * 100;
-		$item['uci_beds_total_percent'] = $item['uci_beds'] == 0 ? 0 : (($item['uci_beds_covid'] + $item['uci_beds_nocovid']) / $item['uci_beds']) * 100;
+		$item['hosp_beds_covid_percent'] = $item['hosp_beds'] == null ? null : ($item['hosp_beds'] == 0 ? 0 : ($item['hosp_beds_covid'] / $item['hosp_beds']) * 100);
+		$item['hosp_beds_uci_covid_percent'] = $item['hosp_beds'] == null ? null : (($item['hosp_uci_resp_beds'] + $item['hosp_uci_beds']) == 0 ? 0 : (($item['hosp_uci_resp_beds_covid'] + $item['hosp_uci_beds_covid']) / ($item['hosp_uci_resp_beds'] + $item['hosp_uci_beds'])) * 100);
+		$item['hosp_beds_total_percent'] = $item['hosp_beds'] == null ? null : ($item['hosp_beds'] == 0 ? 0 : (($item['hosp_beds_covid'] + $item['hosp_beds_nocovid']) / $item['hosp_beds']) * 100);
+		$item['uci_beds_total_percent'] = $item['hosp_beds'] == null ? null : ($item['uci_beds'] == 0 ? 0 : (($item['uci_beds_covid'] + $item['uci_beds_nocovid']) / $item['uci_beds']) * 100);
 
 		return $item;
 
