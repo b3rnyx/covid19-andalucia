@@ -134,6 +134,7 @@ foreach (config('custom.stats-days') as $k => $v) {
 
 				<div class="level1 col-lg-2 col-md-4 col-sm-6">
 					<?= htmlInfo('incidence_14d', 'Incidencia<br>14 días', 'style1'); ?>
+					<?= htmlInfo(['hosp_beds_total_percent', 'uci_beds_total_percent'], '<small>Ocupación Hospitalaria</small>', 'style1b'); ?>
 				</div>
 
 				<div class="level-group col-lg-10 col-md-8 col-sm-12 col-12">
@@ -155,15 +156,17 @@ foreach (config('custom.stats-days') as $k => $v) {
 						</div>
 
 						<div class="level2 col-lg-3 col-md-6 col-sm-6">
-							<?= htmlInfo('hospitalized_increment', 'Nuevos hospitalizados<span>*</span>', 'style2'); ?>
-							<?= htmlInfo('hospitalized_total', 'Hospitalizados totales', 'style3'); ?>
-							<?= htmlInfo('hospitalized_percent', 'Porcentaje hospitalizados', 'stylep', 'Respecto a confirmados totales'); ?>
+							<?= htmlInfo('hosp_admissions', 'Nuevos hospitalizados', 'style2'); ?>
+							<?= htmlInfo('hosp_beds_covid', 'Hospitalizados COVID', 'style3'); ?>
+							<?= htmlInfo('hosp_beds_nocovid', 'Hospitalizados No COVID', 'style3'); ?>
+							<?= htmlInfo('hosp_beds_covid_percent', 'Ocupación hospitalaria COVID', 'stylep'); ?>
 						</div>
 
 						<div class="level2 col-lg-3 col-md-6 col-sm-6">
-							<?= htmlInfo('uci_increment', 'Nuevos ingresos UCI<span>*</span>', 'style2'); ?>
-							<?= htmlInfo('uci_total', 'Ingresados UCI totales', 'style3'); ?>
-							<?= htmlInfo('uci_percent', 'Porcentaje ingresados UCI', 'stylep', 'Respecto a hospitalizados totales'); ?>
+							<?= htmlInfo('uci_admissions', 'Nuevos ingresos UCI', 'style2'); ?>
+							<?= htmlInfo('uci_beds_covid', 'Ingresados UCI COVID', 'style3'); ?>
+							<?= htmlInfo('uci_beds_nocovid', 'Ingresados UCI No COVID', 'style3'); ?>
+							<?= htmlInfo('hosp_beds_uci_covid_percent', 'Ocupación UCI COVID', 'stylep'); ?>
 						</div>
 
 					</div>
@@ -247,6 +250,7 @@ foreach (config('custom.stats-items') as $k => $v) {
 	app.cfg.lists = <?= json_encode($lists, JSON_UNESCAPED_UNICODE) ?>;
 	app.cfg.items = <?= json_encode(config('custom.stats-items'), JSON_UNESCAPED_UNICODE) ?>;
 	app.cfg.cookie_name = '<?= config('custom.cookie-name') ?>';
+	app.cfg.days_default = '<?= config('custom.stats-days-fefault') ?>';
 </script>
 
 </body>

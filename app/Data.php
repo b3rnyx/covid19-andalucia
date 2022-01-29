@@ -180,6 +180,11 @@ class Data extends Model
 		$item['uci_admissions_increment'] = intval($item['hosp_uci_resp_admissions_increment']) + intval($item['hosp_uci_admissions_increment']);
 		$item['uci_discharges'] = intval($item['hosp_uci_resp_discharges']) + intval($item['hosp_uci_discharges']);
 
+		$item['hosp_beds_covid_percent'] = $item['hosp_beds'] == 0 ? 0 : ($item['hosp_beds_covid'] / $item['hosp_beds']) * 100;
+		$item['hosp_beds_uci_covid_percent'] = ($item['hosp_uci_resp_beds'] + $item['hosp_uci_beds']) == 0 ? 0 : (($item['hosp_uci_resp_beds_covid'] + $item['hosp_uci_beds_covid']) / ($item['hosp_uci_resp_beds'] + $item['hosp_uci_beds'])) * 100;
+		$item['hosp_beds_total_percent'] = $item['hosp_beds'] == 0 ? 0 : (($item['hosp_beds_covid'] + $item['hosp_beds_nocovid']) / $item['hosp_beds']) * 100;
+		$item['uci_beds_total_percent'] = $item['uci_beds'] == 0 ? 0 : (($item['uci_beds_covid'] + $item['uci_beds_nocovid']) / $item['uci_beds']) * 100;
+
 		return $item;
 
 	}

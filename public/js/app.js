@@ -12,7 +12,7 @@ var app = {
 	
 	init: function () {
 		
-		$('#select_days').val('30');
+		$('#select_days').val(app.cfg.days_default);
 
 		$('section.selector div.select-province button').on('click', app.selector.select);
 		$('section.selector select, section.graphs div.days select').on('change', app.selector.select);
@@ -136,7 +136,7 @@ var app = {
 				} else {
 					url = '?' + selected + '=' + value;
 				}
-				if ($('#select_days').val() != '30') {
+				if ($('#select_days').val() != app.cfg.days_default) {
 					url += ((url.indexOf('?') == -1) ? '?days=' : '&days=') + $('#select_days').val();
 				}
 
@@ -202,7 +202,12 @@ var app = {
 				$('section.info div[data-item="' + i + '"] strong').html(data.info[i]);
 				$('section.info div[data-item="' + i + '"] div.num span').html(data.icons[i]);
 
+				$('section.info div.num[data-item="' + i + '"] strong').html(data.info[i]);
+				$('section.info div.num[data-item="' + i + '"] span').html(data.icons[i]);
+
 			}
+
+			$('section.info div.num[data-item="uci_beds_total_percent"] strong').append('<em>(UCI)</em>')
 
 			$('section.info').show();
 
@@ -217,18 +222,48 @@ var app = {
 		show: function (data) {
 
 			var serie = [], 
+				series = [],
 				ylabels = [];
-			
+
 			for (var i in app.cfg.items) {
 
 				if (typeof app.cfg.items[i]['graph'] !== 'undefined') {
 
-					serie = [];
+					if (app.cfg.items[i]['graph']['type'] != 'area') {
+						serie = [];
+					} else {
+						series = [];
+						for (var f in app.cfg.items[i]['graph']['series']) {
+							series[f] = {
+								name: app.cfg.items[i]['graph']['series'][f]['name'],
+								data: [],
+							}
+						}
+					}
 					ylabels = [];
 
 					for (var d in data.data) {
-						serie.push(data.data[d][i]);
+
+						if (app.cfg.items[i]['graph']['type'] != 'area') {
+
+							serie.push(data.data[d][i]);
+
+						} else {
+
+							for (var s in series) {
+
+								if (typeof series[s]['data'] === 'undefined') {
+									series[s]['data'] = [];
+								}
+
+								series[s]['data'].push(data.data[d][s]);
+
+							}
+
+						}
+
 						ylabels.push(data.data[d]['date']);
+
 					}
 					
 					switch (app.cfg.items[i]['graph']['type']) {
@@ -239,6 +274,7 @@ var app = {
 									name: app.cfg.items[i]['name'],
 									data: serie
 								}],
+								colors: typeof app.cfg.items[i]['graph']['color'] === 'undefined' ? ['#2E93fA'] : [app.cfg.items[i]['graph']['color']],
 								chart: {
 									height: 350,
 									parentHeightOffset: 0,
@@ -343,6 +379,82 @@ var app = {
 										}
 									]
 								}
+							};
+						break;
+
+						case 'area':
+
+							var new_series = [];
+							for (var s in series) {
+								new_series.push(series[s]);
+							}
+							var options = {
+								series: new_series,
+								chart: {
+									height: 350,
+									parentHeightOffset: 0,
+									type: 'area',
+									zoom: {
+										enabled: false
+									},
+									toolbar: {
+										show: true,
+										offsetX: -80,
+										offsetY: 0,
+										tools: {
+											download: '<i class="fa fa-cloud-download"></i> Descargar',
+											selection: false,
+											zoom: false,
+											zoomin: false,
+											zoomout: false,
+											pan: false,
+											reset: false,
+										}
+									},
+								},
+								dataLabels: {
+									enabled: false
+								},
+								stroke: {
+									width: 1.5,
+									curve: 'straight'
+								},
+								fill: {
+									opacity: 0.1,
+									type: 'solid',
+								},
+								title: {
+									text: app.cfg.items[i]['name'],
+									align: 'left',
+									style: {
+										color: '#28a745',
+									}
+								},
+								grid: {
+									row: {
+										colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+										opacity: 0.5
+									},
+									padding: {
+										top: 0,
+										right: 40,
+										bottom: 0,
+										left: 10
+									}
+								},
+								xaxis: {
+									categories: ylabels,
+									tickAmount: 18,
+								},
+								yaxis: {
+									min: 0,
+									forceNiceScale: true,
+									labels: {
+										formatter: function (val, index) {
+											return val.toLocaleString('de');
+										}
+									}
+								},
 							};
 						break;
 
@@ -591,15 +703,19 @@ var app = {
 						
 					}
 
-					x = ylabels[ylabels.length - 1];
-					text = serie[serie.length - 1];
-					if (text !== null && typeof text !== 'undefined') {
-						options.annotations.points[0].x = x;
-						if (app.cfg.items[i]['type'] == 'percent') {
-							options.annotations.points[0].label.text = parseFloat(text).toLocaleString('de', {maximumFractionDigits: 2}) + '%';
-						} else {
-							options.annotations.points[0].label.text = parseFloat(text).toLocaleString('de', {maximumFractionDigits: 2});
+					if (typeof options.annotations !== 'undefined') {
+
+						x = ylabels[ylabels.length - 1];
+						text = serie[serie.length - 1];
+						if (text !== null && typeof text !== 'undefined') {
+							options.annotations.points[0].x = x;
+							if (app.cfg.items[i]['type'] == 'percent') {
+								options.annotations.points[0].label.text = parseFloat(text).toLocaleString('de', {maximumFractionDigits: 2}) + '%';
+							} else {
+								options.annotations.points[0].label.text = parseFloat(text).toLocaleString('de', {maximumFractionDigits: 2});
+							}
 						}
+
 					}
 
 					app.graphs.charts[i] = new ApexCharts(document.querySelector('#graph-' + i), options);

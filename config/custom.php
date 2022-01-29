@@ -41,6 +41,7 @@ return [
 		'180' => 'Mostrar datos de los últimos 6 meses',
 		'365' => 'Mostrar datos del último año',
 	],
+	'stats-days-fefault' => 30,
 
 	// Días de la semana
 	'weekdays' => [
@@ -53,6 +54,12 @@ return [
 	// Listado de items a mostrar
 	'stats-items' => [
 
+		'population' => [
+			'name' => 'Población',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
+		],
+
 		'incidence_14d' => [
 			'name' => 'Incidencia 14 días',
 			'description' => 'Indice en el que se basa la Junta de Andalucía para establecer las restricciones. Casos en los últimos 14 días de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación) por cada 100.000 habitantes.',
@@ -63,33 +70,47 @@ return [
 				'type' => 'line',
 			],
 		],
-		'population' => [
-			'name' => 'Población',
+
+		'hospitalization' => [
+			'name' => 'Ocupación hospitalaria',
+			'description' => 'Porcentaje de ocupación de camas de hospital disponibles, tanto en hospitalización convencional como en UCI.',
+			'allowed' => ['region', 'province'],
+			'type' => 'percent',
+			'graph' => [
+				'type' => 'area',
+				'series' => [
+					'hosp_beds_total_percent' => [
+						'name' => 'Convencional total',
+					],
+					'uci_beds_total_percent' => [
+						'name' => 'UCI total',
+					],
+					'hosp_beds_covid_percent' => [
+						'name' => 'Convencional COVID',
+					],
+					'hosp_beds_uci_covid_percent' => [
+						'name' => 'UCI COVID',
+					],
+				],
+			]
+		],
+		
+		'confirmed_increment' => [
+			'name' => 'Nuevos confirmados cada día',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número total de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'line',
+			],
 		],
 		'confirmed_total' => [
 			'name' => 'Confirmados totales',
 			'description' => 'Total acumulado de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'number',
-		],
-		'dead_total' => [
-			'name' => 'Fallecidos totales',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
-		],
-		'hospitalized_total' => [
-			'name' => 'Hospitalizados totales',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
-		],
-		'uci_total' => [
-			'name' => 'Ingresados en UCI totales',
-			'allowed' => ['region', 'province'],
-			'type' => 'number',
-			'green' => 'desc',
 		],
 		'confirmed_14d' => [
 			'name' => 'Confirmados 14 días',
@@ -105,18 +126,6 @@ return [
 			'type' => 'number',
 			'green' => 'desc',
 		],
-		
-		'confirmed_increment' => [
-			'name' => 'Nuevos confirmados cada día',
-			'legend' => 'Datos no oficiales mostrados a título orientativo.',
-			'description' => 'Aumento con respecto al día anterior en el número total de casos de COVID-19 con infección activa confirmados por PDIA (Prueba Diagnóstica de Infección Activa, es decir, técnica PCR o test antigénicos rápidos de última generación).',
-			'allowed' => ['region', 'province', 'district', 'city'],
-			'type' => 'number',
-			'green' => 'desc',
-			'graph' => [
-				'type' => 'columns',
-			],
-		],
 		'incidence_7d' => [
 			'name' => 'Incidencia 7 días',
 			'legend' => 'Datos disponibles a partir del 10/02/2021. Datos por municipios disponibles a partir del 14/01/2022.',
@@ -126,46 +135,30 @@ return [
 			'green' => 'desc',
 			'graph' => [
 				'type' => 'line',
+				'color' => '#999999',
 			],
 		],
-		'hospitalized_increment' => [
-			'name' => 'Nuevos hospitalizados cada día',
-			'legend' => 'Datos no oficiales mostrados a título orientativo.',
-			'description' => 'Aumento con respecto al día anterior en el número total de hospitalizados.',
+
+		'hosp_admissions' => [
+			'name' => 'Nuevos hospitalizados',
+			'description' => 'Nuevos ingresos hospitalarios por causa de COVID-19.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
 			'graph' => [
-				'type' => 'columns',
-			],
-		],
-		'hospitalized_percent' => [
-			'name' => 'Porcentaje Hospitalizados',
-			'legend' => 'Respecto a confirmados.',
-			'allowed' => ['region', 'province'],
-			'type' => 'percent',
-			'graph' => [
 				'type' => 'line',
+				'color' => '#86558B',
 			],
 		],
-		'uci_increment' => [
-			'name' => 'Nuevos ingresos en UCI cada día',
-			'legend' => 'Datos no oficiales mostrados a título orientativo.',
-			'description' => 'Aumento con respecto al día anterior en el número total de ingresados en UCI.',
+		'uci_admissions' => [
+			'name' => 'Nuevos ingresos UCI',
+			'description' => 'Nuevos ingresos en UCI por causa de COVID-19.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
 			'graph' => [
-				'type' => 'columns',
-			],
-		],
-		'uci_percent' => [
-			'name' => 'Porcentaje ingresados UCI',
-			'legend' => 'Respecto a hospitalizados totales.',
-			'allowed' => ['region', 'province'],
-			'type' => 'percent',
-			'graph' => [
 				'type' => 'line',
+				'color' => '#FF9800',
 			],
 		],
 		'dead_increment' => [
@@ -176,17 +169,79 @@ return [
 			'type' => 'number',
 			'green' => 'desc',
 			'graph' => [
-				'type' => 'columns',
+				'type' => 'line',
+				'color' => '#DD0000',
 			],
+		],
+		'dead_total' => [
+			'name' => 'Fallecidos totales',
+			'allowed' => ['region', 'province', 'district', 'city'],
+			'type' => 'number',
 		],
 		'dead_percent' => [
 			'name' => 'Porcentaje fallecidos',
 			'legend' => 'Respecto a confirmados.',
 			'allowed' => ['region', 'province', 'district', 'city'],
 			'type' => 'percent',
-			'graph' => [
-				'type' => 'line',
-			],
+		],
+
+		'hosp_beds_total_percent' => [
+			'name' => 'Ocupación Hospitalaria',
+			'description' => 'Porcentaje de camas hospitalarias ocupadas en total (por casos COVID y no COVID). De hospitalización convencional y de UCI.',
+			'allowed' => ['region', 'province'],
+			'type' => 'percent',
+			'green' => 'desc',
+		],
+		'uci_beds_total_percent' => [
+			'name' => 'Ocupación Hospitalaria',
+			'allowed' => ['region', 'province'],
+			'type' => 'percent',
+			'green' => 'desc',
+		],
+
+		
+		'hosp_beds_covid' => [
+			'name' => 'Hospitalizados COVID',
+			'description' => 'Personas hospitalizadas actualmente por causa de COVID-19.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'hosp_beds_nocovid' => [
+			'name' => 'Hospitalizados No COVID',
+			'description' => 'Personas hospitalizadas actualmente por causas ajenas a COVID-19.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'hosp_beds_covid_percent' => [
+			'name' => 'Ocupación hospitalaria COVID',
+			'description' => 'Porcentaje de camas hospitalarias disponibles ocupadas por pacientes COVID-19.',
+			'allowed' => ['region', 'province'],
+			'type' => 'percent',
+			'green' => 'desc',
+		],
+
+		'uci_beds_covid' => [
+			'name' => 'Ingresados UCI COVID',
+			'description' => 'Personas hospitalizadas en UCI actualmente por causa de COVID-19.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'uci_beds_nocovid' => [
+			'name' => 'Ingresados UCI No COVID',
+			'description' => 'Personas hospitalizadas en UCI actualmente por causas ajenas a COVID-19.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+		],
+		'hosp_beds_uci_covid_percent' => [
+			'name' => 'Ocupación UCI COVID',
+			'description' => 'Porcentaje de camas UCI disponibles ocupadas por pacientes COVID-19.',
+			'allowed' => ['region', 'province'],
+			'type' => 'percent',
+			'green' => 'desc',
 		],
 
 		// Datos descartados
@@ -273,6 +328,46 @@ return [
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'hospitalized_increment' => [
+			'name' => 'Nuevos hospitalizados cada día',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número total de hospitalizados.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'columns',
+			],
+		],
+		'hospitalized_percent' => [
+			'name' => 'Porcentaje Hospitalizados',
+			'legend' => 'Respecto a confirmados.',
+			'allowed' => ['region', 'province'],
+			'type' => 'percent',
+			'graph' => [
+				'type' => 'line',
+			],
+		],
+		'uci_increment' => [
+			'name' => 'Nuevos ingresos en UCI cada día',
+			'legend' => 'Datos no oficiales mostrados a título orientativo.',
+			'description' => 'Aumento con respecto al día anterior en el número total de ingresados en UCI.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'green' => 'desc',
+			'graph' => [
+				'type' => 'columns',
+			],
+		],
+		'uci_percent' => [
+			'name' => 'Porcentaje ingresados UCI',
+			'legend' => 'Respecto a hospitalizados totales.',
+			'allowed' => ['region', 'province'],
+			'type' => 'percent',
 			'graph' => [
 				'type' => 'line',
 			],

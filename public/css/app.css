@@ -206,11 +206,35 @@ section.info .level2 {
 	font-size: 1.0em;
 	line-height: 1.2;
 }
-section.info .style1 {
+section.info .style1,
+section.info .style1b {
 	padding: 15px 15px 10px 15px;
 	border-radius: 12px;
 	background: #ffffff;
 	text-align: center;
+}
+section.info .style1b {
+	margin-top: 10px;
+	padding: 10px 6px 10px 6px;
+}
+section.info .style1b label {
+	padding-bottom: 5px;
+	font-size: 1.0em;
+	line-height: 0.9;
+}
+section.info .style1b label i {
+	font-size: 0.8em;
+}
+section.info .style1b div.num strong {
+	font-size: 1.05em;
+}
+section.info .style1b div.num strong em {
+	display: inline-block;
+	padding-left: 3px;
+	color: #999999;
+	font-size: 0.6em;
+	font-weight: normal !important;
+	font-style: normal;
 }
 section.info .style2 {
 	font-size: 1em;
