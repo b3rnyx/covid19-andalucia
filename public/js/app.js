@@ -221,17 +221,16 @@ var app = {
 
 		show: function (data) {
 
-			var serie = [], 
-				series = [],
+			var series = [],
 				ylabels = [];
 
 			for (var i in app.cfg.items) {
 
 				if (typeof app.cfg.items[i]['graph'] !== 'undefined') {
 
-					if (app.cfg.items[i]['graph']['type'] != 'area') {
-						serie = [];
-					} else {
+					if (typeof app.cfg.items[i]['graph']['series'] !== 'undefined') {
+						// Tiene series múltiples
+
 						series = [];
 						for (var f in app.cfg.items[i]['graph']['series']) {
 							series[f] = {
@@ -239,16 +238,22 @@ var app = {
 								data: [],
 							}
 						}
+
+					} else {
+						// Tiene una sola serie
+
+						series = [];
+						series[i] = {
+							name: app.cfg.items[i]['name'],
+							data: [],
+						};
+
 					}
 					ylabels = [];
 
 					for (var d in data.data) {
 
-						if (app.cfg.items[i]['graph']['type'] != 'area') {
-
-							serie.push(data.data[d][i]);
-
-						} else {
+						if (typeof app.cfg.items[i]['graph'] !== 'undefined') {
 
 							for (var s in series) {
 
@@ -260,27 +265,36 @@ var app = {
 
 							}
 
+						} else {
+
+							series[i]['data'].push(data.data[d][i]);
+
 						}
 
 						ylabels.push(data.data[d]['date']);
 
+					}
+
+					var new_series = [];
+					for (var s in series) {
+						new_series.push(series[s]);
 					}
 					
 					switch (app.cfg.items[i]['graph']['type']) {
 
 						case 'line':
 							var options = {
-								series: [{
-									name: app.cfg.items[i]['name'],
-									data: serie
-								}],
-								colors: typeof app.cfg.items[i]['graph']['color'] === 'undefined' ? ['#2E93fA'] : [app.cfg.items[i]['graph']['color']],
+								series: new_series,
+								colors: typeof app.cfg.items[i]['graph']['colors'] === 'undefined' ? ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800'] : app.cfg.items[i]['graph']['colors'],
 								chart: {
 									height: 350,
 									parentHeightOffset: 0,
 									type: 'line',
 									zoom: {
 										enabled: false
+									},
+									animations: {
+										enabled: false,
 									},
 									toolbar: {
 										show: true,
@@ -300,8 +314,9 @@ var app = {
 								dataLabels: {
 									enabled: false
 								},
-								stroke: {
-									curve: 'straight'
+								stroke: typeof app.cfg.items[i]['graph']['stroke'] !== 'undefined' ? app.cfg.items[i]['graph']['stroke'] : {
+									width: 4,
+									curve: 'straight',
 								},
 								title: {
 									text: app.cfg.items[i]['name'],
@@ -325,13 +340,6 @@ var app = {
 								xaxis: {
 									categories: ylabels,
 									tickAmount: 18,
-									/*labels: {
-										formatter: function (value, timestamp, opts) {
-											if (typeof value !== 'undefined') {
-												return value.substr(0, 5);
-											}
-										}
-									},*/
 								},
 								yaxis: {
 									min: 0,
@@ -342,60 +350,23 @@ var app = {
 										}
 									}
 								},
-								annotations: {
-									points: [
-										{
-											x: null,
-											y: null,
-											marker: {
-												size: 6,
-												fillColor: "#fff",
-												strokeColor: "#333",
-												strokeWidth: 3,
-												shape: "circle",
-												radius: 2,
-											},
-											label: {
-												borderColor: '#666666',
-												borderWidth: 1.5,
-												borderRadius: 4,
-												text: null,
-												textAnchor: 'middle',
-												offsetX: 0,
-												offsetY: 0,
-												style: {
-													background: '#fff',
-													color: '#777',
-													fontSize: '14px',
-													fontWeight: 400,
-													padding: {
-														left: 5,
-														right: 5,
-														top: 2,
-														bottom: 2,
-													}
-												},
-											},
-										}
-									]
-								}
 							};
 						break;
 
 						case 'area':
 
-							var new_series = [];
-							for (var s in series) {
-								new_series.push(series[s]);
-							}
 							var options = {
 								series: new_series,
+								colors: typeof app.cfg.items[i]['graph']['colors'] === 'undefined' ? ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800'] : app.cfg.items[i]['graph']['colors'],
 								chart: {
 									height: 350,
 									parentHeightOffset: 0,
 									type: 'area',
 									zoom: {
 										enabled: false
+									},
+									animations: {
+										enabled: false,
 									},
 									toolbar: {
 										show: true,
@@ -415,8 +386,8 @@ var app = {
 								dataLabels: {
 									enabled: false
 								},
-								stroke: {
-									width: 1.5,
+								stroke: typeof app.cfg.items[i]['graph']['stroke'] !== 'undefined' ? app.cfg.items[i]['graph']['stroke'] : {
+									width: 2,
 									curve: 'straight'
 								},
 								fill: {
@@ -460,13 +431,14 @@ var app = {
 
 						case 'columns':
 							var options = {
-								series: [{
-									name: app.cfg.items[i]['name'],
-									data: serie
-								}],
+								series: new_series,
+								colors: typeof app.cfg.items[i]['graph']['colors'] === 'undefined' ? ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800'] : app.cfg.items[i]['graph']['colors'],
 								chart: {
 									type: 'bar',
 									height: 350,
+									animations: {
+										enabled: false,
+									},
 									toolbar: {
 										show: true,
 										offsetX: -80,
@@ -514,13 +486,6 @@ var app = {
 								xaxis: {
 									categories: ylabels,
 									tickAmount: 18,
-									/*labels: {
-										formatter: function (value, timestamp, opts) {
-											if (typeof value !== 'undefined') {
-												return value.substr(0, 5);
-											}
-										}
-									},*/
 								},
 								yaxis: {
 									min: 0,
@@ -534,46 +499,52 @@ var app = {
 								fill: {
 									opacity: 1
 								},
-								annotations: {
-									points: [
-										{
-											x: null,
-											y: null,
-											marker: {
-												size: 6,
-												fillColor: "#fff",
-												strokeColor: "#333",
-												strokeWidth: 3,
-												shape: "circle",
-												radius: 2,
-											},
-											label: {
-												borderColor: '#666666',
-												borderWidth: 1.5,
-												borderRadius: 4,
-												text: null,
-												textAnchor: 'middle',
-												offsetX: 0,
-												offsetY: 0,
-												style: {
-													background: '#fff',
-													color: '#777',
-													fontSize: '14px',
-													fontWeight: 400,
-													padding: {
-														left: 5,
-														right: 5,
-														top: 2,
-														bottom: 2,
-													}
-												},
-											},
-										}
-									]
-								}
 							};
 			
 						break;
+
+					}
+
+					// Anotaciones
+					if (options.series.length == 1) {
+
+						options.annotations = {
+							points: [
+								{
+									x: null,
+									y: null,
+									marker: {
+										size: 6,
+										fillColor: "#fff",
+										strokeColor: "#333",
+										strokeWidth: 3,
+										shape: "circle",
+										radius: 2,
+									},
+									label: {
+										borderColor: '#666666',
+										borderWidth: 1.5,
+										borderRadius: 4,
+										text: null,
+										textAnchor: 'middle',
+										offsetX: 0,
+										offsetY: 0,
+										style: {
+											background: '#fff',
+											color: '#777',
+											fontSize: '14px',
+											fontWeight: 400,
+											padding: {
+												left: 5,
+												right: 5,
+												top: 2,
+												bottom: 2,
+											}
+										},
+									},
+								}
+							]
+						};
 
 					}
 
@@ -697,16 +668,11 @@ var app = {
 						}
 					}
 
-					if (typeof app.graphs.charts[i] !== 'undefined') {
-
-						app.graphs.charts[i].destroy();
-						
-					}
-
 					if (typeof options.annotations !== 'undefined') {
 
 						x = ylabels[ylabels.length - 1];
-						text = serie[serie.length - 1];
+						text = options.series[0]['data'][options.series[0]['data'].length - 1];
+						
 						if (text !== null && typeof text !== 'undefined') {
 							options.annotations.points[0].x = x;
 							if (app.cfg.items[i]['type'] == 'percent') {
@@ -716,6 +682,10 @@ var app = {
 							}
 						}
 
+					}
+
+					if (typeof app.graphs.charts[i] !== 'undefined') {
+						app.graphs.charts[i].destroy();
 					}
 
 					app.graphs.charts[i] = new ApexCharts(document.querySelector('#graph-' + i), options);

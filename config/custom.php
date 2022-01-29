@@ -68,16 +68,25 @@ return [
 			'green' => 'desc',
 			'graph' => [
 				'type' => 'line',
+				'stroke' => [
+					'curve' => 'straight',
+					'width' =>  5,
+				],
 			],
 		],
 
 		'hospitalization' => [
 			'name' => 'Ocupación hospitalaria',
+			'legend' => 'Datos disponibles a partir del 01/08/2020 y sólo por provincias.',
 			'description' => 'Porcentaje de ocupación de camas de hospital disponibles, tanto en hospitalización convencional como en UCI.',
 			'allowed' => ['region', 'province'],
 			'type' => 'percent',
 			'graph' => [
 				'type' => 'area',
+				'stroke' => [
+					'curve' => 'smooth',
+					'width' =>  2,
+				],
 				'series' => [
 					'hosp_beds_total_percent' => [
 						'name' => 'Convencional total',
@@ -90,6 +99,29 @@ return [
 					],
 					'hosp_beds_uci_covid_percent' => [
 						'name' => 'UCI COVID',
+					],
+				],
+			]
+		],
+		'hospitalization_covid' => [
+			'name' => 'Ingresados por COVID-19',
+			'legend' => 'Datos disponibles a partir del 01/08/2020 y sólo por provincias.',
+			'description' => 'Número de peronas ingresadas por COVID-19, tanto en hospitalización convencional como en UCI.',
+			'allowed' => ['region', 'province'],
+			'type' => 'number',
+			'graph' => [
+				'type' => 'line',
+				'colors' => ['#86558B', '#FF9800'],
+				'stroke' => [
+					'curve' => 'smooth',
+					'width' =>  2,
+				],
+				'series' => [
+					'hosp_beds_covid' => [
+						'name' => 'Convencional',
+					],
+					'uci_beds_covid' => [
+						'name' => 'UCI',
 					],
 				],
 			]
@@ -135,30 +167,32 @@ return [
 			'green' => 'desc',
 			'graph' => [
 				'type' => 'line',
-				'color' => '#999999',
+				'colors' => ['#999999'],
 			],
 		],
 
 		'hosp_admissions' => [
 			'name' => 'Nuevos hospitalizados',
+			'legend' => 'Datos disponibles a partir del 01/08/2020 y sólo por provincias.',
 			'description' => 'Nuevos ingresos hospitalarios por causa de COVID-19.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
 			'graph' => [
 				'type' => 'line',
-				'color' => '#86558B',
+				'colors' => ['#86558B'],
 			],
 		],
 		'uci_admissions' => [
 			'name' => 'Nuevos ingresos UCI',
+			'legend' => 'Datos disponibles a partir del 01/08/2020 y sólo por provincias.',
 			'description' => 'Nuevos ingresos en UCI por causa de COVID-19.',
 			'allowed' => ['region', 'province'],
 			'type' => 'number',
 			'green' => 'desc',
 			'graph' => [
 				'type' => 'line',
-				'color' => '#FF9800',
+				'colors' => ['#FF9800'],
 			],
 		],
 		'dead_increment' => [
@@ -170,9 +204,10 @@ return [
 			'green' => 'desc',
 			'graph' => [
 				'type' => 'line',
-				'color' => '#DD0000',
+				'colors' => ['#DD0000'],
 			],
 		],
+
 		'dead_total' => [
 			'name' => 'Fallecidos totales',
 			'allowed' => ['region', 'province', 'district', 'city'],
@@ -198,7 +233,6 @@ return [
 			'type' => 'percent',
 			'green' => 'desc',
 		],
-
 		
 		'hosp_beds_covid' => [
 			'name' => 'Hospitalizados COVID',
