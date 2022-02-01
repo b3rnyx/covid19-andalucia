@@ -19,7 +19,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
 
-	<link rel="stylesheet" href="<?= config('app.url') ?>css/app.css">
+	<link rel="stylesheet" href="<?= config('app.url') ?>css/app.css?r=<?= md5(rand()) ?>">
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-KGYVFHZDND"></script>
@@ -254,7 +254,7 @@ foreach (config('custom.stats-items') as $k => $v) {
 <script src="https://use.fontawesome.com/b008463dff.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script type="text/javascript" src="<?= config('app.url') ?>vendor/clipboard.min.js"></script>
-<script src="<?= config('app.url') ?>js/app.js"></script>
+<script src="<?= config('app.url') ?>js/app.js?r=<?= md5(rand()) ?>"></script>
 
 <script>
 	app.cfg.url = '<?= config('app.url') ?>';
