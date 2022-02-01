@@ -11,10 +11,6 @@
 |
 */
 
-/*$router->get('/', function () use ($router) {
-    return $router->app->version();
-});*/
-
 // Home
 $router->get('/', [
 	'as' => 'home',
@@ -25,6 +21,12 @@ $router->get('/', [
 $router->post('/load', [
 	'as' => 'load',
 	'uses' => 'MainController@load',
+]);
+
+// Changelog
+$router->get('/changelog', [
+	'as' => 'changelog',
+	'uses' => 'MainController@changelog',
 ]);
 
 // IMPORT

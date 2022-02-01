@@ -42,6 +42,15 @@
 			Consulta los datos históricos por provincias y municipios de COVID-19 en Andalucía.
 		</h2>
 		
+		<div class="changelog">
+			<a href="<?= route('changelog') ?>" title="Ver los cambios en la página">
+				<i class="fa fa-birthday-cake"></i>
+				<strong>¡¡La página cumple 1 año!!</strong>
+				<span>Y han cambiado cosas...</span>
+				<small>Más info aquí</small>
+			</a>
+		</div>
+
 		<div class="update row">
 			<div class="col-md-6">
 				<strong>Última actualización:</strong><mark><?= $updated ?></mark>
@@ -54,6 +63,7 @@
 				<span>Los datos de ocupación hospitalaria suelen actualizarse con los datos del día anterior de lunes a viernes sobre las 15:30 (los fines de semana no hay actualización).</span>
 			</div>
 		</div>
+
 	</header>
 
 	<main>

@@ -13,6 +13,7 @@ body {
 }
 
 header {
+	position: relative;
 	padding: 20px 0 0 0;
 }
 header h1 {
@@ -51,6 +52,50 @@ header .update span {
 	color: rgba(0, 0, 0, 0.4);
 	font-size: 0.7em;
 	font-weight: normal;
+}
+
+header .changelog {
+	position: absolute;
+	right: 10px;
+	top: 20px;
+	width: 210px;
+	font-size: 14px;
+	line-height: 1.2;
+	transform: rotate(4deg);
+}
+header .changelog a {
+	display: block;
+	position: relative;
+	padding: 5px 5px 5px 5px;
+	border-radius: 6px;
+	background:rgb(242, 172, 22);
+	color: #ffffff;
+	box-shadow:
+    0 0 0 3px rgb(255, 255, 255),
+    0 0 0 5px rgb(242, 172, 22);
+}
+header .changelog a:hover {
+	background:rgb(216, 153, 17);
+	text-decoration: none;
+}
+header .changelog i {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	font-size: 32px;
+}
+header .changelog strong {
+	display: block;
+	width: 180px;
+	padding: 0 0 0 50px;
+}
+header .changelog span {
+	display: block;
+	padding: 0 0 0 50px;
+}
+header .changelog small {
+	display: block;
+	padding: 0 0 0 50px;
 }
 
 section.selector {
@@ -329,6 +374,55 @@ div.graph-container .graph-expand button:hover {
 	margin-top: 15px !important;
 }
 
+/* Chengelog */
+
+section.changelog {
+	padding: 35px 0 80px 0;
+}
+section.changelog h3 {
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid #aaaaaa;
+	font-size: 22px;
+	font-weight: 700;
+}
+section.changelog nav {
+	float: right;
+}
+section.changelog nav ul {
+	margin: 0;
+	padding: 0;
+}
+section.changelog nav li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+section.changelog article {
+	position: relative;
+	margin-top: 50px;
+	padding: 20px 5% 20px 5%;
+	border: 1px solid #bbbbbb;
+	border-radius: 16px;
+	background: #ffffff;
+	font-size: 16px;
+	box-shadow: 3px 3px 12px 0px rgba(0,0,0,0.10);
+}
+section.changelog article h4 {
+	color: #888888;
+	font-size: 20px;
+	font-weight: 700;
+}
+section.changelog article h5 {
+	font-size: 18px;
+	font-weight: 600;
+}
+section.changelog article p,
+section.changelog article li {
+	text-align: justify;
+}
+
+/* Footer */
+
 footer {
 	position: fixed;
 	left: 0px;
@@ -382,6 +476,9 @@ footer .share button:hover {
 @media only screen 
    and (max-width : 1199px) {
 
+		header h2 {
+			width: 80%;
+		}
 		section.selector {
 			width: 100%;
 		}
@@ -390,6 +487,9 @@ footer .share button:hover {
 @media only screen 
    and (max-width : 991px) {
 
+		header h2 {
+			width: 60%;
+		}
 		.select-province {
 			padding-right: 5px;
 		}
@@ -404,6 +504,35 @@ footer .share button:hover {
 
 		body {
 			padding-bottom: 0px;
+		}
+		header h2 {
+			width: 100%;
+		}
+		header .changelog {
+			position: relative;
+			right: auto;
+			top: auto;
+			width: 100%;
+			margin-top: 15px;
+			transform: unset;
+		}
+		header .changelog a {
+			padding: 10px 5px 10px 5px;
+		}
+		header .changelog i {
+			left: 12px;
+			top: 8px;
+			font-size: 22px;
+		}
+		header .changelog strong {
+			display: inline-block;
+			width: auto;
+			padding-left: 40px;
+		}
+		header .changelog span,
+		header .changelog small {
+			display: inline-block;
+			padding-left: 5px;
 		}
 		div.select-city {
 			padding-top: 15px;
@@ -421,6 +550,26 @@ footer .share button:hover {
 		footer .share {
 			padding-top: 10px;
 		}
+}
+
+@media only screen 
+   and (max-width : 500px) {
+
+		header .changelog small {
+			padding-left: 40px;
+		}
+
+}
+@media only screen 
+   and (max-width : 430px) {
+
+		header .changelog span {
+			padding-left: 40px;
+		}
+		header .changelog small {
+			padding-left: 5px;
+		}
+
 }
 
 

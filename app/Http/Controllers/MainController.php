@@ -333,4 +333,12 @@ class MainController extends Controller
 
 	}
 
+	// Muestra la página de changelog
+	public function changelog(Request $request)
+	{
+
+		return view('changelog');
+
+	}
+
 }
