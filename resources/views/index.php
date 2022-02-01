@@ -44,11 +44,13 @@
 		
 		<div class="update row">
 			<div class="col-md-6">
-				Última actualización: <mark><?= $updated ?></mark>
+				<strong>Última actualización:</strong><mark><?= $updated ?></mark>
+				<div class="clearfix"></div>
 				<span>Los datos suelen actualizarse de lunes a viernes sobre las 13:00 (los fines de semana no hay actualización).</span>
 			</div>
 			<div class="col-md-6">
-				Última actualización datos hospitalarios: <mark><?= $updated_hospitals ?></mark>
+				<strong>Última actualización datos hospitalarios:</strong><mark><?= $updated_hospitals ?></mark>
+				<div class="clearfix"></div>
 				<span>Los datos de ocupación hospitalaria suelen actualizarse con los datos del día anterior de lunes a viernes sobre las 15:30 (los fines de semana no hay actualización).</span>
 			</div>
 		</div>
@@ -184,7 +186,7 @@ foreach (config('custom.stats-days') as $k => $v) {
 foreach (config('custom.stats-items') as $k => $v) {
 
 	if (isset($v['graph'])) {
-		echo '<div class="graph-container data-switch switch-' . implode(' switch-', $v['allowed']) . ' col-md-12">
+		echo '<div class="graph-container graph-' . $k . ' data-switch switch-' . implode(' switch-', $v['allowed']) . ' col-md-12">
 						<div id="graph-' . $k . '" class="graph" data-item="' . $k . '"></div>
 						' . (isset($v['description']) ? '<div class="description">' . $v['description'] . '</div>' : '') . '
 						<div class="graph-expand">

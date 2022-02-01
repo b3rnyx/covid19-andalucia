@@ -33,6 +33,11 @@ header .update {
 	color: #444;
 	font-weight: 700;
 }
+header .update strong {
+	display: inline-block;
+	margin-right: 7px;
+	font-weight: 700;
+}
 header .update mark {
 	padding: 4px 8px;
 	border: 1px solid #cccccc;
@@ -51,7 +56,7 @@ header .update span {
 section.selector {
 	width: 80%;
 	min-width: 350px;
-	margin: 45px auto 0 auto;
+	margin: 25px auto 0 auto;
 	padding: 12px 15px;
 	border-radius: 12px;
 	background: rgba(40, 167, 69, 0.1);
@@ -319,6 +324,10 @@ div.graph-container .graph-expand button:hover {
 .apexcharts-menu-icon:hover {
 	color: #6E8192 !important;
 }
+.graph-hospitalization div.description,
+.graph-hospitalization_covid div.description {
+	margin-top: 15px !important;
+}
 
 footer {
 	position: fixed;
@@ -420,13 +429,45 @@ section.info.city .level2 {
 	flex: 0 0 50% !important;
 	max-width: 50% !important;
 }
+
 @media only screen 
    and (max-width : 575px) {
 
+		header .update div.col-md-6 {
+			padding-bottom: 10px;
+		}
+		header .update strong {
+			float: left;
+			width: 45%;
+			line-height: 1.1;
+		}
+		header .update mark {
+			float: right;
+			width: 45%;
+		}
+		section.selector {
+			margin-top: 15px;
+			padding-bottom: 20px;
+		}
 		section.info .level2 {
 			-ms-flex: 0 0 50% !important;
 			flex: 0 0 50% !important;
 			max-width: 50% !important;
+		}
+		.graph-expand {
+			right: 0px;
+		}
+		.apexcharts-toolbar {
+			right: 55px !important;
+		}
+		.apexcharts-menu-icon {
+			width: 30px !important;
+		}
+		.graph-expand span {
+			display: none !important;
+		}
+		.apexcharts-menu-icon span {
+			display: none !important;
 		}
 
 }
@@ -445,11 +486,6 @@ section.info.city .level2 {
 		}
 
 }
-
-
-
-
-
 
 .loader {
 	display: none;

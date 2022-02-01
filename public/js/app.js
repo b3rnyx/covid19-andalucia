@@ -315,7 +315,7 @@ var app = {
 										offsetX: -80,
 										offsetY: 0,
 										tools: {
-											download: '<i class="fa fa-cloud-download"></i> Descargar',
+											download: '<i class="fa fa-cloud-download"></i> <span>Descargar</span>',
 											selection: false,
 											zoom: false,
 											zoomin: false,
